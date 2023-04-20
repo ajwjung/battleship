@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const Ship = require("../modules/ship");
 
 test("Ship has length of 4", () => {
