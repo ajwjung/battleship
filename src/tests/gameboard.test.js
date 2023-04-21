@@ -30,3 +30,26 @@ test("Gameboard receives attack but attack misses", () => {
     
     expect(testBoard.missedAttacks[0]).toEqual([3, "E"]);
 });
+
+test("Gameboard reports all ships have sunk", () => {
+    const allShips = [];
+    const destroyer = Ship(3);
+    const patrol = Ship(2);
+    allShips.push(destroyer);
+    allShips.push(patrol);
+
+    const testBoard = Gameboard();
+    testBoard.placeShip(destroyer, [5, "E"]);
+    testBoard.placeShip(patrol, [1, "J"]);
+
+    // Attack destroyer
+    testBoard.receiveAttack([5, "E"]);
+    testBoard.receiveAttack([6, "E"]);
+    testBoard.receiveAttack([7, "E"]);
+    
+    // Attack patrol boat
+    testBoard.receiveAttack([1, "J"]);
+    testBoard.receiveAttack([2, "J"]);
+
+    expect(testBoard.allShipsSunk(allShips)).toBe(true);
+})
