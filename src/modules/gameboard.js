@@ -38,12 +38,17 @@ const Gameboard = (() => {
         };
     };
 
+    function allShipsSunk(allShips) {
+        return allShips.every(ship => ship.isSunk());
+    };
+
     return {
         board,
         missedAttacks,
         placeShip,
-        receiveAttack
-    }
+        receiveAttack,
+        allShipsSunk
+    };
 });
 
 module.exports = Gameboard;
