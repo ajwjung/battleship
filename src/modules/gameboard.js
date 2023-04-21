@@ -23,8 +23,9 @@ const Gameboard = (() => {
 
     function placeShip(boat, coordinates) {
         const [row, col] = convertCoordinates(coordinates);
-
-        board[row - 1][col].ship = boat;
+        for (let i = row; i < row + boat.length; i += 1) {
+            board[i - 1][col].ship = boat;
+        };
     };
 
     function receiveAttack(coordinates) {
