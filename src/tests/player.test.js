@@ -26,3 +26,28 @@ test("Player can attack computer (opponent)", () => {
 
     expect(computerBoard.board[3][1].ship.numHits).toEqual(1);
 });
+
+describe("Computer Player", () => {
+    const player = Player("Bob");
+    const computer = Player("AI");
+    const playerBoard = Gameboard();
+
+    test("Computer makes a random move", () => {
+        computer.startTurn();
+        computer.makeAttack(player, playerBoard);
+        // Move must be in missedAttacks
+        // Because no ships are placed on playerBoard
+        expect(playerBoard.missedAttacks.length).toBe(1);
+    });
+
+    test("Computer's move is legal", () => {
+        for (let i = 0; i < 10; i += 1) {
+            computer.startTurn();
+            computer.makeAttack(player, playerBoard);
+        };
+
+        // All 10 attacks should be missed attacks;
+        // Add 1 extra to take into account the previous test
+        expect(playerBoard.missedAttacks.length).toBe(11);
+    });
+});
