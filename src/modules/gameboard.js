@@ -1,5 +1,8 @@
+const arrayContainsCoordinates = require("./checkArraysContain");
+
 const Gameboard = (() => {
     const board = [];
+    const successfulHits = [];
     const missedAttacks = [];
     const lettersKey = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
 
@@ -33,9 +36,9 @@ const Gameboard = (() => {
 
         if (board[row - 1][col].ship !== "none") {
             board[row - 1][col].ship.hit();
-        } else {
+            successfulHits.push(coordinates);
+        } else if (!arrayContainsCoordinates(missedAttacks, coordinates))
             missedAttacks.push(coordinates);
-        };
     };
 
     function allShipsSunk(allShips) {
@@ -44,6 +47,7 @@ const Gameboard = (() => {
 
     return {
         board,
+        successfulHits,
         missedAttacks,
         placeShip,
         receiveAttack,
