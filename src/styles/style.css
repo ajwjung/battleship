@@ -80,3 +80,33 @@ h1 {
     border-radius: 0% 0% 30% 0% / 0% 30% 45% 50%;
     background: white;
 }
+
+/* Styles DOM-created grid*/
+.row,
+.square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.row {
+    height: calc(100% / 11);
+    width: 100%;
+}
+
+/* Adds bottom border to all but last row (row 10)*/
+.row:not(:nth-last-child(-n+1)) {
+    border-bottom: 1px solid;
+}
+
+.square {
+    height: 100%;
+    width: calc(100% / 11);
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+/* Adds right border to all but last col (col "J")  */
+.square:not(:nth-child(11n)) {
+    border-right: 1px solid;
+}
