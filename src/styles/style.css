@@ -47,10 +47,44 @@ h1 {
     background: var(--blue);
 }
 
+/* Styles the ships (left panel) */
 .left-panel {
     border-right: none;
     border-radius: 30% 0 0 30%;
     justify-content: space-evenly;
+}
+
+.left-ships,
+.right-ships {
+    height: 80%;
+    width: 35%;
+}
+
+.left-ships > *,
+.right-ships > * {
+    border: 2px solid;
+    margin: 1rem 0;
+}
+
+.carrier {
+    height: 60%;
+    width: 100%;
+}
+
+.battleship {
+    height: 40%;
+    width: 100%;
+}
+
+.destroyer,
+.submarine {
+    height: 30%;
+    width: 100%;
+}
+
+.patrol {
+    height: 15%;
+    width: 100%;
 }
 
 .main-grid {
