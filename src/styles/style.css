@@ -17,25 +17,62 @@
     margin: 0 auto;
 }
 
-h1 {
-    line-height: 10vh;
-    margin: 1rem 0;
-    text-align: center;
+.content {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr 5fr;
 }
 
-/* Generic styles for Gameboards*/
-.content,
-.left-board,
-.right-board,
+h1,
+.player-side,
+.opponent-side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    text-align: center;
+    grid-column: 1 / span 2;
+    grid-row: 1;
+}
+
+.player-side {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.opponent-side {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.player-side,
+.opponent-side {
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.message-box {
+    height: 5rem;
+    width: 85%;
+    border: var(--borders);
+}
+
+/* Styles for Gameboards*/
+.board,
 .left-panel {
     display: flex;
     align-items: center;
 }
 
-.content {
-    height: 80%;
-    width: 100%;
-    justify-content: space-evenly;
+.main-grid {
+    height: 500px;
+    width: 500px;
+    background: var(--grid-bg);
+    border: var(--borders);
 }
 
 .left-panel,
@@ -64,34 +101,24 @@ h1 {
 .right-ships > * {
     border: 2px solid;
     margin: 1rem 0;
+    width: 100%;
 }
 
 .carrier {
     height: 60%;
-    width: 100%;
 }
 
 .battleship {
     height: 40%;
-    width: 100%;
 }
 
 .destroyer,
 .submarine {
     height: 30%;
-    width: 100%;
 }
 
 .patrol {
     height: 15%;
-    width: 100%;
-}
-
-.main-grid {
-    height: 500px;
-    width: 500px;
-    background: var(--grid-bg);
-    border: var(--borders);
 }
 
 /* Styles the pegs (right panel)*/
