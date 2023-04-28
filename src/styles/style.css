@@ -3,6 +3,7 @@
     --blue: rgb(57, 101, 133);
     --blue-border: rgba(34, 73, 104, 0.85);
     --borders: 3px solid var(--blue-border);
+    --font-size: 1.5rem;
 }
 
 * {
@@ -27,10 +28,16 @@
 
 h1,
 .player-side,
-.opponent-side {
+.opponent-side,
+.message-box {
     display: flex;
-    justify-content: center;
     align-items: center;
+}
+
+h1,
+.player-side,
+.opponent-side {
+    justify-content: center;
 }
 
 h1 {
@@ -59,6 +66,12 @@ h1 {
     height: 5rem;
     width: 85%;
     border: var(--borders);
+}
+
+.player-name {
+    display: inline-block;
+    text-indent: 4rem;
+    font-size: var(--font-size);
 }
 
 /* Styles for Gameboards*/
@@ -164,7 +177,7 @@ h1 {
     height: 100%;
     width: calc(100% / 11);
     font-weight: 600;
-    font-size: 1.5rem;
+    font-size: var(--font-size);
 }
 
 /* Adds right border to all but last col (col "J")  */
