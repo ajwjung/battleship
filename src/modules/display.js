@@ -4,7 +4,7 @@ const Display = (() => {
             const newRow = document.createElement("div");
             newRow.classList.add("row");
             parentDiv.appendChild(newRow);
-            
+
             "ZABCDEFGHIJ".split("").forEach(letter => {
                 const newSquare = document.createElement("div");
                 newSquare.classList.add("square");
@@ -12,13 +12,20 @@ const Display = (() => {
                 
                 // Add legend for columns
                 if (i === 0 && letter !== "Z") {
-                    newSquare.textContent = `${letter}`
+                    newSquare.textContent = `${letter}`;
                 };
                 
                 // Add legend for rows
                 if (i !== 0 && letter === "Z") {
-                    newSquare.textContent = `${i}`
+                    newSquare.textContent = `${i}`;
                 };
+
+                // Add peg holes in grid
+                if (i !== 0 && letter !== "Z") {
+                    const newPegHole = document.createElement("div");
+                    newPegHole.classList.add("peg-hole");
+                    newSquare.appendChild(newPegHole);
+                }
                 
                 newRow.appendChild(newSquare);
             })
