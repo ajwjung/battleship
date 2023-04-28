@@ -1,5 +1,7 @@
 :root {
-    --grid-bg: rgb(34, 190, 211);
+    --grid-bg: rgb(32, 119, 160);
+    --grid-outline: rgb(34, 190, 211);
+    --grid-text: rgb(98, 211, 226);
     --blue: rgb(57, 101, 133);
     --blue-border: rgba(34, 73, 104, 0.85);
     --border: 3px solid var(--blue-border);
@@ -170,7 +172,7 @@ h1 {
 
 /* Adds bottom border to all but last row (row 10)*/
 .row:not(:nth-last-child(-n+1)) {
-    border-bottom: 1px solid;
+    border-bottom: 3px double var(--grid-outline);
 }
 
 .square {
@@ -178,16 +180,17 @@ h1 {
     width: calc(100% / 11);
     font-weight: 600;
     font-size: var(--font-size);
+    color: var(--grid-text);
 }
 
 /* Adds right border to all but last col (col "J")  */
 .square:not(:nth-child(11n)) {
-    border-right: 1px solid;
+    border-right: 3px double var(--grid-outline);
 }
 
 .peg-hole {
-    height: 30%;
-    width: 30%;
+    height: 40%;
+    width: 40%;
     border-radius: 50%;
-    border: 2px solid var(--blue);
+    border: 5px solid var(--grid-outline);
 }
