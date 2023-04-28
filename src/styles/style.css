@@ -2,7 +2,7 @@
     --grid-bg: rgb(34, 190, 211);
     --blue: rgb(57, 101, 133);
     --blue-border: rgba(34, 73, 104, 0.85);
-    --borders: 3px solid var(--blue-border);
+    --border: 3px solid var(--blue-border);
     --font-size: 1.5rem;
 }
 
@@ -65,7 +65,7 @@ h1 {
 .message-box {
     height: 5rem;
     width: 85%;
-    border: var(--borders);
+    border: var(--border);
 }
 
 .player-name {
@@ -85,7 +85,7 @@ h1 {
     height: 500px;
     width: 500px;
     background: var(--grid-bg);
-    border: var(--borders);
+    border: var(--border);
 }
 
 .left-panel,
@@ -93,7 +93,7 @@ h1 {
     height: 480px;
     width: 170px;
     justify-content: center;
-    border: var(--borders);
+    border: var(--border);
     background: var(--blue);
 }
 
@@ -143,7 +143,7 @@ h1 {
 .red-pegs {
     height: 35%;
     width: 100%;
-    border-bottom: var(--borders);
+    border-bottom: var(--border);
     border-radius: 0% 30% 0% 0% / 10% 80% 0% 0%;
     background: rgb(226, 12, 12);
 }
@@ -183,4 +183,11 @@ h1 {
 /* Adds right border to all but last col (col "J")  */
 .square:not(:nth-child(11n)) {
     border-right: 1px solid;
+}
+
+.peg-hole {
+    height: 30%;
+    width: 30%;
+    border-radius: 50%;
+    border: 2px solid var(--blue);
 }
