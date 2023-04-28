@@ -25,10 +25,11 @@
     width: 100%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1fr 5fr;
+    grid-template-rows: repeat(2, 0.5fr) 5fr;
 }
 
 h1,
+.info-container,
 .player-side,
 .opponent-side,
 .message-box {
@@ -37,6 +38,7 @@ h1,
 }
 
 h1,
+.info-container,
 .player-side,
 .opponent-side {
     justify-content: center;
@@ -48,14 +50,20 @@ h1 {
     grid-row: 1;
 }
 
+.info-container {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+    font-size: var(--font-size);
+}
+
 .player-side {
     grid-column: 1;
-    grid-row: 2;
+    grid-row: 3;
 }
 
 .opponent-side {
     grid-column: 2;
-    grid-row: 2;
+    grid-row: 3;
 }
 
 .player-side,
