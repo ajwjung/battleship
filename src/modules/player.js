@@ -30,6 +30,6 @@ const Player = ((playerName) => ({
             this.endTurn(opponent);
         }
     }
-}))();
+}));
 
 module.exports = Player;
