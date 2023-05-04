@@ -19,16 +19,14 @@ const Gameboard = (() => {
 
     function placeShip(boat, coordinates) {
         const [row, col] = Coordinates.convertCoordinates(coordinates);
-        for (let i = row; i < row + boat.length; i += 1) {
-            board[i - 1][col].ship = boat;
-        };
+        board[row][col].ship = boat;
     };
 
     function receiveAttack(coordinates) {
         const [row, col] = Coordinates.convertCoordinates(coordinates);
 
-        if (board[row - 1][col].ship !== "none") {
-            board[row - 1][col].ship.hit();
+        if (board[row][col].ship !== "none") {
+            board[row][col].ship.hit();
             successfulHits.push(coordinates);
         } else if (!arrayContainsCoordinates(missedAttacks, coordinates))
             missedAttacks.push(coordinates);
