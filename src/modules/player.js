@@ -20,7 +20,7 @@ const Player = ((playerName) => ({
     makeAttack(opponent, opponentBoard, coordinates) {
         if (this.checkTurn()) {
             if (!coordinates) {
-                const randomCoordinates = GenerateCoordinates.getRandomCoordinates(
+                const randomCoordinates = GenerateCoordinates.getUnusedCoordinates(
                     opponentBoard.successfulHits, opponentBoard.missedAttacks
                 );
                 opponentBoard.receiveAttack(randomCoordinates);
