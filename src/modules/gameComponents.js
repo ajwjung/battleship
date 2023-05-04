@@ -39,8 +39,12 @@ const Game = (() => {
         Display.cpuAttackMessage(playerBoard.lastAttack, playerBoard.wasHit);
         const coordinatesIndex = Coordinates.convertCoordinatesToIndex(playerBoard.lastAttack);
         const hitSquare = playerBoard.board[coordinatesIndex[0]][coordinatesIndex[1]];
-        Display.playerResponse(playerBoard.wasHit, hitSquare.ship);
-        Display.updateCpuPeg(playerBoard.lastAttack, playerBoard.wasHit);
+        setTimeout(() => {
+            Display.playerResponse(playerBoard.wasHit, hitSquare.ship);
+        }, 1000);
+        setTimeout(() => {
+            Display.updateCpuPeg(playerBoard.lastAttack, playerBoard.wasHit);
+        }, 2000);
     };
 
     return { placeComputerShips, cpuTurnToAttack };
