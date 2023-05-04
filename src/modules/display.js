@@ -10,22 +10,29 @@ const Display = (() => {
                 newSquare.classList.add("square");
                 newSquare.setAttribute("id", `${letter}${i}`);
                 
-                // Add legend for columns
-                if (i === 0 && letter !== "Z") {
-                    newSquare.textContent = `${letter}`;
+                // Give each square an ID of the coordinates (e.g., A3)
+                if (i > 0 && letter !== "Z") {
+                    newSquare.setAttribute("id", `${letter}${i}`);
+                } else {
+                    newSquare.classList.add("legend");
                 };
                 
-                // Add legend for rows
-                if (i !== 0 && letter === "Z") {
-                    newSquare.textContent = `${i}`;
+                // Create legend in first row/col
+                if (i === 0 && letter !== "Z") {
+                    newSquare.textContent = `${letter}`
                 };
 
-                // Add peg holes in grid
-                if (i !== 0 && letter !== "Z") {
-                    const newPegHole = document.createElement("div");
-                    newPegHole.classList.add("peg-hole");
-                    newSquare.appendChild(newPegHole);
-                }
+                if (i !== 0 && letter === "Z") {
+                    newSquare.textContent = `${i}`
+                };
+
+                // Add peg holes to each square
+                if (i > 0 && letter !== "Z") {
+                    const pegHole = document.createElement("div");
+                    pegHole.classList.add("peg-hole");
+                    pegHole.setAttribute("id", `${letter}${i}`);
+                    newSquare.appendChild(pegHole);
+                };
                 
                 newRow.appendChild(newSquare);
             })
