@@ -1,6 +1,6 @@
 import Coordinates from "./convertCoordinates.js";
 
-const arrayContainsCoordinates = require("./checkArraysContain");
+const arrayContainsCoordinates = require("./checkArraysContains.js");
 
 const Gameboard = (() => {
     const board = [];
