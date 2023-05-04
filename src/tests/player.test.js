@@ -52,4 +52,8 @@ describe("Computer", () => {
         // Add 1 extra to take into account the previous test
         expect(playerBoard.missedAttacks.length).toBe(11);
     });
+
+    test("Computer's last move is saved", () => {
+        expect(playerBoard.lastAttack).not.toBe("none");
+    })
 });
