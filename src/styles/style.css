@@ -104,6 +104,23 @@ h1 {
     border: var(--border);
 }
 
+.peg-hole {
+    height: 40%;
+    width: 40%;
+    border-radius: 50%;
+    border: 5px solid var(--grid-outline);
+}
+
+.white-miss {
+    border-color: white;
+    background: white;
+}
+
+.red-hit {
+    border-color: red;
+    background: red;
+}
+
 .left-panel,
 .right-panel {
     height: 480px;
@@ -204,11 +221,4 @@ h1 {
 /* Adds right border to all but last col (col "J")  */
 .square:not(:nth-child(11n)) {
     border-right: 3px double var(--grid-outline);
-}
-
-.peg-hole {
-    height: 40%;
-    width: 40%;
-    border-radius: 50%;
-    border: 5px solid var(--grid-outline);
 }
