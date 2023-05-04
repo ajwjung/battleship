@@ -1,4 +1,7 @@
 const Display = (() => {
+    const playerMsgBox = document.getElementById("player-text");
+    const cpuMsgBox = document.getElementById("cpu-text");
+
     function createBoardGrid(parentDiv) {
         for (let i = 0; i < 11; i += 1) {
             const newRow = document.createElement("div");
@@ -39,7 +42,51 @@ const Display = (() => {
         };
     };
 
-    return { createBoardGrid };
+    function cpuAttackMessage(coordinates, wasHit) {
+        const formattedCoordinates = `${coordinates[1]}${coordinates[0]}`;
+        // Specifically target squares on player's board only
+        const targetSquarePeg = document.body.querySelector(
+            `#my-board #${formattedCoordinates} > .peg-hole`
+        );
+      
+        cpuMsgBox.textContent = formattedCoordinates;
+        if (wasHit) {
+            playerMsgBox.textContent = "Hit!";
+            targetSquarePeg.classList.add("red-hit");
+        } else {
+            playerMsgBox.textContent = "Miss";
+            targetSquarePeg.classList.add("white-miss");
+        };
+    };
+
+    function playerResponse(wasHit, hitTarget) {
+        if (hitTarget !== "none") {
+            if (wasHit && hitTarget.isSunk()) {
+                playerMsgBox.textContent = "Hit, sunk!";
+            } else if (wasHit) {
+                playerMsgBox.textContent = "Hit!" 
+            };
+        } else {
+            playerMsgBox.textContent = "Miss";
+        };
+    };
+
+    function updateCpuPeg(coordinates, wasHit) {
+        const formattedCoordinates = `${coordinates[1]}${coordinates[0]}`;
+        const targetSquarePeg = document.body.querySelector(
+            `#my-board #${formattedCoordinates} > .peg-hole`
+        );
+
+        if (wasHit) {
+            targetSquarePeg.classList.add("red-hit");
+        } else {
+            targetSquarePeg.classList.add("white-miss");
+        };
+
+        cpuMsgBox.textContent = "Your turn.";
+    };
+
+    return { createBoardGrid, cpuAttackMessage, playerResponse, updateCpuPeg };
 })();
 
 module.exports = Display;

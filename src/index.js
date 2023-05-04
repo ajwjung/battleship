@@ -7,6 +7,12 @@ const Display = require("./modules/display");
 const Game = require("./modules/gameComponents");
 
 const StartGame = (() => {
+    // Game setup
+    const player = Player("player");
+    const computer = Player("computer");
+    const playerBoard = Gameboard();
+    const computerBoard = Gameboard();
+
     // Display setup
     const playerGrid = document.getElementById("my-board");
     const opponentGrid = document.getElementById("opponent-board");
@@ -23,5 +29,8 @@ const StartGame = (() => {
         computerCarrier, computerBattleship, computerDestroyer,
         computerSubmarine, computerPatrol
     ];
-    Game.placeComputerShips(allComputerShips);
+    Game.placeComputerShips(computerBoard, allComputerShips);
+
+    computer.startTurn();
+    Game.cpuTurnToAttack(computer, player, playerBoard);
 })();

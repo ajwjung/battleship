@@ -1,4 +1,6 @@
-const GenerateCoordinates = require("./generateCoordinates")
+const Coordinates = require("./convertCoordinates");
+const GenerateCoordinates = require("./generateCoordinates");
+const Display = require("./display");
 
 const Game = (() => {
     function getLetter(letter, i) {
@@ -32,11 +34,16 @@ const Game = (() => {
         return takenSquares;
     };
 
-    // function cpuTurnToAttack(computer, player, playerBoard, playerShips) {
+    function cpuTurnToAttack(computer, player, playerBoard) {
+        computer.makeAttack(player, playerBoard);
+        Display.cpuAttackMessage(playerBoard.lastAttack, playerBoard.wasHit);
+        const coordinatesIndex = Coordinates.convertCoordinatesToIndex(playerBoard.lastAttack);
+        const hitSquare = playerBoard.board[coordinatesIndex[0]][coordinatesIndex[1]];
+        Display.playerResponse(playerBoard.wasHit, hitSquare.ship);
+        Display.updateCpuPeg(playerBoard.lastAttack, playerBoard.wasHit);
+    };
 
-    // };
-
-    return { placeComputerShips };
+    return { placeComputerShips, cpuTurnToAttack };
 })();
 
 module.exports = Game;
