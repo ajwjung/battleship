@@ -42,21 +42,9 @@ const Display = (() => {
         };
     };
 
-    function cpuAttackMessage(coordinates, wasHit) {
+    function cpuAttackMessage(coordinates) {
         const formattedCoordinates = `${coordinates[1]}${coordinates[0]}`;
-        // Specifically target squares on player's board only
-        const targetSquarePeg = document.body.querySelector(
-            `#my-board #${formattedCoordinates} > .peg-hole`
-        );
-      
         cpuMsgBox.textContent = formattedCoordinates;
-        if (wasHit) {
-            playerMsgBox.textContent = "Hit!";
-            targetSquarePeg.classList.add("red-hit");
-        } else {
-            playerMsgBox.textContent = "Miss";
-            targetSquarePeg.classList.add("white-miss");
-        };
     };
 
     function playerResponse(wasHit, hitTarget) {
@@ -83,7 +71,7 @@ const Display = (() => {
             targetSquarePeg.classList.add("white-miss");
         };
 
-        cpuMsgBox.textContent = "Your turn.";
+        
     };
 
     return { createBoardGrid, cpuAttackMessage, playerResponse, updateCpuPeg };
