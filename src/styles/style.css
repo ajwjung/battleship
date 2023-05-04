@@ -84,6 +84,12 @@ h1 {
     font-size: var(--font-size);
 }
 
+#player-text,
+#cpu-text {
+    margin-left: 1rem;
+    font-size: var(--font-size);
+}
+
 /* Styles for Gameboards*/
 .board,
 .left-panel {
