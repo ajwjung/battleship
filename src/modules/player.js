@@ -1,4 +1,4 @@
-import GenerateCoordinates from "./generateCoordinates.js";
+const GenerateCoordinates = require("./generateCoordinates");
 
 const Player = ((playerName) => ({
     playerName,

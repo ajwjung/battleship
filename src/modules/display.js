@@ -42,4 +42,4 @@ const Display = (() => {
     return { createBoardGrid };
 })();
 
-export default Display;
+module.exports = Display;

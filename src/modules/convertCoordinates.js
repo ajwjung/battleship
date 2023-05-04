@@ -11,4 +11,4 @@ const Coordinates = (() => {
     return { convertCoordinates };
 })();
 
-export default Coordinates;
+module.exports = Coordinates;
