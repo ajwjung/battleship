@@ -144,6 +144,10 @@ h1 {
     height: 15%;
 }
 
+.highlight {
+    background: greenyellow;
+}
+
 /* Styles the pegs (right panel)*/
 .right-panel {
     border-left: none;
