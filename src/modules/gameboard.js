@@ -3,9 +3,7 @@ const Coordinates = require("./convertCoordinates");
 
 const Gameboard = (() => {
     const board = [];
-    const successfulHits = [];
-    const missedAttacks = [];
-
+    
     for (let i = 1; i < 11; i += 1) {
         const newRow = [];
         "ABCDEFGHIJ".split("").forEach(letter => {
@@ -17,33 +15,38 @@ const Gameboard = (() => {
         board.push(newRow);
     };
 
-    function placeShip(boat, coordinates) {
-        const [row, col] = Coordinates.convertCoordinates(coordinates);
-        board[row][col].ship = boat;
-    };
-
-    function receiveAttack(coordinates) {
-        const [row, col] = Coordinates.convertCoordinates(coordinates);
-
-        if (board[row][col].ship !== "none") {
-            board[row][col].ship.hit();
-            successfulHits.push(coordinates);
-        } else if (!arrayContainsCoordinates(missedAttacks, coordinates))
-            missedAttacks.push(coordinates);
-    };
-
-    function allShipsSunk(allShips) {
-        return allShips.every(ship => ship.isSunk());
-    };
-
     return {
         board,
-        successfulHits,
-        missedAttacks,
-        placeShip,
-        receiveAttack,
-        allShipsSunk
-    };
+        lastAttack: "none",
+        wasHit: false,
+        successfulHits: [],
+        missedAttacks: [],
+        placeShip(boat, coordinates) {
+            const [row, col] = Coordinates.convertCoordinatesToIndex(coordinates);
+
+            if (row + boat.length > 10) return "Invalid placement";
+            board[row][col].ship = boat;
+        },
+        receiveAttack(coordinates) {
+            const [row, col] = Coordinates.convertCoordinatesToIndex(coordinates);
+
+            if (board[row][col].ship !== "none") {
+                board[row][col].ship.hit();
+                this.successfulHits.push(coordinates);
+                this.lastAttack = coordinates;
+                this.wasHit = true;
+            } else if (board[row][col].ship === "none") {
+                if (!arrayContainsCoordinates(this.missedAttacks, coordinates)) {
+                    this.missedAttacks.push(coordinates);
+                    this.lastAttack = coordinates;
+                    this.wasHit = false;
+                };
+            };
+        },
+        allShipsSunk(allShips) {
+            return allShips.every(ship => ship.isSunk());
+        }
+  };
 });
 
 module.exports = Gameboard;
