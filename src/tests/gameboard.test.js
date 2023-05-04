@@ -2,16 +2,12 @@ const Ship = require("../modules/ship");
 const Gameboard = require("../modules/gameboard");
 
 describe("Gameboard", () => {
-    test("Carrier placed vertically at A5 to A9", () => {
+    test("Carrier placed at A3", () => {
         const carrier = Ship(5);
         const testBoard = Gameboard();
-        testBoard.placeShip(carrier, [5, "A"]);
+        testBoard.placeShip(carrier, [3, "A"]);
     
-        expect(testBoard.board[4][0].ship).toBe(carrier);
-        expect(testBoard.board[5][0].ship).toBe(carrier);
-        expect(testBoard.board[6][0].ship).toBe(carrier);
-        expect(testBoard.board[7][0].ship).toBe(carrier);
-        expect(testBoard.board[8][0].ship).toBe(carrier);
+        expect(testBoard.board[2][0].ship).toBe(carrier);
     });
     
     test("Gameboard receives attack and carrier is hit", () => {
@@ -41,7 +37,10 @@ describe("Gameboard", () => {
     
         const testBoard = Gameboard();
         testBoard.placeShip(destroyer, [5, "E"]);
+        testBoard.placeShip(destroyer, [6, "E"]);
+        testBoard.placeShip(destroyer, [7, "E"]);
         testBoard.placeShip(patrol, [1, "J"]);
+        testBoard.placeShip(patrol, [2, "J"]);
     
         // Attack destroyer
         testBoard.receiveAttack([5, "E"]);
