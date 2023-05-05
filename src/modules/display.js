@@ -70,8 +70,6 @@ const Display = (() => {
         } else {
             targetSquarePeg.classList.add("white-miss");
         };
-
-        
     };
 
     return { createBoardGrid, cpuAttackMessage, playerResponse, updateCpuPeg };
