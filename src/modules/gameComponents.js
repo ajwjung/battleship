@@ -1,6 +1,7 @@
 const Coordinates = require("./convertCoordinates");
 const GenerateCoordinates = require("./generateCoordinates");
 const Display = require("./display");
+const arrayContainsCoordinates = require("./checkArraysContains");
 
 const Game = (() => {
     const cpuMsgBox = document.getElementById("cpu-text");
@@ -59,7 +60,7 @@ const Game = (() => {
         return [row, col];
     };
 
-    function playerAttackHandler(e, player, computer, computerBoard) {
+    function playerTurnToAttack(e, player, computer, computerBoard) {
         const formattedCoordinates = formatTarget(e.target.id);
         const coordinatesIndex = Coordinates.convertCoordinatesToIndex(formattedCoordinates);
         const hitSquare = computerBoard.board[coordinatesIndex[0]][coordinatesIndex[1]];
@@ -75,19 +76,35 @@ const Game = (() => {
         }, 2000);
     };
 
-    function playerTurnToAttack(player, computer, computerBoard) {
-        if (player.checkTurn()) {
-            const cpuGridSquares = document.body.querySelectorAll("#opponent-board .square");
-    
-            cpuGridSquares.forEach(square => {
-                square.addEventListener("click", (e) => {
-                    playerAttackHandler(e, player, computer, computerBoard);
-                });
+    function takeTurnsAttacking(player, playerBoard, computer, computerBoard, cpuShips, playerShips) {
+        const cpuGridSquares = document.body.querySelectorAll("#opponent-board .square");
+        
+        cpuGridSquares.forEach(square => {
+            square.addEventListener("click", (e) => {   
+                const formattedCoordinates = formatTarget(e.target.id);
+
+                if (!player.checkTurn()
+                || arrayContainsCoordinates(computerBoard.successfulHits, formattedCoordinates) 
+                || arrayContainsCoordinates(computerBoard.missedAttacks, formattedCoordinates)
+                || computerBoard.allShipsSunk(cpuShips)
+                || playerBoard.allShipsSunk(playerShips)) return;
+
+                playerTurnToAttack(e, player, computer, computerBoard, cpuShips);
+                player.endTurn();
+                computer.startTurn();
+
+                setTimeout(() => {
+                    if (computer.checkTurn()) {
+                        cpuTurnToAttack(computer, player, playerBoard, playerShips);
+                        computer.endTurn();
+                        player.startTurn();
+                    }
+                }, 4000);
             });
-        };
+        });
     };
 
-    return { placeComputerShips, cpuTurnToAttack, playerTurnToAttack };
+    return { placeComputerShips, takeTurnsAttacking };
 })();
 
 module.exports = Game;

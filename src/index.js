@@ -64,7 +64,8 @@ const StartGame = (() => {
     Game.placeComputerShips(computerBoard, allComputerShips);
 
     player.startTurn();
-    Game.playerTurnToAttack(player, computer, computerBoard, allPlayerShips);
-    // computer.startTurn();
-    // Game.cpuTurnToAttack(computer, player, playerBoard);
+    Game.takeTurnsAttacking(
+        player, playerBoard, computer, computerBoard,
+        allComputerShips, allPlayerShips
+    );
 })();
