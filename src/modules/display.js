@@ -43,10 +43,12 @@ const Display = (() => {
     };
 
     function playerAttackMessage(coordinates, player) {
-        const message = player.playerName === "computer" ? cpuMsgBox : playerMsgBox;
-
-        const formattedCoordinates = `${coordinates[1]}${coordinates[0]}`;
-        message.textContent = formattedCoordinates;
+        if (player.playerName === "computer") {
+            const formattedCoordinates = `${coordinates[1]}${coordinates[0]}`;
+            cpuMsgBox.textContent = formattedCoordinates;
+        } else {
+            playerMsgBox.textContent = coordinates;
+        }
     };
 
     function opponentResponse(wasHit, hitTarget, opponent) {
