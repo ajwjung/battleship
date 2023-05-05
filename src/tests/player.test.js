@@ -5,20 +5,24 @@ const Player = require("../modules/player");
 describe("Player", () => {
     test("Players can take turns", () => {
         const player = Player("Bob");
-        const computer = Player("AI");
+        const computer = Player("computer");
         
         player.startTurn();
         expect(player.checkTurn()).toBe(true);
         expect(computer.checkTurn()).toBe(false);
 
-        player.endTurn(computer);
+        player.endTurn();
         expect(player.checkTurn()).toBe(false);
-        expect(computer.checkTurn()).toBe(true);
+        expect(computer.checkTurn()).toBe(false);
+
+        computer.startTurn();
+        expect(computer.myTurn).toBe(true);
+        expect(player.myTurn).toBe(false);
     });
 
     test("Player can attack computer (opponent)", () => {
         const player = Player("Bob");
-        const computer = Player("AI");
+        const computer = Player("computer");
         const destroyer = Ship(3);
         const computerBoard = Gameboard();
         computerBoard.placeShip(destroyer, [4, "B"]);
@@ -40,6 +44,7 @@ describe("Computer", () => {
         // Move must be in missedAttacks
         // Because no ships are placed on playerBoard
         expect(playerBoard.missedAttacks.length).toBe(1);
+        expect(playerBoard.missedAttacks[0]).not.toBe(undefined);
     });
 
     test("Computer's move is legal", () => {
