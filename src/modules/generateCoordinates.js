@@ -9,13 +9,30 @@ const GenerateCoordinates = (() => {
 
         return [row, col];
     };
+      
+    function checkOverlap(takenSpots, ship, row, colIndex) {
+        const requiredSquares = [];
+        let overlap = false;
+    
+        for (let i = 0; i < ship.length; i += 1) {
+            requiredSquares.push([row + i, lettersKey[colIndex]]); // horizontal
+            requiredSquares.push([row, lettersKey[colIndex + i]]); // vertical
+        };
+    
+        requiredSquares.forEach(coordinates => {
+            if (arrayContainsCoordinates(takenSpots, coordinates)) overlap = true;
+        });
+    
+        return overlap;
+    };
 
     function getRandomPlacement(takenSpots, ship) {
         const row = Math.floor(Math.random() * 10) + 1;
         const colIndex = Math.floor(Math.random() * lettersKey.length)
     
         if (row + ship.length > 10 || colIndex + ship.length > 10
-            || arrayContainsCoordinates(takenSpots, [row, lettersKey[colIndex]])) {
+            || arrayContainsCoordinates(takenSpots, [row, lettersKey[colIndex]])
+            || checkOverlap(takenSpots, ship, row, colIndex)) {
             return getRandomPlacement(takenSpots, ship);
         } 
     
