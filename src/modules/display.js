@@ -65,7 +65,7 @@ const Display = (() => {
 
     function updatePeg(coordinates, wasHit, opponent) {
         const formattedCoordinates = `${coordinates[1]}${coordinates[0]}`;
-        const targetSquarePeg = opponent.name !== "computer"
+        const targetSquarePeg = opponent.playerName !== "computer"
         ? document.body.querySelector(
             `#my-board #${formattedCoordinates} > .peg-hole`
         )
@@ -79,8 +79,6 @@ const Display = (() => {
             targetSquarePeg.classList.add("white-miss");
         };
     };
-
-    // playerMsgBox.textContent = "Your turn.";
 
     return { createBoardGrid, playerAttackMessage, opponentResponse, updatePeg };
 })();
