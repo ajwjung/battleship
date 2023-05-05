@@ -38,7 +38,7 @@ const Game = (() => {
         return takenSquares;
     };
 
-    function cpuTurnToAttack(computer, player, playerBoard) {
+    function cpuTurnToAttack(computer, player, playerBoard, playerShips) {
         computer.makeAttack(player, playerBoard);
         Display.playerAttackMessage(playerBoard.lastAttack, computer);
         const coordinatesIndex = Coordinates.convertCoordinatesToIndex(playerBoard.lastAttack);
@@ -49,6 +49,12 @@ const Game = (() => {
         setTimeout(() => {
             Display.updatePeg(playerBoard.lastAttack, playerBoard.wasHit, player);
             cpuMsgBox.textContent = "Your turn.";
+            computer.endTurn();
+            if (playerBoard.allShipsSunk(playerShips)) {
+                Display.displayEndGame("computer");
+            } else {
+                player.startTurn();
+            }
         }, 2000);
     };
 
@@ -60,7 +66,7 @@ const Game = (() => {
         return [row, col];
     };
 
-    function playerTurnToAttack(e, player, computer, computerBoard) {
+    function playerTurnToAttack(e, player, computer, computerBoard, cpuShips) {
         const formattedCoordinates = formatTarget(e.target.id);
         const coordinatesIndex = Coordinates.convertCoordinatesToIndex(formattedCoordinates);
         const hitSquare = computerBoard.board[coordinatesIndex[0]][coordinatesIndex[1]];
@@ -73,6 +79,12 @@ const Game = (() => {
         setTimeout(() => {
             Display.updatePeg(computerBoard.lastAttack, computerBoard.wasHit, computer);
             playerMsgBox.textContent = "Your turn.";
+            player.endTurn();
+            if (computerBoard.allShipsSunk(cpuShips)) {
+                Display.displayEndGame("player");
+            } else {
+                computer.startTurn();
+            };
         }, 2000);
     };
 
@@ -90,14 +102,10 @@ const Game = (() => {
                 || playerBoard.allShipsSunk(playerShips)) return;
 
                 playerTurnToAttack(e, player, computer, computerBoard, cpuShips);
-                player.endTurn();
-                computer.startTurn();
 
                 setTimeout(() => {
                     if (computer.checkTurn()) {
                         cpuTurnToAttack(computer, player, playerBoard, playerShips);
-                        computer.endTurn();
-                        player.startTurn();
                     }
                 }, 4000);
             });

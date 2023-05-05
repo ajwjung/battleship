@@ -82,7 +82,18 @@ const Display = (() => {
         };
     };
 
-    return { createBoardGrid, playerAttackMessage, opponentResponse, updatePeg };
+    function displayEndGame(winner) {
+        if (winner === "computer") {
+            playerMsgBox.textContent = "Congrats, you win!";
+            cpuMsgBox.textContent = ":)";
+        } else {
+            cpuMsgBox.textContent = "Congrats, you beat me!";
+            playerMsgBox.textContent = ":)";
+        };
+    };
+
+    return { createBoardGrid, playerAttackMessage, opponentResponse,
+        updatePeg, displayEndGame };
 })();
 
 module.exports = Display;
