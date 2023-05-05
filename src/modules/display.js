@@ -42,27 +42,35 @@ const Display = (() => {
         };
     };
 
-    function cpuAttackMessage(coordinates) {
+    function playerAttackMessage(coordinates, player) {
+        const message = player.playerName === "computer" ? cpuMsgBox : playerMsgBox;
+
         const formattedCoordinates = `${coordinates[1]}${coordinates[0]}`;
-        cpuMsgBox.textContent = formattedCoordinates;
+        message.textContent = formattedCoordinates;
     };
 
-    function playerResponse(wasHit, hitTarget) {
+    function opponentResponse(wasHit, hitTarget, opponent) {
+        const message = opponent.playerName !== "computer" ? playerMsgBox : cpuMsgBox;
+
         if (hitTarget !== "none") {
             if (wasHit && hitTarget.isSunk()) {
-                playerMsgBox.textContent = "Hit, sunk!";
+                message.textContent = "Hit, sunk!";
             } else if (wasHit) {
-                playerMsgBox.textContent = "Hit!" 
+                message.textContent = "Hit!" 
             };
         } else {
-            playerMsgBox.textContent = "Miss";
+            message.textContent = "Miss";
         };
     };
 
-    function updateCpuPeg(coordinates, wasHit) {
+    function updatePeg(coordinates, wasHit, opponent) {
         const formattedCoordinates = `${coordinates[1]}${coordinates[0]}`;
-        const targetSquarePeg = document.body.querySelector(
+        const targetSquarePeg = opponent.name !== "computer"
+        ? document.body.querySelector(
             `#my-board #${formattedCoordinates} > .peg-hole`
+        )
+        : document.body.querySelector(
+            `#opponent-board #${formattedCoordinates} > .peg-hole`
         );
 
         if (wasHit) {
@@ -72,7 +80,9 @@ const Display = (() => {
         };
     };
 
-    return { createBoardGrid, cpuAttackMessage, playerResponse, updateCpuPeg };
+    // playerMsgBox.textContent = "Your turn.";
+
+    return { createBoardGrid, playerAttackMessage, opponentResponse, updatePeg };
 })();
 
 module.exports = Display;

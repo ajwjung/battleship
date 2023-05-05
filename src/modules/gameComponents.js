@@ -38,14 +38,14 @@ const Game = (() => {
 
     function cpuTurnToAttack(computer, player, playerBoard) {
         computer.makeAttack(player, playerBoard);
-        Display.cpuAttackMessage(playerBoard.lastAttack, playerBoard.wasHit);
+        Display.playerAttackMessage(playerBoard.lastAttack, computer);
         const coordinatesIndex = Coordinates.convertCoordinatesToIndex(playerBoard.lastAttack);
         const hitSquare = playerBoard.board[coordinatesIndex[0]][coordinatesIndex[1]];
         setTimeout(() => {
-            Display.playerResponse(playerBoard.wasHit, hitSquare.ship);
+            Display.opponentResponse(playerBoard.wasHit, hitSquare.ship, player);
         }, 1000);
         setTimeout(() => {
-            Display.updateCpuPeg(playerBoard.lastAttack, playerBoard.wasHit);
+            Display.updatePeg(playerBoard.lastAttack, playerBoard.wasHit, player);
             cpuMsgBox.textContent = "Your turn.";
         }, 2000);
     };
