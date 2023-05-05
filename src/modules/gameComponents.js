@@ -4,6 +4,7 @@ const Display = require("./display");
 
 const Game = (() => {
     const cpuMsgBox = document.getElementById("cpu-text");
+    const playerMsgBox = document.getElementById("player-text");
 
     function getLetter(letter, i) {
         const lettersKey = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
@@ -50,7 +51,43 @@ const Game = (() => {
         }, 2000);
     };
 
-    return { placeComputerShips, cpuTurnToAttack };
+    function formatTarget(target) {
+        const splitString = target.split("");
+        const row = splitString.splice(1).join("");
+        const col = splitString[0];
+    
+        return [row, col];
+    };
+
+    function playerAttackHandler(e, player, computer, computerBoard) {
+        const formattedCoordinates = formatTarget(e.target.id);
+        const coordinatesIndex = Coordinates.convertCoordinatesToIndex(formattedCoordinates);
+        const hitSquare = computerBoard.board[coordinatesIndex[0]][coordinatesIndex[1]];
+
+        player.makeAttack(computer, computerBoard, formattedCoordinates);
+        Display.playerAttackMessage(e.target.id, player);
+        setTimeout(() => {
+            Display.opponentResponse(computerBoard.wasHit, hitSquare.ship, computer);
+        }, 1000);
+        setTimeout(() => {
+            Display.updatePeg(computerBoard.lastAttack, computerBoard.wasHit, computer);
+            playerMsgBox.textContent = "Your turn.";
+        }, 2000);
+    };
+
+    function playerTurnToAttack(player, computer, computerBoard) {
+        if (player.checkTurn()) {
+            const cpuGridSquares = document.body.querySelectorAll("#opponent-board .square");
+    
+            cpuGridSquares.forEach(square => {
+                square.addEventListener("click", (e) => {
+                    playerAttackHandler(e, player, computer, computerBoard);
+                });
+            });
+        };
+    };
+
+    return { placeComputerShips, cpuTurnToAttack, playerTurnToAttack };
 })();
 
 module.exports = Game;
