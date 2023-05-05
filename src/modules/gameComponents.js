@@ -3,6 +3,8 @@ const GenerateCoordinates = require("./generateCoordinates");
 const Display = require("./display");
 
 const Game = (() => {
+    const cpuMsgBox = document.getElementById("cpu-text");
+
     function getLetter(letter, i) {
         const lettersKey = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
         return lettersKey[lettersKey.indexOf(letter) + i];
@@ -44,6 +46,7 @@ const Game = (() => {
         }, 1000);
         setTimeout(() => {
             Display.updateCpuPeg(playerBoard.lastAttack, playerBoard.wasHit);
+            cpuMsgBox.textContent = "Your turn.";
         }, 2000);
     };
 
