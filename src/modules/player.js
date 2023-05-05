@@ -8,26 +8,24 @@ const Player = ((playerName) => ({
             this.myTurn = true;
         }
     },
-    endTurn(opponent) {
+    endTurn() {
         if (this.checkTurn()) {
             this.myTurn = false;
-            opponent.startTurn();
         }
     },
     checkTurn() {
         return this.myTurn;
     },
-    makeAttack(opponent, opponentBoard, coordinates) {
+    makeAttack(opponent, opponentBoard, coordinates = []) {
         if (this.checkTurn()) {
-            if (!coordinates) {
+            if (opponent.playerName !== "computer" && coordinates.length === 0) {
                 const randomCoordinates = GenerateCoordinates.getUnusedCoordinates(
                     opponentBoard.successfulHits, opponentBoard.missedAttacks
-                );
+                    );
                 opponentBoard.receiveAttack(randomCoordinates);
             } else {
                 opponentBoard.receiveAttack(coordinates);
             };
-            this.endTurn(opponent);
         }
     }
 }));
