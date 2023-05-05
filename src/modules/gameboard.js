@@ -23,8 +23,6 @@ const Gameboard = (() => {
         missedAttacks: [],
         placeShip(boat, coordinates) {
             const [row, col] = Coordinates.convertCoordinatesToIndex(coordinates);
-
-            if (row + boat.length > 10) return "Invalid placement";
             board[row][col].ship = boat;
         },
         receiveAttack(coordinates) {
