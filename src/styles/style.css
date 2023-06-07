@@ -91,10 +91,17 @@ h1 {
 }
 
 /* Styles for Gameboards*/
-.board,
-.left-panel {
+.board {
     display: flex;
     align-items: center;
+}
+
+.left-panel,
+.left-ships,
+.right-ships {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .main-grid {
@@ -125,7 +132,6 @@ h1 {
 .right-panel {
     height: 480px;
     width: 170px;
-    justify-content: center;
     border: var(--border);
     background: var(--blue);
 }
@@ -139,7 +145,8 @@ h1 {
 
 .left-ships,
 .right-ships {
-    height: 80%;
+    flex-direction: column;
+    height: 100%;
     width: 35%;
 }
 
@@ -147,24 +154,24 @@ h1 {
 .right-ships > * {
     border: 2px solid;
     margin: 1rem 0;
-    width: 100%;
+    width: 45px;
 }
 
 .carrier {
-    height: 60%;
+    height: 225px;
 }
 
 .battleship {
-    height: 40%;
+    height: 180px;
 }
 
 .destroyer,
 .submarine {
-    height: 30%;
+    height: 135px;
 }
 
 .patrol {
-    height: 15%;
+    height: 90px;
 }
 
 .highlight {
