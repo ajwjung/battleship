@@ -112,6 +112,7 @@ h1 {
     width: 20px;
     border-radius: 50%;
     border: 5px solid var(--grid-outline);
+    position: absolute;
     z-index: 10;
 }
 
@@ -150,7 +151,7 @@ h1 {
     cursor: pointer;
 }
 
-.ship {
+.vertical {
     align-self: flex-start;
 }
 
@@ -184,12 +185,6 @@ h1 {
     height: 88px;
     width: 45px;
     background: blue;
-}
-
-/* Places peg holes on top of ship blocks */
-.ship-under,
-.peg-hole {
-    position: absolute;
 }
 
 .left-panel,
