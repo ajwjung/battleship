@@ -96,13 +96,8 @@ h1 {
 .left-ships,
 .right-ships {
     display: flex;
-    align-items: center;
-}
-
-.left-panel,
-.left-ships,
-.right-ships {
     justify-content: center;
+    align-items: center;
 }
 
 .main-grid {
@@ -148,7 +143,6 @@ h1 {
 .right-ships > * {
     border: 2px solid;
     margin: 1rem 0;
-    width: 45px;
 }
 
 #my-ships > .left-ships > *,
@@ -162,17 +156,20 @@ h1 {
 
 .carrier {
     height: 225px;
+    width: 45px;
     background: red;
 }
 
 .battleship {
     height: 180px;
+    width: 45px;
     background: purple;
 }
 
 .destroyer,
 .submarine {
     height: 135px;
+    width: 45px;
 }
 
 .destroyer {
@@ -185,6 +182,7 @@ h1 {
 
 .patrol {
     height: 90px;
+    width: 45px;
     background: blue;
 }
 
@@ -256,6 +254,7 @@ h1 {
     font-weight: 600;
     font-size: var(--font-size);
     color: var(--grid-text);
+    position: relative;
 }
 
 /* Adds right border to all but last col (col "J")  */
