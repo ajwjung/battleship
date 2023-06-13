@@ -30,6 +30,8 @@ const StartGame = (() => {
         playerCarrier, playerBattleship, playerDestroyer,
         playerSubmarine, playerPatrol
     ];
+
+    // Manually place player's ships for now just to test the game
     playerBoard.placeShip(playerCarrier, [4, "A"]);
     playerBoard.placeShip(playerCarrier, [4, "B"]);
     playerBoard.placeShip(playerCarrier, [4, "C"]);
@@ -61,11 +63,59 @@ const StartGame = (() => {
         computerCarrier, computerBattleship, computerDestroyer,
         computerSubmarine, computerPatrol
     ];
+
+    // Randomly place computer's ships
     Game.placeComputerShips(computerBoard, allComputerShips);
 
+    // Game starts with player going first
     player.startTurn();
     Game.takeTurnsAttacking(
         player, playerBoard, computer, computerBoard,
         allComputerShips, allPlayerShips
     );
+
+    // Drag-drop player ships (WIP)
+    const ships = document.querySelectorAll(".ship");
+    const squares = document.body.querySelectorAll("#my-board .square:not(.legend)");
+
+    // drag/drop stuff
+    function dragStart(e) {
+        e.dataTransfer.clearData();
+        e.dataTransfer.setData("text", e.target.classList[1]);
+    }
+
+    function dragOver(e) {
+        e.preventDefault();
+    }
+
+    function dragEnter(e) {
+        e.preventDefault();
+        if(e.target.classList.contains("square")) e.target.classList.add("hover");
+    }
+
+    // possibly not working
+    function dragLeave(e) {
+        if (e.target.classList.contains("square")) e.target.classList.remove("hover");
+    }
+
+    function dragDrop(e) {
+        const shipData = e.dataTransfer.getData("text");
+        const ship = document.querySelector(`.ship.${shipData}`);
+        if (e.target.classList.contains("square")) {
+            e.target.appendChild(ship);
+            e.target.classList.remove("hover");
+        };
+        ship.classList.add("ship-under");
+    }
+    
+    ships.forEach(ship => {
+        ship.addEventListener("dragstart", e => dragStart(e));
+        ship.addEventListener("dragend", null);
+    });
+    squares.forEach(square => {
+        square.addEventListener("dragover", e => dragOver(e));
+        square.addEventListener("dragenter", e => dragEnter(e));
+        square.addEventListener("dragleave", e => dragLeave(e));
+        square.addEventListener("drop", e => dragDrop(e));
+    });
 })();
