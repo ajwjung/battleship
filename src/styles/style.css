@@ -151,8 +151,14 @@ h1 {
     cursor: pointer;
 }
 
+/* Align ships individually based on orientation */
+.horizontal {
+    position: absolute;
+}
+
 .vertical {
     align-self: flex-start;
+    position: absolute;
 }
 
 .carrier {

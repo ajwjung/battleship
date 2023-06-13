@@ -84,6 +84,13 @@ const StartGame = (() => {
         e.target.style.transform = `rotate(${angle}deg)`;
     }
 
+    function getHorizontalOffset(div) {
+        const divWidth = div.getBoundingClientRect().width;
+        const divLength = (divWidth + 2) / 45;
+        
+        return 22 * (divLength - 1);         
+    }
+
     function dragStart(e) {
         e.dataTransfer.clearData();
         e.dataTransfer.setData("text", e.target.classList[1]);
@@ -106,9 +113,15 @@ const StartGame = (() => {
         const shipData = e.dataTransfer.getData("text");
         const ship = document.querySelector(`.ship.${shipData}`);
         if (e.target.classList.contains("square")) {
+            e.target.appendChild(ship);
+            e.target.classList.remove("hover");
+
             if (angle === 90) {
                 if (ship.classList.contains("vertical")) ship.classList.remove("vertical");
                 ship.classList.add("horizontal");
+                // Offset ships to start in correct square
+                const offsetX = getHorizontalOffset(ship);
+                ship.style.left = `${offsetX}px`;
             } else {
                 if (ship.classList.contains("horizontal")) ship.classList.remove("horizontal");
                 ship.classList.add("vertical");
