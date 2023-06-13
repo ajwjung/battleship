@@ -79,7 +79,7 @@ const StartGame = (() => {
     const squares = document.body.querySelectorAll("#my-board .square:not(.legend)");
     let angle = 0;
 
-    function rotateShip(e) {
+    function rotateShip(e) {      
         angle = angle === 0 ? 90 : 0;
         e.target.style.transform = `rotate(${angle}deg)`;
     }
@@ -129,6 +129,7 @@ const StartGame = (() => {
 
             e.target.appendChild(ship);
             e.target.classList.remove("hover");
+            angle = 0;
         };
     }
     
