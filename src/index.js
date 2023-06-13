@@ -74,11 +74,16 @@ const StartGame = (() => {
         allComputerShips, allPlayerShips
     );
 
-    // Drag-drop player ships (WIP)
+    // Drag-drop player ships
     const ships = document.querySelectorAll(".ship");
     const squares = document.body.querySelectorAll("#my-board .square:not(.legend)");
+    let angle = 0;
 
-    // drag/drop stuff
+    function rotateShip(e) {
+        angle = angle === 0 ? 90 : 0;
+        e.target.style.transform = `rotate(${angle}deg)`;
+    }
+
     function dragStart(e) {
         e.dataTransfer.clearData();
         e.dataTransfer.setData("text", e.target.classList[1]);
@@ -93,7 +98,6 @@ const StartGame = (() => {
         if(e.target.classList.contains("square")) e.target.classList.add("hover");
     }
 
-    // possibly not working
     function dragLeave(e) {
         if (e.target.classList.contains("square")) e.target.classList.remove("hover");
     }
@@ -102,13 +106,21 @@ const StartGame = (() => {
         const shipData = e.dataTransfer.getData("text");
         const ship = document.querySelector(`.ship.${shipData}`);
         if (e.target.classList.contains("square")) {
+            if (angle === 90) {
+                if (ship.classList.contains("vertical")) ship.classList.remove("vertical");
+                ship.classList.add("horizontal");
+            } else {
+                if (ship.classList.contains("horizontal")) ship.classList.remove("horizontal");
+                ship.classList.add("vertical");
+            }
+
             e.target.appendChild(ship);
             e.target.classList.remove("hover");
         };
-        ship.classList.add("ship-under");
     }
     
     ships.forEach(ship => {
+        ship.addEventListener("click", e => rotateShip(e));
         ship.addEventListener("dragstart", e => dragStart(e));
         ship.addEventListener("dragend", null);
     });
