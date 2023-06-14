@@ -80,6 +80,7 @@ const StartGame = (() => {
     const squares = document.body.querySelectorAll("#my-board .square:not(.legend)");
     let angle = 0;
     let lastClickArea;
+    let lastDroppedShip;
 
     function getShipLength(dimension) {
         return (dimension + 2) / 45;
@@ -109,7 +110,9 @@ const StartGame = (() => {
     }
 
     function rotateShip(e) {
-        const currentClick = e.target.parentElement.parentElement.id || e.target.parentElement.className;
+        // Reset angle in case player rotates a ship from dock
+        // After just rotating a ship in the grid
+        const currentClick = e.target.parentElement.parentElement.id;
         if (lastClickArea === "grid" && currentClick === "my-ships") angle = 0;
 
         if (e.target.classList.contains("vertical")) {
@@ -133,7 +136,9 @@ const StartGame = (() => {
     }
 
     function dragStart(e) {
-        const currentClick = e.target.parentElement.parentElement.id || e.target.parentElement.className;
+        // Reset angle in case player drags a ship from dock
+        // After just rotating a ship in the grid
+        const currentClick = e.target.parentElement.parentElement.id;
         if (lastClickArea === "grid" && currentClick === "my-ships") angle = 0;
 
         e.dataTransfer.clearData();
@@ -161,15 +166,17 @@ const StartGame = (() => {
 
         if (e.target.classList.contains("square")) {
             if (angle === 90 && checkWithinBounds(e.target.id, getShipLength(shipWidth))) {
+                if (lastDroppedShip === ship) angle = 0;
                 if (ship.classList.contains("vertical")) ship.classList.remove("vertical");
                 addHorizontalStyles(ship, shipWidth);
                 e.target.append(ship);
-                angle = 0;
+                lastDroppedShip = ship;
             } else if (angle === 0 && checkWithinBounds(e.target.id, getShipLength(shipHeight))) {
+                if (lastDroppedShip === ship) angle = 0;
                 if (ship.classList.contains("horizontal")) ship.classList.remove("horizontal");
                 addVerticalStyles(ship);
                 e.target.appendChild(ship);
-                angle = 0;
+                lastDroppedShip = ship;
             }
         };
 
