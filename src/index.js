@@ -79,6 +79,7 @@ const StartGame = (() => {
     const ships = document.querySelectorAll(".ship");
     const squares = document.body.querySelectorAll("#my-board .square:not(.legend)");
     let angle = 0;
+    let lastClickArea;
 
     function getShipLength(dimension) {
         return (dimension + 2) / 45;
@@ -108,26 +109,33 @@ const StartGame = (() => {
     }
 
     function rotateShip(e) {
+        const currentClick = e.target.parentElement.parentElement.id || e.target.parentElement.className;
+        if (lastClickArea === "grid" && currentClick === "my-ships") angle = 0;
+
         if (e.target.classList.contains("vertical")) {
             e.target.classList.remove("vertical");
             angle = 90;
             e.target.style.transform = `rotate(${angle}deg)`;
             const shipWidth = e.target.getBoundingClientRect().width;
             addHorizontalStyles(e.target, shipWidth);
+            lastClickArea = "grid";
         } else if (e.target.classList.contains("horizontal")) {
             e.target.classList.remove("horizontal");
             addVerticalStyles(e.target);
             angle = 0;
             e.target.style.transform = `rotate(${angle}deg)`;
-        } else if (e.target.parentElement.parentElement.id === "my-ships") {
+            lastClickArea = "grid";
+        } else {
             angle = angle === 0 ? 90 : 0;
             e.target.style.transform = `rotate(${angle}deg)`;
+            lastClickArea = "my-ships";
         }
-        
-        console.log(angle);
     }
 
     function dragStart(e) {
+        const currentClick = e.target.parentElement.parentElement.id || e.target.parentElement.className;
+        if (lastClickArea === "grid" && currentClick === "my-ships") angle = 0;
+
         e.dataTransfer.clearData();
         e.dataTransfer.setData("text", e.target.classList[1]);
     }
