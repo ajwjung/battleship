@@ -93,6 +93,13 @@ const StartGame = (() => {
         return 22 * (getShipLength(dimension) - 1);         
     }
 
+    function checkWithinBounds(coordinates, shipLength) {
+        const coords = [coordinates[1], coordinates[0]];
+        const [row, col] = convertCoordinatesToIndex(coords); // 0-based indexes
+
+        return angle === 0 ? row + Math.round(shipLength) <= 10 : col + Math.round(shipLength) <= 10
+    }
+
     function dragStart(e) {
         e.dataTransfer.clearData();
         e.dataTransfer.setData("text", e.target.classList[1]);
@@ -114,25 +121,27 @@ const StartGame = (() => {
     function dragDrop(e) {
         const shipData = e.dataTransfer.getData("text");
         const ship = document.querySelector(`.ship.${shipData}`);
-        if (e.target.classList.contains("square")) {
-            e.target.appendChild(ship);
-            e.target.classList.remove("hover");
+        const shipHeight = ship.getBoundingClientRect().height;
+        const shipWidth = ship.getBoundingClientRect().width;
 
-            if (angle === 90) {
+        if (e.target.classList.contains("square")) {
+            if (angle === 90 && checkWithinBounds(e.target.id, getShipLength(shipWidth))) {
                 if (ship.classList.contains("vertical")) ship.classList.remove("vertical");
                 ship.classList.add("horizontal");
                 // Offset ships to start in correct square
-                const offsetX = getHorizontalOffset(ship.getBoundingClientRect().width);
+                const offsetX = getHorizontalOffset(shipWidth);
                 ship.style.left = `${offsetX}px`;
-            } else {
+                e.target.appendChild(ship);
+                angle = 0;
+            } else if (angle === 0 && checkWithinBounds(e.target.id, getShipLength(shipHeight))) {
                 if (ship.classList.contains("horizontal")) ship.classList.remove("horizontal");
                 ship.classList.add("vertical");
+                e.target.appendChild(ship);
+                angle = 0;
             }
-
-            e.target.appendChild(ship);
-            e.target.classList.remove("hover");
-            angle = 0;
         };
+
+        e.target.classList.remove("hover");
     }
     
     ships.forEach(ship => {
