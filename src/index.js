@@ -1,3 +1,4 @@
+import { convertCoordinatesToIndex } from "./modules/convertCoordinates";
 import "./styles/style.css";
 
 const Ship = require("./modules/ship");
@@ -84,11 +85,12 @@ const StartGame = (() => {
         e.target.style.transform = `rotate(${angle}deg)`;
     }
 
-    function getHorizontalOffset(div) {
-        const divWidth = div.getBoundingClientRect().width;
-        const divLength = (divWidth + 2) / 45;
-        
-        return 22 * (divLength - 1);         
+    function getShipLength(dimension) {
+        return (dimension + 2) / 45;
+    }
+
+    function getHorizontalOffset(dimension) {
+        return 22 * (getShipLength(dimension) - 1);         
     }
 
     function dragStart(e) {
@@ -120,7 +122,7 @@ const StartGame = (() => {
                 if (ship.classList.contains("vertical")) ship.classList.remove("vertical");
                 ship.classList.add("horizontal");
                 // Offset ships to start in correct square
-                const offsetX = getHorizontalOffset(ship);
+                const offsetX = getHorizontalOffset(ship.getBoundingClientRect().width);
                 ship.style.left = `${offsetX}px`;
             } else {
                 if (ship.classList.contains("horizontal")) ship.classList.remove("horizontal");
