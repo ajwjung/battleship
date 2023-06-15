@@ -110,10 +110,13 @@ const StartGame = (() => {
     }
 
     function rotateShip(e) {
-        // Reset angle in case player rotates a ship from dock
-        // After just rotating a ship in the grid
+        // Reset angle if player rotates a new ship
+        // After just dropping an already-rotated ship
+        // And if player rotates a new ship after rotating a placed ship
+        if (!lastClickArea) lastClickArea = e.target.parentElement.parentElement.id;
         const currentClick = e.target.parentElement.parentElement.id;
         if (lastClickArea === "grid" && currentClick === "my-ships") angle = 0;
+        if (lastDroppedShip !== e.target) angle = 0;
 
         if (e.target.classList.contains("vertical")) {
             e.target.classList.remove("vertical");
