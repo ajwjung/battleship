@@ -78,33 +78,14 @@ const StartGame = (() => {
     // Drag-drop player ships
     const ships = document.querySelectorAll(".ship");
     const squares = document.body.querySelectorAll("#my-board .square:not(.legend)");
-    const angle = 0;
 
-    function getShipLength(dimension) {
-        return (dimension + 2) / 45;
+    function hasVerticalClass(ship) {
+        return ship.classList.contains("vertical");
     }
 
-    function getHorizontalOffset(dimension) {
-        return 22 * (getShipLength(dimension) - 1);         
-    }
-
-    function addHorizontalStyles(ship, shipWidth) {
-        ship.classList.add("horizontal");
-        // Offset ships to start in correct square
-        const offsetX = getHorizontalOffset(shipWidth);
-        ship.style.left = `${offsetX}px`;
-    }
-
-    function addVerticalStyles(ship) {
+    function addVerticalStyle(ship) {
         ship.classList.add("vertical");
         ship.style.left = "";
-    }
-
-    function checkWithinBounds(coordinates, shipLength) {
-        const coords = [coordinates[1], coordinates[0]];
-        const [row, col] = convertCoordinatesToIndex(coords); // 0-based indexes
-        
-        return angle === 0 ? row + Math.round(shipLength) <= 10 : col + Math.round(shipLength) <= 10
     }
 
     function dragStart(e) {
@@ -132,19 +113,13 @@ const StartGame = (() => {
         const shipWidth = ship.getBoundingClientRect().width;
 
         if (e.target.classList.contains("square")) {
-            if (angle === 90 && checkWithinBounds(e.target.id, getShipLength(shipWidth))) {
-                if (ship.classList.contains("vertical")) ship.classList.remove("vertical");
-                addHorizontalStyles(ship, shipWidth);
+            if (!hasVerticalClass(ship)) {
+                addVerticalStyle(ship);
                 e.target.append(ship);
-            } else if (angle === 0 && checkWithinBounds(e.target.id, getShipLength(shipHeight))) {
-                if (ship.classList.contains("horizontal")) ship.classList.remove("horizontal");
-                addVerticalStyles(ship);
-                e.target.appendChild(ship);
             }
         };
 
         e.target.classList.remove("hover");
-        console.log("After drag/drop:", angle)
     }
     
     ships.forEach(ship => {
