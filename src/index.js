@@ -110,13 +110,16 @@ const StartGame = (() => {
     }
 
     function rotateShip(e) {
+        console.log("On rotate, before reset:", angle);
         // Reset angle if player rotates a new ship
         // After just dropping an already-rotated ship
         // And if player rotates a new ship after rotating a placed ship
         if (!lastClickArea) lastClickArea = e.target.parentElement.parentElement.id;
         const currentClick = e.target.parentElement.parentElement.id;
         if (lastClickArea === "grid" && currentClick === "my-ships") angle = 0;
-        if (lastDroppedShip !== e.target) angle = 0;
+        if (lastDroppedShip !== e.target) angle = 0; // faulty logic here
+
+        console.log("On rotate, after reset:", angle)
 
         if (e.target.classList.contains("vertical")) {
             e.target.classList.remove("vertical");
@@ -139,6 +142,7 @@ const StartGame = (() => {
     }
 
     function dragStart(e) {
+        console.log("Drag start:", angle)
         // Reset angle in case player drags a ship from dock
         // After just rotating a ship in the grid
         const currentClick = e.target.parentElement.parentElement.id;
@@ -184,6 +188,7 @@ const StartGame = (() => {
         };
 
         e.target.classList.remove("hover");
+        console.log("After drag/drop:", angle)
     }
     
     ships.forEach(ship => {

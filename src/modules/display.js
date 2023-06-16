@@ -42,6 +42,8 @@ const Display = (() => {
         };
     };
 
+    // Initial message - player calling out coordinates
+    // Update respective player's message box
     function playerAttackMessage(coordinates, player) {
         if (player.playerName === "computer") {
             const formattedCoordinates = `${coordinates[1]}${coordinates[0]}`;
@@ -51,6 +53,8 @@ const Display = (() => {
         }
     };
 
+    // Opponent that got hit responds hit/miss
+    // Update respective player's message box
     function opponentResponse(wasHit, hitTarget, opponent) {
         const message = opponent.playerName !== "computer" ? playerMsgBox : cpuMsgBox;
 
@@ -65,6 +69,8 @@ const Display = (() => {
         };
     };
 
+    // Board of opponent that got hit updates
+    // Peg hole changes to red (hit) or white (miss)
     function updatePeg(coordinates, wasHit, opponent) {
         const formattedCoordinates = `${coordinates[1]}${coordinates[0]}`;
         const targetSquarePeg = opponent.playerName !== "computer"
@@ -82,6 +88,7 @@ const Display = (() => {
         };
     };
 
+    // Congratulate winner
     function displayEndGame(winner) {
         if (winner === "computer") {
             playerMsgBox.textContent = "Congrats, you win!";

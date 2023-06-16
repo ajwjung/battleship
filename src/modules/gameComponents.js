@@ -16,10 +16,17 @@ const Game = (() => {
         const takenSquares = [];
         
         allShips.forEach(ship => {
+            // Get a set of coordinates that's available to place ship
+            // Randomly decide if ship should be horizontal or vertical placement
             const [x, y] = GenerateCoordinates.getRandomPlacement(takenSquares, ship); // [1, "A"] format
             const randomBoolean = Math.random() < 0.5;
             const isHorizontal = randomBoolean;
 
+            // Based on the randomly generated coordinate,
+            // Place ship along its length (horizontally or vertically)
+            // And push it to the `taken squares` array so we know what's taken
+            // Also highlight the squares on the board
+            // E.g., [x, y] = [4, "A"] then if horizontal, we'll place the ship on [4, "A/B/C/D"]
             for (let i = 0; i < ship.length; i += 1) {
                 if (isHorizontal) {
                     computerGameboard.placeShip(ship, [x + i, y]);
@@ -38,6 +45,13 @@ const Game = (() => {
         return takenSquares;
     };
 
+    // CPU makes a random attack (we don't pass coordinates bc it's randomly generated)
+    // CPU calls out the coordinates - displayed
+    // Display opponent's response (hit/miss)
+    // Update CPU's board's peg
+    // End CPU's turn
+    // If end game, display congratulations
+    // If not, then start opponent player's turn
     function cpuTurnToAttack(computer, player, playerBoard, playerShips) {
         computer.makeAttack(player, playerBoard);
         Display.playerAttackMessage(playerBoard.lastAttack, computer);
@@ -58,6 +72,8 @@ const Game = (() => {
         }, 2000);
     };
 
+    // Function to format player's target square (coordinates)
+    // E.g., "A3" >> [3, "A"]
     function formatTarget(target) {
         const splitString = target.split("");
         const row = splitString.splice(1).join("");
@@ -66,6 +82,13 @@ const Game = (() => {
         return [row, col];
     };
 
+    // Player makes attack based on square clicked
+    // Player calls out the coordinates - displayed
+    // Display opponent's response (hit/miss)
+    // Update player's board's peg
+    // End player's turn
+    // If end game, display congratulations
+    // If not, then start opponent player's turn
     function playerTurnToAttack(e, player, computer, computerBoard, cpuShips) {
         const formattedCoordinates = formatTarget(e.target.id);
         const coordinatesIndex = Coordinates.convertCoordinatesToIndex(formattedCoordinates);
@@ -88,6 +111,12 @@ const Game = (() => {
         }, 2000);
     };
 
+    // Players (automatically) take turns attacking until end game
+    // Add event listener on all of CPU's grid squares
+    // If it's not player's turn, or the square player clicked has already been attacked before,
+    // or all of player's ships have sunk, then do nothing
+    // Otherwise player makes an attack, then computer makes an attack
+    // And they keep going until end game (which is checked in each player's `turnToAttack()` functions)
     function takeTurnsAttacking(player, playerBoard, computer, computerBoard, cpuShips, playerShips) {
         const cpuGridSquares = document.body.querySelectorAll("#opponent-board .square");
         
