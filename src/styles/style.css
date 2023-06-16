@@ -146,8 +146,7 @@ h1 {
     margin: 1rem 0;
 }
 
-#my-ships > .left-ships > *,
-#my-ships > .right-ships > * {
+.ship {
     cursor: pointer;
 }
 
