@@ -78,6 +78,7 @@ const StartGame = (() => {
     // Drag-drop player ships
     const ships = document.querySelectorAll(".ship");
     const squares = document.body.querySelectorAll("#my-board .square:not(.legend)");
+    let angle = 0;
 
     function hasVerticalClass(ship) {
         return ship.classList.contains("vertical");
@@ -90,6 +91,11 @@ const StartGame = (() => {
 
     function getShipLength(dimension) {
         return Math.round((dimension + 2) / 45);
+    }
+
+    function rotateShip(e) {
+        angle = angle === 0 ? 90 : 0;
+        e.target.style.transform = `rotate(${angle}deg)`;
     }
 
     function checkOutOfBoundsVertical(squareId, shipHeight) {
@@ -169,6 +175,7 @@ const StartGame = (() => {
     }
     
     ships.forEach(ship => {
+        ship.addEventListener("click", e => rotateShip(e));
         ship.addEventListener("dragstart", e => dragStart(e));
         ship.addEventListener("dragend", null);
     });
