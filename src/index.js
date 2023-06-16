@@ -106,6 +106,26 @@ const StartGame = (() => {
         return row - 1 + shipLength <= 10;
     }
 
+    // For vertical orientation only at this time
+    function getAdjacentSquares(squareId, shipHeight) {
+        const shipLength = getShipLength(shipHeight);
+        const [col, row] = [squareId.charAt(0), Number(squareId.slice(1))];
+        const requiredSquares = [];
+
+        for (let i = 0; i < shipLength; i += 1) {
+            const targetSquare = document.getElementById(`${col}${row + i}`);
+            requiredSquares.push(targetSquare);
+        }
+
+        return requiredSquares;
+    }
+
+    // For vertical orientation only at this time
+    function checkSquaresTaken(requiredSquares) {
+        // Checks whether at least one square has `.taken` class
+        return requiredSquares.some(square => square.classList.contains("taken"));
+    }
+
     function dragStart(e) {
         e.dataTransfer.clearData();
         e.dataTransfer.setData("text", e.target.classList[1]);
@@ -131,9 +151,17 @@ const StartGame = (() => {
         const shipWidth = ship.getBoundingClientRect().width;
 
         if (e.target.classList.contains("square")) {
-            if (!hasVerticalClass(ship) && checkOutOfBoundsVertical(e.target.id, shipHeight)) {
+            const adjacentSquares = getAdjacentSquares(e.target.id, shipHeight);
+
+            // For first time drop only (no rotation either)
+            if (!hasVerticalClass(ship) && checkOutOfBoundsVertical(e.target.id, shipHeight) && !checkSquaresTaken(adjacentSquares)) {
                 addVerticalStyle(ship);
                 e.target.append(ship);
+                adjacentSquares.forEach(square => {
+                    const shipName = ship.classList[1]
+                    square.classList.add(`my-${shipName}`)
+                    square.classList.add("taken");
+                })
             }
         };
 
