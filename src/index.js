@@ -78,9 +78,7 @@ const StartGame = (() => {
     // Drag-drop player ships
     const ships = document.querySelectorAll(".ship");
     const squares = document.body.querySelectorAll("#my-board .square:not(.legend)");
-    let angle = 0;
-    let lastClickArea;
-    let lastDroppedShip;
+    const angle = 0;
 
     function getShipLength(dimension) {
         return (dimension + 2) / 45;
@@ -109,45 +107,7 @@ const StartGame = (() => {
         return angle === 0 ? row + Math.round(shipLength) <= 10 : col + Math.round(shipLength) <= 10
     }
 
-    function rotateShip(e) {
-        console.log("On rotate, before reset:", angle);
-        // Reset angle if player rotates a new ship
-        // After just dropping an already-rotated ship
-        // And if player rotates a new ship after rotating a placed ship
-        if (!lastClickArea) lastClickArea = e.target.parentElement.parentElement.id;
-        const currentClick = e.target.parentElement.parentElement.id;
-        if (lastClickArea === "grid" && currentClick === "my-ships") angle = 0;
-        if (lastDroppedShip !== e.target) angle = 0; // faulty logic here
-
-        console.log("On rotate, after reset:", angle)
-
-        if (e.target.classList.contains("vertical")) {
-            e.target.classList.remove("vertical");
-            angle = 90;
-            e.target.style.transform = `rotate(${angle}deg)`;
-            const shipWidth = e.target.getBoundingClientRect().width;
-            addHorizontalStyles(e.target, shipWidth);
-            lastClickArea = "grid";
-        } else if (e.target.classList.contains("horizontal")) {
-            e.target.classList.remove("horizontal");
-            addVerticalStyles(e.target);
-            angle = 0;
-            e.target.style.transform = `rotate(${angle}deg)`;
-            lastClickArea = "grid";
-        } else {
-            angle = angle === 0 ? 90 : 0;
-            e.target.style.transform = `rotate(${angle}deg)`;
-            lastClickArea = "my-ships";
-        }
-    }
-
     function dragStart(e) {
-        console.log("Drag start:", angle)
-        // Reset angle in case player drags a ship from dock
-        // After just rotating a ship in the grid
-        const currentClick = e.target.parentElement.parentElement.id;
-        if (lastClickArea === "grid" && currentClick === "my-ships") angle = 0;
-
         e.dataTransfer.clearData();
         e.dataTransfer.setData("text", e.target.classList[1]);
     }
@@ -173,17 +133,13 @@ const StartGame = (() => {
 
         if (e.target.classList.contains("square")) {
             if (angle === 90 && checkWithinBounds(e.target.id, getShipLength(shipWidth))) {
-                if (lastDroppedShip === ship) angle = 0;
                 if (ship.classList.contains("vertical")) ship.classList.remove("vertical");
                 addHorizontalStyles(ship, shipWidth);
                 e.target.append(ship);
-                lastDroppedShip = ship;
             } else if (angle === 0 && checkWithinBounds(e.target.id, getShipLength(shipHeight))) {
-                if (lastDroppedShip === ship) angle = 0;
                 if (ship.classList.contains("horizontal")) ship.classList.remove("horizontal");
                 addVerticalStyles(ship);
                 e.target.appendChild(ship);
-                lastDroppedShip = ship;
             }
         };
 
@@ -192,7 +148,6 @@ const StartGame = (() => {
     }
     
     ships.forEach(ship => {
-        ship.addEventListener("click", e => rotateShip(e));
         ship.addEventListener("dragstart", e => dragStart(e));
         ship.addEventListener("dragend", null);
     });
