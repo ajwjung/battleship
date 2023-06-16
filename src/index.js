@@ -1,4 +1,4 @@
-import { convertCoordinatesToIndex } from "./modules/convertCoordinates";
+import { convertCoordinatesToIndex, convertLetterToNumber } from "./modules/convertCoordinates";
 import "./styles/style.css";
 
 const Ship = require("./modules/ship");
@@ -88,6 +88,24 @@ const StartGame = (() => {
         ship.style.left = "";
     }
 
+    function getShipLength(dimension) {
+        return Math.round((dimension + 2) / 45);
+    }
+
+    function checkOutOfBoundsVertical(squareId, shipHeight) {
+        /* 
+        Subtract 1 from row because adding the ship length
+        assumes we're starting from the next cell 
+            - E.g., A ship of length 4 placed on A7 occupies A7-10
+                    but the calculation (7 + 4) would assume
+                    we're taking up one extra square
+        */ 
+        const row = squareId.slice(1);
+        const shipLength = getShipLength(shipHeight);
+
+        return row - 1 + shipLength <= 10;
+    }
+
     function dragStart(e) {
         e.dataTransfer.clearData();
         e.dataTransfer.setData("text", e.target.classList[1]);
@@ -113,7 +131,7 @@ const StartGame = (() => {
         const shipWidth = ship.getBoundingClientRect().width;
 
         if (e.target.classList.contains("square")) {
-            if (!hasVerticalClass(ship)) {
+            if (!hasVerticalClass(ship) && checkOutOfBoundsVertical(e.target.id, shipHeight)) {
                 addVerticalStyle(ship);
                 e.target.append(ship);
             }
