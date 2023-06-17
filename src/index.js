@@ -1,4 +1,3 @@
-import { convertCoordinatesToIndex, convertLetterToNumber } from "./modules/convertCoordinates";
 import "./styles/style.css";
 
 const Ship = require("./modules/ship");
@@ -6,6 +5,7 @@ const Gameboard = require("./modules/gameboard");
 const Player = require("./modules/player");
 const Display = require("./modules/display");
 const Game = require("./modules/gameComponents");
+const Coordinates = require("./modules/convertCoordinates");
 
 const StartGame = (() => {
     // Game setup
@@ -126,7 +126,7 @@ const StartGame = (() => {
 
     function checkOutOfBoundsHorizontal(squareId, shipWidth) {
         const col = squareId.charAt(0);
-        const colCoordinate = Number(convertLetterToNumber(col));
+        const colCoordinate = Number(Coordinates.convertLetterToNumber(col));
         const shipLength = getShipLength(shipWidth);
 
         return colCoordinate - 1 + shipLength <= 10;
@@ -172,6 +172,19 @@ const StartGame = (() => {
         return requiredSquares.some(square => square.classList.contains("taken"));
     }
 
+    function isValidDrop(squareId, dimension, adjacentSquares) {
+        // Returns true if the attempted drop position is within bounds and does not overlap a placed ship
+        let validDrop;
+
+        if (angle === 0) {
+            validDrop = checkOutOfBoundsVertical(squareId, dimension) && !checkSquaresTaken(adjacentSquares)
+        } else if (angle === 90) {
+            validDrop = checkOutOfBoundsHorizontal(squareId, dimension) && !checkSquaresTaken(adjacentSquares);
+        }
+
+        return validDrop;
+    }
+
     function dragStart(e) {
         e.dataTransfer.clearData();
         e.dataTransfer.setData("text", e.target.classList[1]);
@@ -198,15 +211,16 @@ const StartGame = (() => {
 
         if (e.target.classList.contains("square")) {
             const adjacentSquares = angle === 0 ? getAdjacentSquares(e.target.id, shipHeight) : getAdjacentSquares(e.target.id, shipWidth);
+            const validDrop = angle === 0 ? isValidDrop(e.target.id, shipHeight, adjacentSquares) : isValidDrop(e.target.id, shipWidth, adjacentSquares);
             
             // For first time drop only (no rotation either)
-            if (angle === 0 && firstDropForShip(ship, shipWidth) && checkOutOfBoundsVertical(e.target.id, shipHeight) && !checkSquaresTaken(adjacentSquares)) {
+            if (angle === 0 && firstDropForShip(ship, shipWidth) && validDrop) {
                 addVerticalStyle(ship);
                 e.target.append(ship);
                 adjacentSquares.forEach(square => {
                     markSquareTaken(ship, square);
                 });
-            } else if (angle === 90 && firstDropForShip(ship) && checkOutOfBoundsHorizontal(e.target.id, shipWidth) && !checkSquaresTaken(adjacentSquares)) {
+            } else if (angle === 90 && firstDropForShip(ship) && validDrop) {
                 // For first time drop with horizontal ship (single rotation)
                 // Does not check for out of bounds yet
                 addHorizontalStyle(ship, shipWidth);
@@ -225,6 +239,7 @@ const StartGame = (() => {
         ship.addEventListener("dragstart", e => dragStart(e));
         ship.addEventListener("dragend", null);
     });
+    
     squares.forEach(square => {
         square.addEventListener("dragover", e => dragOver(e));
         square.addEventListener("dragenter", e => dragEnter(e));
