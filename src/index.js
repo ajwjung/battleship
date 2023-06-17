@@ -146,7 +146,7 @@ const StartGame = (() => {
         return row - 1 + shipLength <= 10;
     }
 
-    // For vertical orientation only at this time
+    // Works for both orientations
     function getAdjacentSquares(squareId, dimension) {
         const lettersKey = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
         const shipLength = getShipLength(dimension);
@@ -166,7 +166,7 @@ const StartGame = (() => {
         return requiredSquares;
     }
 
-    // For vertical orientation only at this time
+    // Works for both orientations
     function checkSquaresTaken(requiredSquares) {
         // Checks whether at least one square has `.taken` class
         return requiredSquares.some(square => square.classList.contains("taken"));
