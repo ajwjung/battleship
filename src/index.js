@@ -147,13 +147,19 @@ const StartGame = (() => {
     }
 
     // For vertical orientation only at this time
-    function getAdjacentSquares(squareId, shipHeight) {
-        const shipLength = getShipLength(shipHeight);
+    function getAdjacentSquares(squareId, dimension) {
+        const lettersKey = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+        const shipLength = getShipLength(dimension);
         const [col, row] = [squareId.charAt(0), Number(squareId.slice(1))];
         const requiredSquares = [];
 
         for (let i = 0; i < shipLength; i += 1) {
-            const targetSquare = document.getElementById(`${col}${row + i}`);
+            let targetSquare;
+            if (angle === 0) {
+                targetSquare = document.getElementById(`${col}${row + i}`);
+            } else {
+                targetSquare = document.getElementById(`${lettersKey[lettersKey.indexOf(col) + i]}${row}`);
+            }
             requiredSquares.push(targetSquare);
         }
 
@@ -191,7 +197,7 @@ const StartGame = (() => {
         const shipWidth = ship.getBoundingClientRect().width;
 
         if (e.target.classList.contains("square")) {
-            const adjacentSquares = getAdjacentSquares(e.target.id, shipHeight);
+            const adjacentSquares = angle === 0 ? getAdjacentSquares(e.target.id, shipHeight) : getAdjacentSquares(e.target.id, shipWidth);
             
             // For first time drop only (no rotation either)
             if (angle === 0 && firstDropForShip(ship, shipWidth) && checkOutOfBoundsVertical(e.target.id, shipHeight) && !checkSquaresTaken(adjacentSquares)) {
@@ -199,10 +205,15 @@ const StartGame = (() => {
                 e.target.append(ship);
                 adjacentSquares.forEach(square => {
                     markSquareTaken(ship, square);
-                })
-            } else if (angle === 90 && firstDropForShip(ship)) {
+                });
+            } else if (angle === 90 && firstDropForShip(ship) && !checkSquaresTaken(adjacentSquares)) {
+                // For first time drop with horizontal ship (single rotation)
+                // Does not check for out of bounds yet
                 addHorizontalStyle(ship, shipWidth);
                 e.target.append(ship);
+                adjacentSquares.forEach(square => {
+                    markSquareTaken(ship, square);
+                });
             }
         };
 
