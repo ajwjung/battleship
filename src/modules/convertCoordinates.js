@@ -9,7 +9,13 @@ const Coordinates = (() => {
         return [row - 1, colIndex];
     };
 
-    return { convertCoordinatesToIndex };
+    function convertLetterToNumber(letter) {
+        // Converts the A in "A3" to 1
+        // We want coordinates, not indices, so we're counting from 1
+        return lettersKey.indexOf(letter) + 1;
+    }
+
+    return { convertCoordinatesToIndex, convertLetterToNumber };
 })();
 
 module.exports = Coordinates;

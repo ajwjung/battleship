@@ -206,7 +206,7 @@ const StartGame = (() => {
                 adjacentSquares.forEach(square => {
                     markSquareTaken(ship, square);
                 });
-            } else if (angle === 90 && firstDropForShip(ship) && !checkSquaresTaken(adjacentSquares)) {
+            } else if (angle === 90 && firstDropForShip(ship) && checkOutOfBoundsHorizontal(e.target.id, shipWidth) && !checkSquaresTaken(adjacentSquares)) {
                 // For first time drop with horizontal ship (single rotation)
                 // Does not check for out of bounds yet
                 addHorizontalStyle(ship, shipWidth);
