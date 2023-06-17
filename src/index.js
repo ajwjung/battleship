@@ -84,18 +84,52 @@ const StartGame = (() => {
         return ship.classList.contains("vertical");
     }
 
-    function addVerticalStyle(ship) {
-        ship.classList.add("vertical");
-        ship.style.left = "";
+    function hasHorizontalClass(ship) {
+        return ship.classList.contains("horizontal");
+    }
+
+    function firstDropForShip(ship, shipWidth) {
+        // Check if it's the first time this ship is being dropped
+        // It should not have either `horizontal` or `vertical` classes
+        return !hasHorizontalClass(ship, shipWidth) && !hasVerticalClass(ship)
     }
 
     function getShipLength(dimension) {
         return Math.round((dimension + 2) / 45);
     }
 
+    function getHorizontalOffset(dimension) {
+        return 22 * (getShipLength(dimension) - 1);
+    }
+
+    function addVerticalStyle(ship) {
+        ship.classList.add("vertical");
+        ship.style.left = "";
+    }
+
+    function addHorizontalStyle(ship, shipWidth) {
+        ship.classList.add("horizontal");
+        const offsetX = getHorizontalOffset(shipWidth);
+        ship.style.left = `${offsetX}px`;
+    }
+
+    function markSquareTaken(ship, square) {
+        const shipName = ship.classList[1]
+        square.classList.add(`my-${shipName}`)
+        square.classList.add("taken");
+    }
+
     function rotateShip(e) {
         angle = angle === 0 ? 90 : 0;
         e.target.style.transform = `rotate(${angle}deg)`;
+    }
+
+    function checkOutOfBoundsHorizontal(squareId, shipWidth) {
+        const col = squareId.charAt(0);
+        const colCoordinate = Number(convertLetterToNumber(col));
+        const shipLength = getShipLength(shipWidth);
+
+        return colCoordinate - 1 + shipLength <= 10;
     }
 
     function checkOutOfBoundsVertical(squareId, shipHeight) {
@@ -158,16 +192,17 @@ const StartGame = (() => {
 
         if (e.target.classList.contains("square")) {
             const adjacentSquares = getAdjacentSquares(e.target.id, shipHeight);
-
+            
             // For first time drop only (no rotation either)
-            if (!hasVerticalClass(ship) && checkOutOfBoundsVertical(e.target.id, shipHeight) && !checkSquaresTaken(adjacentSquares)) {
+            if (angle === 0 && firstDropForShip(ship, shipWidth) && checkOutOfBoundsVertical(e.target.id, shipHeight) && !checkSquaresTaken(adjacentSquares)) {
                 addVerticalStyle(ship);
                 e.target.append(ship);
                 adjacentSquares.forEach(square => {
-                    const shipName = ship.classList[1]
-                    square.classList.add(`my-${shipName}`)
-                    square.classList.add("taken");
+                    markSquareTaken(ship, square);
                 })
+            } else if (angle === 90 && firstDropForShip(ship)) {
+                addHorizontalStyle(ship, shipWidth);
+                e.target.append(ship);
             }
         };
 
