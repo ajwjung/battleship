@@ -140,17 +140,24 @@ const DragDrop = (() => {
             if (angle === 0 && firstDropForShip(ship, shipWidth) && validDrop) {
                 addVerticalStyle(ship);
                 e.target.append(ship);
-                adjacentSquares.forEach(square => {
-                    markSquareTaken(ship, square);
-                });
+                adjacentSquares.forEach(square => markSquareTaken(ship, square));
             } else if (angle === 90 && firstDropForShip(ship) && validDrop) {
                 // For first time drop with horizontal ship (single rotation)
-                // Does not check for out of bounds yet
                 addHorizontalStyle(ship, shipWidth);
                 e.target.append(ship);
-                adjacentSquares.forEach(square => {
-                    markSquareTaken(ship, square);
+                adjacentSquares.forEach(square => markSquareTaken(ship, square));
+            }
+
+            // Handles dragging/dropping an already-placed ship to a new square
+            if (hasVerticalClass(ship) && ship.parentNode.classList.contains("square") && validDrop) {
+                const shipName = ship.classList[1];
+                const lastOccupiedSquares = document.querySelectorAll(`.square.taken.my-${shipName}`);
+                lastOccupiedSquares.forEach(takensquare => {
+                    takensquare.classList.remove("taken");
+                    takensquare.classList.remove(`my-${shipName}`);
                 });
+                e.target.append(ship);
+                adjacentSquares.forEach(newSquare => markSquareTaken(ship, newSquare));
             }
         };
 
