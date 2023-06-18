@@ -42,6 +42,15 @@ const DragDrop = (() => {
         square.classList.add("taken");
     }
 
+    function markOldSquaresAvailable(ship) {
+        const shipName = ship.classList[1];
+        const lastOccupiedSquares = document.querySelectorAll(`.square.taken.my-${shipName}`);
+        lastOccupiedSquares.forEach(takensquare => {
+            takensquare.classList.remove("taken");
+            takensquare.classList.remove(`my-${shipName}`);
+        });
+    }
+
     function rotateShip(e) {
         angle = angle === 0 ? 90 : 0;
         e.target.style.transform = `rotate(${angle}deg)`;
@@ -149,13 +158,8 @@ const DragDrop = (() => {
             }
 
             // Handles dragging/dropping an already-placed ship to a new square
-            if (hasVerticalClass(ship) && ship.parentNode.classList.contains("square") && validDrop) {
-                const shipName = ship.classList[1];
-                const lastOccupiedSquares = document.querySelectorAll(`.square.taken.my-${shipName}`);
-                lastOccupiedSquares.forEach(takensquare => {
-                    takensquare.classList.remove("taken");
-                    takensquare.classList.remove(`my-${shipName}`);
-                });
+            if ((hasVerticalClass(ship) || hasHorizontalClass(ship)) && ship.parentNode.classList.contains("square") && validDrop) {
+                markOldSquaresAvailable(ship);
                 e.target.append(ship);
                 adjacentSquares.forEach(newSquare => markSquareTaken(ship, newSquare));
             }
