@@ -17,6 +17,14 @@ const DragDrop = (() => {
         return !hasHorizontalClass(ship, shipWidth) && !hasVerticalClass(ship)
     }
 
+    function getShipWidth(ship) {
+        return ship.getBoundingClientRect().width;
+    }
+
+    function getShipHeight(ship) {
+        return ship.getBoundingClientRect().height;
+    }
+
     function getShipLength(dimension) {
         return Math.round((dimension + 2) / 45);
     }
@@ -49,11 +57,6 @@ const DragDrop = (() => {
             takensquare.classList.remove("taken");
             takensquare.classList.remove(`my-${shipName}`);
         });
-    }
-
-    function rotateShip(e) {
-        angle = angle === 0 ? 90 : 0;
-        e.target.style.transform = `rotate(${angle}deg)`;
     }
 
     function checkOutOfBoundsHorizontal(squareId, shipWidth) {
@@ -99,19 +102,24 @@ const DragDrop = (() => {
     }
 
     // Works for both orientations
-    function checkSquaresTaken(requiredSquares) {
+    function checkSquaresTaken(requiredSquares, ship) {
         // Checks whether at least one square has `.taken` class
-        return requiredSquares.some(square => square.classList.contains("taken"));
-    }
+        // If a square is taken,
+        // checks that it's not taken by the same ship we're dropping/rotating
+        const shipName = ship.classList[1];
+        return requiredSquares.some(square => 
+            square.classList.contains("taken") && square.classList[1] !== `my-${shipName}`
+        )
+    };
 
-    function isValidDrop(squareId, dimension, adjacentSquares) {
+    function isValidDrop(squareId, dimension, adjacentSquares, ship) {
         // Returns true if the attempted drop position is within bounds and does not overlap a placed ship
         let validDrop;
 
         if (angle === 0) {
-            validDrop = checkOutOfBoundsVertical(squareId, dimension) && !checkSquaresTaken(adjacentSquares)
+            validDrop = checkOutOfBoundsVertical(squareId, dimension) && !checkSquaresTaken(adjacentSquares, ship)
         } else if (angle === 90) {
-            validDrop = checkOutOfBoundsHorizontal(squareId, dimension) && !checkSquaresTaken(adjacentSquares);
+            validDrop = checkOutOfBoundsHorizontal(squareId, dimension) && !checkSquaresTaken(adjacentSquares, ship);
         }
 
         return validDrop;
@@ -138,12 +146,12 @@ const DragDrop = (() => {
     function dragDrop(e) {
         const shipData = e.dataTransfer.getData("text");
         const ship = document.querySelector(`.ship.${shipData}`);
-        const shipHeight = ship.getBoundingClientRect().height;
-        const shipWidth = ship.getBoundingClientRect().width;
+        const shipHeight = getShipHeight(ship);
+        const shipWidth = getShipWidth(ship);
 
         if (e.target.classList.contains("square")) {
             const adjacentSquares = angle === 0 ? getAdjacentSquares(e.target.id, shipHeight) : getAdjacentSquares(e.target.id, shipWidth);
-            const validDrop = angle === 0 ? isValidDrop(e.target.id, shipHeight, adjacentSquares) : isValidDrop(e.target.id, shipWidth, adjacentSquares);
+            const validDrop = angle === 0 ? isValidDrop(e.target.id, shipHeight, adjacentSquares, ship) : isValidDrop(e.target.id, shipWidth, adjacentSquares, ship);
             
             // For first time drop only (no rotation either)
             if (angle === 0 && firstDropForShip(ship, shipWidth) && validDrop) {
@@ -166,6 +174,29 @@ const DragDrop = (() => {
         };
 
         e.target.classList.remove("hover");
+    }
+
+    function rotateShip(e) {
+        const ship = e.target;
+        if (hasVerticalClass(ship)) {
+            angle = 0;
+            angle = angle === 0 ? 90 : 0;
+            const shipWidth = getShipHeight(ship);
+            const targetSquare = ship.parentNode.id;
+            const adjacentSquares = getAdjacentSquares(targetSquare, shipWidth);
+            const validDrop = isValidDrop(ship.id, shipWidth, adjacentSquares, ship);
+            
+            if (validDrop) {
+                ship.style.transform = `rotate(${angle}deg)`;
+                ship.classList.remove("vertical");
+                addHorizontalStyle(ship, shipWidth);
+                markOldSquaresAvailable(ship);
+                adjacentSquares.forEach(square => markSquareTaken(ship, square));
+            }
+        } else {
+            angle = angle === 0 ? 90 : 0;
+            ship.style.transform = `rotate(${angle}deg)`;
+        }
     }
 
     return { dragStart, dragOver, dragEnter, dragLeave, dragDrop, rotateShip };
