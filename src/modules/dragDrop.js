@@ -2,6 +2,7 @@ const Coordinates = require("./convertCoordinates");
 
 const DragDrop = (() => {
     let angle = 0;
+    let lastClickedArea;
 
     function hasVerticalClass(ship) {
         return ship.classList.contains("vertical");
@@ -178,7 +179,8 @@ const DragDrop = (() => {
 
     function rotateShip(e) {
         const ship = e.target;
-        if (hasVerticalClass(ship)) {
+        // First time rotating any ship and it's within the grid
+        if (hasVerticalClass(ship) && !lastClickedArea) {
             angle = 0;
             angle = angle === 0 ? 90 : 0;
             const shipWidth = getShipHeight(ship);
@@ -192,7 +194,14 @@ const DragDrop = (() => {
                 addHorizontalStyle(ship, shipWidth);
                 markOldSquaresAvailable(ship);
                 adjacentSquares.forEach(square => markSquareTaken(ship, square));
+                lastClickedArea = "grid";
             }
+        } else if (lastClickedArea === "grid" && e.target.parentNode.parentNode.id === "my-ships") {
+            // First time rotating any ship and it's within the dock
+            angle = 0;
+            angle = angle === 0 ? 90 : 0;
+            ship.style.transform = `rotate(${angle}deg)`;
+            lastClickedArea = "my-ships";
         } else {
             angle = angle === 0 ? 90 : 0;
             ship.style.transform = `rotate(${angle}deg)`;
