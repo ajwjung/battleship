@@ -61,6 +61,11 @@ const DragDrop = (() => {
         });
     }
 
+    function removeTemporaryClasses(ship) {
+        if (ship.classList.contains("rotated-vertical")) ship.classList.remove("rotated-vertical");
+        if (ship.classList.contains("rotated-horizontal")) ship.classList.remove("rotated-horizontal");
+    }
+
     function checkOutOfBoundsHorizontal(squareId, shipWidth) {
         const col = squareId.charAt(0);
         const colCoordinate = Number(Coordinates.convertLetterToNumber(col));
@@ -160,11 +165,13 @@ const DragDrop = (() => {
                 addVerticalStyle(ship);
                 e.target.append(ship);
                 adjacentSquares.forEach(square => markSquareTaken(ship, square));
+                removeTemporaryClasses(ship);
             } else if (angle === 90 && firstDropForShip(ship) && validDrop) {
                 // For first time drop with horizontal ship (single rotation)
                 addHorizontalStyle(ship, shipWidth);
                 e.target.append(ship);
                 adjacentSquares.forEach(square => markSquareTaken(ship, square));
+                removeTemporaryClasses(ship);
             }
 
             // Handles dragging/dropping an already-placed ship to a new square
@@ -172,6 +179,7 @@ const DragDrop = (() => {
                 markOldSquaresAvailable(ship);
                 e.target.append(ship);
                 adjacentSquares.forEach(newSquare => markSquareTaken(ship, newSquare));
+                removeTemporaryClasses(ship);
             }
         };
 
@@ -230,6 +238,24 @@ const DragDrop = (() => {
         }
     }
 
+    function shipNeverRotatedBefore(ship) {
+        return !ship.classList.contains("rotated-vertical") && !ship.classList.contains("rotated-horizontal");
+    }
+
+    function rotateVerticallyInDock(ship) {
+        angle = 90;
+        angle = angle === 90 ? 0 : 90;
+        ship.style.transform = `rotate(${angle}deg)`;
+        ship.classList.add("rotated-vertical");
+    }
+
+    function rotateHorizontallyInDock(ship) {
+        angle = 0;
+        angle = angle === 0 ? 90 : 0;
+        ship.style.transform = `rotate(${angle}deg)`;
+        ship.classList.add("rotated-horizontal")
+    }
+
     function rotateShip(e) {
         const ship = e.target;
         const currentClickedArea = ship.parentNode.parentNode.id === "my-ships" ? "my-ships" : "grid";
@@ -239,33 +265,43 @@ const DragDrop = (() => {
             rotateVerticallyInGrid(ship);
         } else if (shipInDock(ship) && !lastClickedArea && !lastRotatedShip) {
             // First time rotating any ship and it's within the dock
-            angle = 0;
-            angle = angle === 0 ? 90 : 0;
-            ship.style.transform = `rotate(${angle}deg)`;
-            lastClickedArea = "my-ships";
-            lastRotatedShip = ship;
+            rotateHorizontallyInDock(ship);
         } else if (lastClickedArea === "grid" && currentClickedArea === "my-ships") {
             // Rotate a new ship in dock after just rotating a ship in grid
-            angle = 0;
-            angle = angle === 0 ? 90 : 0;
-            ship.style.transform = `rotate(${angle}deg)`;
-            lastClickedArea = "my-ships";
-            lastRotatedShip = ship;
+            rotateHorizontallyInDock(ship);
         } else if (lastClickedArea === currentClickedArea) {
             // Continue rotating the same ship in dock
             if (shipInDock(ship) && sameShipClicked(ship)) {
-                angle = angle === 0 ? 90 : 0;
-                ship.style.transform = `rotate(${angle}deg)`;
-                lastClickedArea = "my-ships";
-                lastRotatedShip = ship;
+                if (ship.classList.contains("rotated-vertical")) {
+                    rotateHorizontallyInDock(ship);
+                    ship.classList.remove("rotated-vertical");
+                } else if (ship.classList.contains("rotated-horizontal")) {
+                    rotateVerticallyInDock(ship);
+                    ship.classList.remove("rotated-horizontal");
+                }
             } else if (shipInGrid(ship) && sameShipClicked(ship)) {
+                // Continue rotating the same ship in grid
                 if (hasVerticalClass(ship)) {
                     rotateVerticallyInGrid(ship);
                 } else if (hasHorizontalClass(ship)) {
                     rotateHorizontallyInGrid(ship);
                 }
+            } else if (shipInDock(ship) && !sameShipClicked(ship)) {
+                // Rotate new ship in dock after just rotating another ship in dock
+                if (shipNeverRotatedBefore(ship)) {
+                    rotateHorizontallyInDock(ship);
+                } else if (ship.classList.contains("rotated-vertical")) {
+                    rotateHorizontallyInDock(ship);
+                    ship.classList.remove("rotated-vertical");
+                } else if (ship.classList.contains("rotated-horizontal")) {
+                    rotateVerticallyInDock(ship);
+                    ship.classList.remove("rotated-horizontal");
+                }
             }
         }
+
+        lastClickedArea = "my-ships";
+        lastRotatedShip = ship;
     }
 
     return { dragStart, dragOver, dragEnter, dragLeave, dragDrop, rotateShip };
