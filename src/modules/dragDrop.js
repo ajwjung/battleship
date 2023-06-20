@@ -3,6 +3,7 @@ const Coordinates = require("./convertCoordinates");
 const DragDrop = (() => {
     let angle = 0;
     let lastClickedArea;
+    let lastRotatedShip;
 
     function hasVerticalClass(ship) {
         return ship.classList.contains("vertical");
@@ -177,10 +178,20 @@ const DragDrop = (() => {
         e.target.classList.remove("hover");
     }
 
+    function shipInDock(ship) {
+        return !hasVerticalClass(ship) && !hasHorizontalClass(ship);
+    }
+
+    function sameShipClicked(ship) {
+        return lastRotatedShip === ship;
+    }
+
     function rotateShip(e) {
         const ship = e.target;
+        const currentClickedArea = ship.parentNode.parentNode.id === "my-ships" ? "my-ships" : "grid";
+
         // First time rotating any ship and it's within the grid
-        if (hasVerticalClass(ship) && !lastClickedArea) {
+        if (hasVerticalClass(ship) && !lastClickedArea && !lastRotatedShip) {
             angle = 0;
             angle = angle === 0 ? 90 : 0;
             const shipWidth = getShipHeight(ship);
@@ -195,13 +206,22 @@ const DragDrop = (() => {
                 markOldSquaresAvailable(ship);
                 adjacentSquares.forEach(square => markSquareTaken(ship, square));
                 lastClickedArea = "grid";
+                lastRotatedShip = ship;
             }
-        } else if (lastClickedArea === "grid" && e.target.parentNode.parentNode.id === "my-ships") {
+        } else if (shipInDock(ship) && !lastClickedArea && !lastRotatedShip) {
             // First time rotating any ship and it's within the dock
             angle = 0;
             angle = angle === 0 ? 90 : 0;
             ship.style.transform = `rotate(${angle}deg)`;
             lastClickedArea = "my-ships";
+            lastRotatedShip = ship;           
+        } else if (lastClickedArea === "grid" && currentClickedArea === "my-ships") {
+            // Rotate a new ship in dock after just rotating a ship in grid
+            angle = 0;
+            angle = angle === 0 ? 90 : 0;
+            ship.style.transform = `rotate(${angle}deg)`;
+            lastClickedArea = "my-ships";
+            lastRotatedShip = ship;
         } else {
             angle = angle === 0 ? 90 : 0;
             ship.style.transform = `rotate(${angle}deg)`;
