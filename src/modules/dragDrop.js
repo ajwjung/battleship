@@ -273,6 +273,8 @@ const DragDrop = (() => {
     function rotateShip(e) {
         const ship = e.target;
         const currentClickedArea = ship.parentNode.parentNode.id === "my-ships" ? "my-ships" : "grid";
+        console.log(lastClickedArea, currentClickedArea);
+        console.log(lastRotatedShip, ship);
 
         // First time rotating any ship and it's within the grid
         if (shipInGrid(ship) && !lastClickedArea && !lastRotatedShip) {
@@ -317,6 +319,13 @@ const DragDrop = (() => {
                 } else if (ship.classList.contains("rotated-horizontal")) {
                     rotateVerticallyInDock(ship);
                     ship.classList.remove("rotated-horizontal");
+                }
+            } else if (shipInGrid(ship) && !sameShipClicked(ship)) {
+                // Rotate new ship in grid after just rotating another ship in grid
+                if (hasVerticalClass(ship)) {
+                    rotateHorizontallyInGrid(ship);
+                } else if (hasHorizontalClass(ship)) {
+                    rotateVerticallyInGrid(ship);
                 }
             }
         }
