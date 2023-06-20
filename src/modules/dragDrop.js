@@ -66,6 +66,10 @@ const DragDrop = (() => {
         if (ship.classList.contains("rotated-horizontal")) ship.classList.remove("rotated-horizontal");
     }
 
+    function resetAngle() {
+        angle = 0;
+    }
+
     function checkOutOfBoundsHorizontal(squareId, shipWidth) {
         const col = squareId.charAt(0);
         const colCoordinate = Number(Coordinates.convertLetterToNumber(col));
@@ -132,6 +136,10 @@ const DragDrop = (() => {
         return validDrop;
     }
 
+    function shipNeverRotatedBefore(ship) {
+        return !ship.classList.contains("rotated-vertical") && !ship.classList.contains("rotated-horizontal");
+    }
+
     function dragStart(e) {
         e.dataTransfer.clearData();
         e.dataTransfer.setData("text", e.target.classList[1]);
@@ -161,13 +169,19 @@ const DragDrop = (() => {
             const validDrop = angle === 0 ? isValidDrop(e.target.id, shipHeight, adjacentSquares, ship) : isValidDrop(e.target.id, shipWidth, adjacentSquares, ship);
             
             // For first time drop only (no rotation either)
-            if (angle === 0 && firstDropForShip(ship, shipWidth) && validDrop) {
+            if (shipNeverRotatedBefore(ship) && firstDropForShip(ship, shipWidth) && validDrop) {
                 addVerticalStyle(ship);
                 e.target.append(ship);
                 adjacentSquares.forEach(square => markSquareTaken(ship, square));
                 removeTemporaryClasses(ship);
-            } else if (angle === 90 && firstDropForShip(ship) && validDrop) {
-                // For first time drop with horizontal ship (single rotation)
+            } else if (ship.classList.contains("rotated-vertical")) {
+                // For first time drop with vertical ship (previously rotated)
+                addVerticalStyle(ship);
+                e.target.append(ship);
+                adjacentSquares.forEach(square => markSquareTaken(ship, square));
+                removeTemporaryClasses(ship);
+            } else if (ship.classList.contains("rotated-horizontal") && firstDropForShip(ship) && validDrop) {
+                // For first time drop with horizontal ship (previously rotated)
                 addHorizontalStyle(ship, shipWidth);
                 e.target.append(ship);
                 adjacentSquares.forEach(square => markSquareTaken(ship, square));
@@ -238,10 +252,6 @@ const DragDrop = (() => {
         }
     }
 
-    function shipNeverRotatedBefore(ship) {
-        return !ship.classList.contains("rotated-vertical") && !ship.classList.contains("rotated-horizontal");
-    }
-
     function rotateVerticallyInDock(ship) {
         angle = 90;
         angle = angle === 90 ? 0 : 90;
@@ -263,7 +273,6 @@ const DragDrop = (() => {
     function rotateShip(e) {
         const ship = e.target;
         const currentClickedArea = ship.parentNode.parentNode.id === "my-ships" ? "my-ships" : "grid";
-        console.log(lastClickedArea, currentClickedArea, angle);
 
         // First time rotating any ship and it's within the grid
         if (shipInGrid(ship) && !lastClickedArea && !lastRotatedShip) {
