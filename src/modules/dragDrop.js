@@ -198,7 +198,7 @@ const DragDrop = (() => {
         return lastRotatedShip === ship;
     }
 
-    function rotateVerticallyInGrid(ship) {
+    function rotateHorizontallyInGrid(ship) {
         angle = 0;
         angle = angle === 0 ? 90 : 0;
         // Use ship height to get ship width because block not rotated yet
@@ -218,7 +218,7 @@ const DragDrop = (() => {
         }
     }
 
-    function rotateHorizontallyInGrid(ship) {
+    function rotateVerticallyInGrid(ship) {
         angle = 90;
         angle = angle === 90 ? 0 : 90;
         // Use ship width to get ship height because block not rotated yet
@@ -226,7 +226,7 @@ const DragDrop = (() => {
         const targetSquare = ship.parentNode.id;
         const adjacentSquares = getAdjacentSquares(targetSquare, shipHeight);
         const validDrop = isValidDrop(ship.id, shipHeight, adjacentSquares, ship);
-        
+
         if (validDrop) {
             ship.style.transform = `rotate(${angle}deg)`;
             ship.classList.remove("horizontal");
@@ -247,13 +247,17 @@ const DragDrop = (() => {
         angle = angle === 90 ? 0 : 90;
         ship.style.transform = `rotate(${angle}deg)`;
         ship.classList.add("rotated-vertical");
+        lastClickedArea = "my-ships";
+        lastRotatedShip = ship;
     }
 
     function rotateHorizontallyInDock(ship) {
         angle = 0;
         angle = angle === 0 ? 90 : 0;
         ship.style.transform = `rotate(${angle}deg)`;
-        ship.classList.add("rotated-horizontal")
+        ship.classList.add("rotated-horizontal");
+        lastClickedArea = "my-ships";
+        lastRotatedShip = ship;
     }
 
     function rotateShip(e) {
@@ -261,12 +265,14 @@ const DragDrop = (() => {
         const currentClickedArea = ship.parentNode.parentNode.id === "my-ships" ? "my-ships" : "grid";
 
         // First time rotating any ship and it's within the grid
-        if (hasVerticalClass(ship) && !lastClickedArea && !lastRotatedShip) {
-            rotateVerticallyInGrid(ship);
+        if (shipInGrid(ship) && !lastClickedArea && !lastRotatedShip) {
+            // WORKS
+            rotateHorizontallyInGrid(ship);
         } else if (shipInDock(ship) && !lastClickedArea && !lastRotatedShip) {
             // First time rotating any ship and it's within the dock
+            // WORKS
             rotateHorizontallyInDock(ship);
-        } else if (lastClickedArea === "grid" && currentClickedArea === "my-ships") {
+        } else if (lastClickedArea === "grid" && currentClickedArea === "my-ships" && shipNeverRotatedBefore(ship)) {
             // Rotate a new ship in dock after just rotating a ship in grid
             rotateHorizontallyInDock(ship);
         } else if (lastClickedArea === currentClickedArea) {
@@ -281,10 +287,13 @@ const DragDrop = (() => {
                 }
             } else if (shipInGrid(ship) && sameShipClicked(ship)) {
                 // Continue rotating the same ship in grid
+                
+                // Currently not working because we don't have a scenario
+                // to allow rotation in grid after just rotating in dock
                 if (hasVerticalClass(ship)) {
-                    rotateVerticallyInGrid(ship);
-                } else if (hasHorizontalClass(ship)) {
                     rotateHorizontallyInGrid(ship);
+                } else if (hasHorizontalClass(ship)) {
+                    rotateVerticallyInGrid(ship);
                 }
             } else if (shipInDock(ship) && !sameShipClicked(ship)) {
                 // Rotate new ship in dock after just rotating another ship in dock
@@ -299,9 +308,6 @@ const DragDrop = (() => {
                 }
             }
         }
-
-        lastClickedArea = "my-ships";
-        lastRotatedShip = ship;
     }
 
     return { dragStart, dragOver, dragEnter, dragLeave, dragDrop, rotateShip };
