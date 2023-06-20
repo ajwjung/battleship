@@ -182,8 +182,52 @@ const DragDrop = (() => {
         return !hasVerticalClass(ship) && !hasHorizontalClass(ship);
     }
 
+    function shipInGrid(ship) {
+        return ship.parentNode.classList.contains("square");
+    }
+
     function sameShipClicked(ship) {
         return lastRotatedShip === ship;
+    }
+
+    function rotateVerticallyInGrid(ship) {
+        angle = 0;
+        angle = angle === 0 ? 90 : 0;
+        // Use ship height to get ship width because block not rotated yet
+        const shipWidth = getShipHeight(ship);
+        const targetSquare = ship.parentNode.id;
+        const adjacentSquares = getAdjacentSquares(targetSquare, shipWidth);
+        const validDrop = isValidDrop(ship.id, shipWidth, adjacentSquares, ship);
+        
+        if (validDrop) {
+            ship.style.transform = `rotate(${angle}deg)`;
+            ship.classList.remove("vertical");
+            addHorizontalStyle(ship, shipWidth);
+            markOldSquaresAvailable(ship);
+            adjacentSquares.forEach(square => markSquareTaken(ship, square));
+            lastClickedArea = "grid";
+            lastRotatedShip = ship;
+        }
+    }
+
+    function rotateHorizontallyInGrid(ship) {
+        angle = 90;
+        angle = angle === 90 ? 0 : 90;
+        // Use ship width to get ship height because block not rotated yet
+        const shipHeight = getShipWidth(ship);
+        const targetSquare = ship.parentNode.id;
+        const adjacentSquares = getAdjacentSquares(targetSquare, shipHeight);
+        const validDrop = isValidDrop(ship.id, shipHeight, adjacentSquares, ship);
+        
+        if (validDrop) {
+            ship.style.transform = `rotate(${angle}deg)`;
+            ship.classList.remove("horizontal");
+            addVerticalStyle(ship);
+            markOldSquaresAvailable(ship);
+            adjacentSquares.forEach(square => markSquareTaken(ship, square));
+            lastClickedArea = "grid";
+            lastRotatedShip = ship;
+        }
     }
 
     function rotateShip(e) {
@@ -192,29 +236,14 @@ const DragDrop = (() => {
 
         // First time rotating any ship and it's within the grid
         if (hasVerticalClass(ship) && !lastClickedArea && !lastRotatedShip) {
-            angle = 0;
-            angle = angle === 0 ? 90 : 0;
-            const shipWidth = getShipHeight(ship);
-            const targetSquare = ship.parentNode.id;
-            const adjacentSquares = getAdjacentSquares(targetSquare, shipWidth);
-            const validDrop = isValidDrop(ship.id, shipWidth, adjacentSquares, ship);
-            
-            if (validDrop) {
-                ship.style.transform = `rotate(${angle}deg)`;
-                ship.classList.remove("vertical");
-                addHorizontalStyle(ship, shipWidth);
-                markOldSquaresAvailable(ship);
-                adjacentSquares.forEach(square => markSquareTaken(ship, square));
-                lastClickedArea = "grid";
-                lastRotatedShip = ship;
-            }
+            rotateVerticallyInGrid(ship);
         } else if (shipInDock(ship) && !lastClickedArea && !lastRotatedShip) {
             // First time rotating any ship and it's within the dock
             angle = 0;
             angle = angle === 0 ? 90 : 0;
             ship.style.transform = `rotate(${angle}deg)`;
             lastClickedArea = "my-ships";
-            lastRotatedShip = ship;           
+            lastRotatedShip = ship;
         } else if (lastClickedArea === "grid" && currentClickedArea === "my-ships") {
             // Rotate a new ship in dock after just rotating a ship in grid
             angle = 0;
@@ -222,9 +251,20 @@ const DragDrop = (() => {
             ship.style.transform = `rotate(${angle}deg)`;
             lastClickedArea = "my-ships";
             lastRotatedShip = ship;
-        } else {
-            angle = angle === 0 ? 90 : 0;
-            ship.style.transform = `rotate(${angle}deg)`;
+        } else if (lastClickedArea === currentClickedArea) {
+            // Continue rotating the same ship in dock
+            if (shipInDock(ship) && sameShipClicked(ship)) {
+                angle = angle === 0 ? 90 : 0;
+                ship.style.transform = `rotate(${angle}deg)`;
+                lastClickedArea = "my-ships";
+                lastRotatedShip = ship;
+            } else if (shipInGrid(ship) && sameShipClicked(ship)) {
+                if (hasVerticalClass(ship)) {
+                    rotateVerticallyInGrid(ship);
+                } else if (hasHorizontalClass(ship)) {
+                    rotateHorizontallyInGrid(ship);
+                }
+            }
         }
     }
 
