@@ -263,18 +263,24 @@ const DragDrop = (() => {
     function rotateShip(e) {
         const ship = e.target;
         const currentClickedArea = ship.parentNode.parentNode.id === "my-ships" ? "my-ships" : "grid";
+        console.log(lastClickedArea, currentClickedArea, angle);
 
         // First time rotating any ship and it's within the grid
         if (shipInGrid(ship) && !lastClickedArea && !lastRotatedShip) {
-            // WORKS
             rotateHorizontallyInGrid(ship);
         } else if (shipInDock(ship) && !lastClickedArea && !lastRotatedShip) {
             // First time rotating any ship and it's within the dock
-            // WORKS
             rotateHorizontallyInDock(ship);
-        } else if (lastClickedArea === "grid" && currentClickedArea === "my-ships" && shipNeverRotatedBefore(ship)) {
+        } else if (lastClickedArea === "grid" && currentClickedArea === "my-ships") {
             // Rotate a new ship in dock after just rotating a ship in grid
             rotateHorizontallyInDock(ship);
+        } else if (lastClickedArea === "my-ships" && currentClickedArea === "grid") {
+            // Rotate a ship in grid after just rotating a ship within dock
+            if(hasVerticalClass(ship)) {
+                rotateHorizontallyInGrid(ship);
+            } else if (hasHorizontalClass(ship)) {
+                rotateVerticallyInGrid(ship);
+            }
         } else if (lastClickedArea === currentClickedArea) {
             // Continue rotating the same ship in dock
             if (shipInDock(ship) && sameShipClicked(ship)) {
@@ -287,9 +293,6 @@ const DragDrop = (() => {
                 }
             } else if (shipInGrid(ship) && sameShipClicked(ship)) {
                 // Continue rotating the same ship in grid
-                
-                // Currently not working because we don't have a scenario
-                // to allow rotation in grid after just rotating in dock
                 if (hasVerticalClass(ship)) {
                     rotateHorizontallyInGrid(ship);
                 } else if (hasHorizontalClass(ship)) {
