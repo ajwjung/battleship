@@ -66,16 +66,6 @@ const StartGame = (() => {
         computerSubmarine, computerPatrol
     ];
 
-    // Randomly place computer's ships
-    Game.placeComputerShips(computerBoard, allComputerShips);
-
-    // Game starts with player going first
-    player.startTurn();
-    Game.takeTurnsAttacking(
-        player, playerBoard, computer, computerBoard,
-        allComputerShips, allPlayerShips
-    );
-
     // Drag-drop player ships
     const ships = document.querySelectorAll(".ship");
     const squares = document.body.querySelectorAll("#my-board .square:not(.legend)");
@@ -92,4 +82,24 @@ const StartGame = (() => {
         square.addEventListener("dragleave", e => DragDrop.dragLeave(e));
         square.addEventListener("drop", e => DragDrop.dragDrop(e));
     });
+ 
+    // Finalize both party's ship placement
+    const startBtn = document.querySelector(".start-game");
+    const playerDockLeft = document.querySelector("#my-ships > .left-ships");
+    const playerDockRight = document.querySelector("#my-ships > .right-ships");
+
+    startBtn.addEventListener("click", () => {
+        if (playerDockLeft.childNodes.length === 0 && playerDockRight.childNodes.length === 0) {
+            Game.placeComputerShips(computerBoard, allComputerShips);
+            startBtn.disabled = "true";
+        }
+    })
+
+
+    // Game starts with player going first
+    player.startTurn();
+    Game.takeTurnsAttacking(
+        player, playerBoard, computer, computerBoard,
+        allComputerShips, allPlayerShips
+    );
 })();
