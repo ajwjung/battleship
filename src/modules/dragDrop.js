@@ -202,10 +202,15 @@ const DragDrop = (() => {
         e.target.classList.remove("hover");
     }
 
+    function disableDragDrop(ships) {
+        ships.forEach(ship => { ship.draggable = false });
+    }
+
     return { dragStart, dragOver, dragEnter, dragLeave, dragDrop,
             hasVerticalClass, hasHorizontalClass, getShipHeight, getShipWidth,
             getAdjacentSquares, isValidDrop, addHorizontalStyle, addVerticalStyle,
-            markOldSquaresAvailable, markSquareTaken, shipNeverRotatedBefore };
+            markOldSquaresAvailable, markSquareTaken, shipNeverRotatedBefore,
+            disableDragDrop };
 
 })();
 

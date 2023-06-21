@@ -114,6 +114,8 @@ const StartGame = (() => {
                     playerBoard.placeShip(playerCarrier, formattedCoordinates);
                 }
             });
+            Rotate.disableRotateShip();
+            DragDrop.disableDragDrop(ships);
         }
     })
 

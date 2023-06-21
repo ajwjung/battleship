@@ -134,7 +134,19 @@ const Rotate = (() => {
         }
     }
 
-    return { rotateShip }
+    function squareHandler(e) {
+        e.stopPropagation();
+        e.preventDefault();
+    }
+
+    function disableRotateShip() {
+        const allPlayerSquares = document.querySelectorAll("#my-board .square");
+        allPlayerSquares.forEach(square => {
+            square.addEventListener("click", squareHandler, true);
+        });
+    }
+
+    return { rotateShip, disableRotateShip }
 })();
 
 module.exports = Rotate;
