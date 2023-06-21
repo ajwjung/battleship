@@ -6,6 +6,7 @@ const Player = require("./modules/player");
 const Display = require("./modules/display");
 const Game = require("./modules/gameComponents");
 const DragDrop = require("./modules/dragDrop");
+const Rotate = require("./modules/rotateShip");
 
 const StartGame = (() => {
     // Game setup
@@ -80,7 +81,7 @@ const StartGame = (() => {
     const squares = document.body.querySelectorAll("#my-board .square:not(.legend)");
     
     ships.forEach(ship => {
-        ship.addEventListener("click", e => DragDrop.rotateShip(e));
+        ship.addEventListener("click", e => Rotate.rotateShip(e));
         ship.addEventListener("dragstart", e => DragDrop.dragStart(e));
         ship.addEventListener("dragend", null);
     });

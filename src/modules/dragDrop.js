@@ -1,22 +1,12 @@
 const Coordinates = require("./convertCoordinates");
 
 const DragDrop = (() => {
-    let angle = 0;
-    let lastClickedArea;
-    let lastRotatedShip;
-
     function hasVerticalClass(ship) {
         return ship.classList.contains("vertical");
     }
 
     function hasHorizontalClass(ship) {
         return ship.classList.contains("horizontal");
-    }
-
-    function firstDropForShip(ship, shipWidth) {
-        // Check if it's the first time this ship is being dropped
-        // It should not have either `horizontal` or `vertical` classes
-        return !hasHorizontalClass(ship, shipWidth) && !hasVerticalClass(ship)
     }
 
     function getShipWidth(ship) {
@@ -44,6 +34,12 @@ const DragDrop = (() => {
         ship.classList.add("horizontal");
         const offsetX = getHorizontalOffset(shipWidth);
         ship.style.left = `${offsetX}px`;
+    }
+
+    function firstDropForShip(ship, shipWidth) {
+        // Check if it's the first time this ship is being dropped
+        // It should not have either `horizontal` or `vertical` classes
+        return !hasHorizontalClass(ship, shipWidth) && !hasVerticalClass(ship)
     }
 
     function markSquareTaken(ship, square) {
@@ -89,7 +85,7 @@ const DragDrop = (() => {
     }
 
     // Works for both orientations
-    function getAdjacentSquares(squareId, dimension) {
+    function getAdjacentSquares(squareId, dimension, orientation) {
         const lettersKey = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
         const shipLength = getShipLength(dimension);
         const [col, row] = [squareId.charAt(0), Number(squareId.slice(1))];
@@ -97,9 +93,9 @@ const DragDrop = (() => {
 
         for (let i = 0; i < shipLength; i += 1) {
             let targetSquare;
-            if (angle === 0) {
+            if (orientation === "vertical") {
                 targetSquare = document.getElementById(`${col}${row + i}`);
-            } else {
+            } else if (orientation === "horizontal") {
                 targetSquare = document.getElementById(`${lettersKey[lettersKey.indexOf(col) + i]}${row}`);
             }
             requiredSquares.push(targetSquare);
@@ -119,13 +115,13 @@ const DragDrop = (() => {
         )
     };
 
-    function isValidDrop(squareId, dimension, adjacentSquares, ship) {
+    function isValidDrop(squareId, dimension, adjacentSquares, ship, orientation) {
         // Returns true if the attempted drop position is within bounds and does not overlap a placed ship
         let validDrop;
 
-        if (angle === 0) {
+        if (orientation === "vertical") {
             validDrop = checkOutOfBoundsVertical(squareId, dimension) && !checkSquaresTaken(adjacentSquares, ship)
-        } else if (angle === 90) {
+        } else if (orientation === "horizontal") {
             validDrop = checkOutOfBoundsHorizontal(squareId, dimension) && !checkSquaresTaken(adjacentSquares, ship);
         }
 
@@ -161,8 +157,18 @@ const DragDrop = (() => {
         const shipWidth = getShipWidth(ship);
 
         if (e.target.classList.contains("square")) {
-            const adjacentSquares = angle === 0 ? getAdjacentSquares(e.target.id, shipHeight) : getAdjacentSquares(e.target.id, shipWidth);
-            const validDrop = angle === 0 ? isValidDrop(e.target.id, shipHeight, adjacentSquares, ship) : isValidDrop(e.target.id, shipWidth, adjacentSquares, ship);
+            let adjacentSquares;
+            let validDrop;
+
+            if (hasVerticalClass(ship) || ship.classList.contains("rotated-vertical") || (firstDropForShip(ship) && shipNeverRotatedBefore(ship))) {
+                // All scenarios where ship is in vertical orientation
+                adjacentSquares = getAdjacentSquares(e.target.id, shipHeight, "vertical");
+                validDrop = isValidDrop(e.target.id, shipHeight, adjacentSquares, ship, "vertical");
+            } else if (hasHorizontalClass(ship) || ship.classList.contains("rotated-horizontal")) {
+                // All scenarios where ship is in horizontal orientation
+                adjacentSquares = getAdjacentSquares(e.target.id, shipWidth, "horizontal");
+                validDrop = isValidDrop(e.target.id, shipWidth, adjacentSquares, ship, "horizontal");
+            }
             
             // For first time drop only (no rotation either)
             if (shipNeverRotatedBefore(ship) && firstDropForShip(ship, shipWidth) && validDrop) {
@@ -196,136 +202,10 @@ const DragDrop = (() => {
         e.target.classList.remove("hover");
     }
 
-    function shipInDock(ship) {
-        return !hasVerticalClass(ship) && !hasHorizontalClass(ship);
-    }
-
-    function shipInGrid(ship) {
-        return ship.parentNode.classList.contains("square");
-    }
-
-    function sameShipClicked(ship) {
-        return lastRotatedShip === ship;
-    }
-
-    function rotateHorizontallyInGrid(ship) {
-        angle = 0;
-        angle = angle === 0 ? 90 : 0;
-        // Use ship height to get ship width because block not rotated yet
-        const shipWidth = getShipHeight(ship);
-        const targetSquare = ship.parentNode.id;
-        const adjacentSquares = getAdjacentSquares(targetSquare, shipWidth);
-        const validDrop = isValidDrop(ship.id, shipWidth, adjacentSquares, ship);
-        
-        if (validDrop) {
-            ship.style.transform = `rotate(${angle}deg)`;
-            ship.classList.remove("vertical");
-            addHorizontalStyle(ship, shipWidth);
-            markOldSquaresAvailable(ship);
-            adjacentSquares.forEach(square => markSquareTaken(ship, square));
-            lastClickedArea = "grid";
-            lastRotatedShip = ship;
-        }
-    }
-
-    function rotateVerticallyInGrid(ship) {
-        angle = 90;
-        angle = angle === 90 ? 0 : 90;
-        // Use ship width to get ship height because block not rotated yet
-        const shipHeight = getShipWidth(ship);
-        const targetSquare = ship.parentNode.id;
-        const adjacentSquares = getAdjacentSquares(targetSquare, shipHeight);
-        const validDrop = isValidDrop(ship.id, shipHeight, adjacentSquares, ship);
-
-        if (validDrop) {
-            ship.style.transform = `rotate(${angle}deg)`;
-            ship.classList.remove("horizontal");
-            addVerticalStyle(ship);
-            markOldSquaresAvailable(ship);
-            adjacentSquares.forEach(square => markSquareTaken(ship, square));
-            lastClickedArea = "grid";
-            lastRotatedShip = ship;
-        }
-    }
-
-    function rotateVerticallyInDock(ship) {
-        angle = 90;
-        angle = angle === 90 ? 0 : 90;
-        ship.style.transform = `rotate(${angle}deg)`;
-        ship.classList.add("rotated-vertical");
-        lastClickedArea = "my-ships";
-        lastRotatedShip = ship;
-    }
-
-    function rotateHorizontallyInDock(ship) {
-        angle = 0;
-        angle = angle === 0 ? 90 : 0;
-        ship.style.transform = `rotate(${angle}deg)`;
-        ship.classList.add("rotated-horizontal");
-        lastClickedArea = "my-ships";
-        lastRotatedShip = ship;
-    }
-
-    function rotateShip(e) {
-        const ship = e.target;
-        const currentClickedArea = ship.parentNode.parentNode.id === "my-ships" ? "my-ships" : "grid";
-
-        // First time rotating any ship and it's within the grid
-        if (shipInGrid(ship) && !lastClickedArea && !lastRotatedShip) {
-            rotateHorizontallyInGrid(ship);
-        } else if (shipInDock(ship) && !lastClickedArea && !lastRotatedShip) {
-            // First time rotating any ship and it's within the dock
-            rotateHorizontallyInDock(ship);
-        } else if (lastClickedArea === "grid" && currentClickedArea === "my-ships") {
-            // Rotate a new ship in dock after just rotating a ship in grid
-            rotateHorizontallyInDock(ship);
-        } else if (lastClickedArea === "my-ships" && currentClickedArea === "grid") {
-            // Rotate a ship in grid after just rotating a ship within dock
-            if(hasVerticalClass(ship)) {
-                rotateHorizontallyInGrid(ship);
-            } else if (hasHorizontalClass(ship)) {
-                rotateVerticallyInGrid(ship);
-            }
-        } else if (lastClickedArea === currentClickedArea) {
-            // Continue rotating the same ship in dock
-            if (shipInDock(ship) && sameShipClicked(ship)) {
-                if (ship.classList.contains("rotated-vertical")) {
-                    rotateHorizontallyInDock(ship);
-                    ship.classList.remove("rotated-vertical");
-                } else if (ship.classList.contains("rotated-horizontal")) {
-                    rotateVerticallyInDock(ship);
-                    ship.classList.remove("rotated-horizontal");
-                }
-            } else if (shipInGrid(ship) && sameShipClicked(ship)) {
-                // Continue rotating the same ship in grid
-                if (hasVerticalClass(ship)) {
-                    rotateHorizontallyInGrid(ship);
-                } else if (hasHorizontalClass(ship)) {
-                    rotateVerticallyInGrid(ship);
-                }
-            } else if (shipInDock(ship) && !sameShipClicked(ship)) {
-                // Rotate new ship in dock after just rotating another ship in dock
-                if (shipNeverRotatedBefore(ship)) {
-                    rotateHorizontallyInDock(ship);
-                } else if (ship.classList.contains("rotated-vertical")) {
-                    rotateHorizontallyInDock(ship);
-                    ship.classList.remove("rotated-vertical");
-                } else if (ship.classList.contains("rotated-horizontal")) {
-                    rotateVerticallyInDock(ship);
-                    ship.classList.remove("rotated-horizontal");
-                }
-            } else if (shipInGrid(ship) && !sameShipClicked(ship)) {
-                // Rotate new ship in grid after just rotating another ship in grid
-                if (hasVerticalClass(ship)) {
-                    rotateHorizontallyInGrid(ship);
-                } else if (hasHorizontalClass(ship)) {
-                    rotateVerticallyInGrid(ship);
-                }
-            }
-        }
-    }
-
-    return { dragStart, dragOver, dragEnter, dragLeave, dragDrop, rotateShip };
+    return { dragStart, dragOver, dragEnter, dragLeave, dragDrop,
+            hasVerticalClass, hasHorizontalClass, getShipHeight, getShipWidth,
+            getAdjacentSquares, isValidDrop, addHorizontalStyle, addVerticalStyle,
+            markOldSquaresAvailable, markSquareTaken, shipNeverRotatedBefore };
 
 })();
 
