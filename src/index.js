@@ -22,7 +22,7 @@ const StartGame = (() => {
     Display.createBoardGrid(playerGrid);
     Display.createBoardGrid(opponentGrid);
 
-    // Test game
+    // Player ships setup
     const playerCarrier = Ship(5);
     const playerBattleship = Ship(4);
     const playerDestroyer = Ship(3);
@@ -32,29 +32,6 @@ const StartGame = (() => {
         playerCarrier, playerBattleship, playerDestroyer,
         playerSubmarine, playerPatrol
     ];
-
-    // Manually place player's ships for now just to test the game
-    playerBoard.placeShip(playerCarrier, [4, "A"]);
-    playerBoard.placeShip(playerCarrier, [4, "B"]);
-    playerBoard.placeShip(playerCarrier, [4, "C"]);
-    playerBoard.placeShip(playerCarrier, [4, "D"]);
-    playerBoard.placeShip(playerCarrier, [4, "E"]);
-
-    playerBoard.placeShip(playerBattleship, [6, "E"]);
-    playerBoard.placeShip(playerBattleship, [7, "E"]);
-    playerBoard.placeShip(playerBattleship, [8, "E"]);
-    playerBoard.placeShip(playerBattleship, [9, "E"]);
-    
-    playerBoard.placeShip(playerDestroyer, [3, "H"]);
-    playerBoard.placeShip(playerDestroyer, [3, "I"]);
-    playerBoard.placeShip(playerDestroyer, [3, "J"]);
-    
-    playerBoard.placeShip(playerSubmarine, [3, "G"]);
-    playerBoard.placeShip(playerSubmarine, [4, "G"]);
-    playerBoard.placeShip(playerSubmarine, [5, "G"]);
-
-    playerBoard.placeShip(playerPatrol, [8, "I"]);
-    playerBoard.placeShip(playerPatrol, [8, "J"]);
 
     const computerCarrier = Ship(5);
     const computerBattleship = Ship(4);
@@ -118,9 +95,28 @@ const StartGame = (() => {
             observer.disconnect();
             playerShipBlocks.forEach(ship => {
                 ship.style.cursor = "default";
-            })
+            });
+            const playerOccupiedSquares = document.querySelectorAll("#my-board .square.taken");
+            playerOccupiedSquares.forEach(occupiedSquare => {
+                const shipName = occupiedSquare.classList[1].slice(3);
+                const coordinates = occupiedSquare.id;
+                const formattedCoordinates = [coordinates[1], coordinates[0]];
+                
+                if (shipName === "patrol") {
+                    playerBoard.placeShip(playerPatrol, formattedCoordinates);
+                } else if (shipName === "destroyer") {
+                    playerBoard.placeShip(playerDestroyer, formattedCoordinates);
+                } else if (shipName === "submarine") {
+                    playerBoard.placeShip(playerSubmarine, formattedCoordinates);
+                } else if (shipName === "battleship") {
+                    playerBoard.placeShip(playerBattleship, formattedCoordinates);
+                } else if (shipName === "carrier") {
+                    playerBoard.placeShip(playerCarrier, formattedCoordinates);
+                }
+            });
         }
     })
+
 
     // Game starts with player going first
     player.startTurn();
