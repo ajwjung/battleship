@@ -54,6 +54,14 @@ h1 {
     grid-column: 1 / span 2;
     grid-row: 2;
     font-size: var(--font-size);
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.start-game {
+    height: 30px;
+    width: 80px;
 }
 
 .player-side {
