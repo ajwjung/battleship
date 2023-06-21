@@ -83,18 +83,44 @@ const StartGame = (() => {
         square.addEventListener("drop", e => DragDrop.dragDrop(e));
     });
  
-    // Finalize both party's ship placement
+    // Listen for changes in player's dock
+    // To enable/disable "Start" button
     const startBtn = document.querySelector(".start-game");
-    const playerDockLeft = document.querySelector("#my-ships > .left-ships");
-    const playerDockRight = document.querySelector("#my-ships > .right-ships");
+    const playerDock = document.getElementById("my-ships");
+    const playerShipBlocks = document.querySelectorAll(".ship");
+    let shipsPlaced = 0;
+    startBtn.disabled = true;
+    
+    function incrementShipsPlaced() {
+        shipsPlaced += 1;
+    }
 
+    const config = { childList: true, subtree: true };
+
+    function mutationHandler(mutations) {
+        mutations.forEach((mutation => {
+            if (mutation.type === "childList") incrementShipsPlaced();
+        }));
+
+        if (shipsPlaced === 5) {
+            startBtn.disabled = false;
+        };
+    }
+
+    const observer = new MutationObserver(mutationHandler);
+    observer.observe(playerDock, config);
+
+    // Finalize both party's ship placement
     startBtn.addEventListener("click", () => {
-        if (playerDockLeft.childNodes.length === 0 && playerDockRight.childNodes.length === 0) {
+        if (shipsPlaced === 5) {
             Game.placeComputerShips(computerBoard, allComputerShips);
-            startBtn.disabled = "true";
+            startBtn.disabled = true;
+            observer.disconnect();
+            playerShipBlocks.forEach(ship => {
+                ship.style.cursor = "default";
+            })
         }
     })
-
 
     // Game starts with player going first
     player.startTurn();
