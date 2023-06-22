@@ -9,6 +9,18 @@ const DragDrop = require("./modules/dragDrop");
 const Rotate = require("./modules/rotateShip");
 
 const StartGame = (() => {
+    const infoText = document.getElementById("info-text");
+    setTimeout(() => {
+        infoText.innerHTML = "Drag and drop your ships to place them on the left board.";
+    }, 2000);
+    setTimeout(() => {
+        infoText.innerHTML = "Click to rotate any ship horizontally or vertically.";
+    }, 6000);
+    setTimeout(() => {
+        infoText.innerHTML = "When you're finished, click the 'Start' button to begin the game.";
+    }, 9000);
+
+
     // Game setup
     const player = Player("player");
     const computer = Player("computer");

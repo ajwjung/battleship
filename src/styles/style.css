@@ -12,6 +12,11 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    color: rgb(98, 211, 226);
+}
+
+body {
+    background:rgb(5, 30, 49);
 }
 
 .container {
@@ -233,14 +238,14 @@ h1 {
     width: 100%;
     border-bottom: var(--border);
     border-radius: 0% 30% 0% 0% / 10% 80% 0% 0%;
-    background: rgb(226, 12, 12);
+    background: rgb(185, 16, 16);
 }
 
 .white-pegs {
     height: 65%;
     width: 100%;
     border-radius: 0% 0% 30% 0% / 0% 30% 45% 50%;
-    background: white;
+    background: rgb(243, 244, 245);
 }
 
 /* Styles DOM-created grid*/
