@@ -30,11 +30,12 @@ body {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 0.5fr) 5fr;
+    grid-template-rows: repeat(3, 0.5fr) 5fr;
 }
 
 h1,
 .info-container,
+.button-container,
 .player-side,
 .opponent-side,
 .message-box {
@@ -44,6 +45,7 @@ h1,
 
 h1,
 .info-container,
+.button-container,
 .player-side,
 .opponent-side {
     justify-content: center;
@@ -60,23 +62,55 @@ h1 {
     grid-row: 2;
     font-size: var(--font-size);
     gap: 1rem;
-    display: flex;
     flex-direction: column;
 }
 
+.button-container {
+    height: 100%;
+    width: 100%;
+    grid-column: 1 / span 2;
+    grid-row: 3;
+    font-size: var(--font-size);
+    gap: 1rem;
+}
+
 .start-game {
-    height: 30px;
+    height: 32px;
     width: 80px;
+    border: none;
+}
+
+.start-game:disabled {
+    background: rgb(105, 114, 119);
+    color: rgb(0, 0, 0);
+}
+
+.start-game:not(:disabled),
+.help {
+    background: var(--blue);
+}
+
+.help {
+    height: 32px;
+    width: 32px;
+    border: none;
+    border-radius: 50%;
+    font-weight: 600;
+}
+
+.start-game:not(:disabled):hover,
+.help:hover {
+    background: var(--blue-border);
 }
 
 .player-side {
     grid-column: 1;
-    grid-row: 3;
+    grid-row: 4;
 }
 
 .opponent-side {
     grid-column: 2;
-    grid-row: 3;
+    grid-row: 4;
 }
 
 .player-side,
