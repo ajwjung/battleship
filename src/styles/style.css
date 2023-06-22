@@ -253,6 +253,7 @@ h1 {
 
 .ship {
     cursor: pointer;
+    z-index: 1;
 }
 
 /* Align ships individually based on orientation */
