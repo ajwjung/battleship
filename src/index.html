@@ -18,9 +18,15 @@
                 <button type="button" class="start-game">START</button>
             </div>
             <div class="player-side">
-                <div class="message-box">
-                    <p class="player-name">Player:</p>
-                    <p id="player-text"></p>
+                <div class="message-container">
+                    <div class="icon-container">
+                        <img src="../src/imgs/account.svg" alt="Person icon" class="user-icon">
+                        <p class="player-name">Player</p>
+                    </div>
+
+                    <div class="chat-bubble">
+                        <p id="player-text"></p>
+                    </div>
                 </div>
                 <div class="board">
                     <div class="left-panel" id="my-ships">
@@ -42,9 +48,15 @@
                 </div>
             </div>
             <div class="opponent-side">
-                <div class="message-box">
-                    <p class="player-name">Computer:</p>
-                    <p id="cpu-text"></p>
+                <div class="message-container">
+                    <div class="icon-container">
+                        <img src="../src/imgs/laptop.svg" alt="Laptop icon" class="user-icon">
+                        <p class="player-name">Computer</p>
+                    </div>
+
+                    <div class="chat-bubble">
+                        <p id="cpu-text"></p>
+                    </div>
                 </div>
                 <div class="board">
                     <div class="left-panel" id="opponent-ships">

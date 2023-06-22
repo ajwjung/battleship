@@ -12,7 +12,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    color: rgb(98, 211, 226);
+    color: var(--grid-text);
 }
 
 body {
@@ -38,7 +38,9 @@ h1,
 .button-container,
 .player-side,
 .opponent-side,
-.message-box {
+.message-container,
+.icon-container,
+.chat-bubble {
     display: flex;
     align-items: center;
 }
@@ -119,22 +121,78 @@ h1 {
     gap: 3rem;
 }
 
-.message-box {
+.message-container {
     height: 5rem;
-    width: 85%;
-    border: var(--border);
+    width: 75%;
 }
 
-.player-name {
-    display: inline-block;
-    text-indent: 4rem;
-    font-size: var(--font-size);
+.player-side > .message-container {
+    justify-content: flex-start;
 }
+
+.opponent-side > .message-container {
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+}
+
+.icon-container {
+    flex-direction: column;
+}
+
+.user-icon {
+    height: 75px;
+    width: 75px;
+    filter: invert(77%) sepia(42%) saturate(538%) hue-rotate(141deg) brightness(93%) contrast(89%);
+}
+
+.chat-bubble {
+    height: 5rem;
+    width: 55%;
+    border-radius: 10px;
+    background: var(--blue);
+}
+
+.player-side .chat-bubble {
+    margin-left: 4rem;
+    position: relative;
+}
+
+.player-side .chat-bubble::before {
+    content: "";
+    position: absolute;
+    height: 0;
+    width: 0;
+    border-top: 15px solid transparent;
+    border-right: 30px solid var(--blue);
+    border-bottom: 15px solid transparent;
+    top: 20px;
+    left: -30px;
+}
+
+.opponent-side .chat-bubble {
+    margin-right: 5rem;
+    position: relative;
+}
+
+.opponent-side .chat-bubble::after {
+    content: "";
+    position: absolute;
+    height: 0;
+    width: 0;
+    border-top: 15px solid transparent;
+    border-left: 30px solid var(--blue);
+    border-bottom: 15px solid transparent;
+    top: 20px;
+    right: -30px;
+
+}
+
 
 #player-text,
 #cpu-text {
-    margin-left: 1rem;
+    margin-left: 2rem;
     font-size: var(--font-size);
+    word-wrap: break-word;
 }
 
 /* Styles for Gameboards*/

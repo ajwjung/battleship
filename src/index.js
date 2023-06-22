@@ -113,6 +113,7 @@ const StartGame = (() => {
             observer.disconnect();
             const cpuMessage = document.getElementById("cpu-text");
             cpuMessage.textContent = "You may go first.";
+            infoText.textContent = "The first to sink all 5 of their opponent's ships wins. Good luck!";
             playerShipBlocks.forEach(ship => {
                 ship.style.cursor = "default";
             });
