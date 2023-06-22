@@ -87,9 +87,15 @@ const StartGame = (() => {
     const observer = new MutationObserver(mutationHandler);
     observer.observe(playerDock, config);
 
+    function removeCpuShipBlocks() {
+        const cpuShipBlocks = document.querySelectorAll(".ship-preview");
+        cpuShipBlocks.forEach(cpuShip => cpuShip.remove());
+    }
+
     // Finalize both party's ship placement
     startBtn.addEventListener("click", () => {
         if (shipsPlaced === 5) {
+            removeCpuShipBlocks();
             Game.placeComputerShips(computerBoard, allComputerShips);
             startBtn.disabled = true;
             observer.disconnect();
