@@ -93,6 +93,8 @@ const StartGame = (() => {
             Game.placeComputerShips(computerBoard, allComputerShips);
             startBtn.disabled = true;
             observer.disconnect();
+            const cpuMessage = document.getElementById("cpu-text");
+            cpuMessage.textContent = "You may go first.";
             playerShipBlocks.forEach(ship => {
                 ship.style.cursor = "default";
             });

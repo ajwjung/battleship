@@ -32,12 +32,12 @@ const Game = (() => {
                     computerGameboard.placeShip(ship, [x + i, y]);
                     takenSquares.push([x + i, y]);
                     const square = document.body.querySelector(`#opponent-board #${y}${x + i}`);
-                    square.classList.add("highlight");
+                    square.classList.add("cpu-ship");
                 } else {
                     computerGameboard.placeShip(ship, [x, getLetter(y, i)]);
                     takenSquares.push([x, getLetter(y, i)]);
                     const square = document.body.querySelector(`#opponent-board #${getLetter(y, i)}${x}`);
-                    square.classList.add("highlight");
+                    square.classList.add("cpu-ship");
                 }
             };
         });
@@ -66,6 +66,10 @@ const Game = (() => {
             computer.endTurn();
             if (playerBoard.allShipsSunk(playerShips)) {
                 Display.displayEndGame("computer");
+                const cpuOccupiedSquares = document.querySelectorAll(".cpu-ship");
+                cpuOccupiedSquares.forEach(square => {
+                    square.classList.add("highlight");
+                });
             } else {
                 player.startTurn();
             }
@@ -105,6 +109,10 @@ const Game = (() => {
             player.endTurn();
             if (computerBoard.allShipsSunk(cpuShips)) {
                 Display.displayEndGame("player");
+                const cpuOccupiedSquares = document.querySelectorAll(".cpu-ship");
+                cpuOccupiedSquares.forEach(square => {
+                    square.classList.add("highlight");
+                });
             } else {
                 computer.startTurn();
             };
