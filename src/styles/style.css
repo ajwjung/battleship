@@ -168,16 +168,21 @@ h1 {
     position: absolute;
 }
 
+.ship,
+.ship-preview {
+    background: rgb(211, 211, 211);
+}
+
 .carrier {
     height: 223px;
     width: 45px;
-    background: red;
+    border-radius: 5px;
 }
 
 .battleship {
     height: 178px;
     width: 45px;
-    background: purple;
+    border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
 }
 
 .destroyer,
@@ -187,17 +192,17 @@ h1 {
 }
 
 .destroyer {
-    background: orange;
+    border-radius: 50% 50% 25% 25% / 65% 65% 10% 10% 
 }
 
 .submarine {
-    background: khaki;
+    border-radius: 50% 50% 60% 55% / 50% 50% 40% 40%;
 }
 
 .patrol {
     height: 88px;
     width: 45px;
-    background: blue;
+    border-radius: 50% 50% 30% 30% / 70% 70% 20% 20% 
 }
 
 .left-panel,
