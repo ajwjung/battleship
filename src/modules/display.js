@@ -213,16 +213,30 @@ const Display = (() => {
         const playerGridSquares = document.querySelectorAll("#my-board .square:not(.legend)");
         const cpuGridSquares = document.querySelectorAll("#opponent-board .square:not(.legend)");
 
-        playerGridSquares.forEach(square => { square.className = "square" });
+        playerGridSquares.forEach(square => {
+            square.className = "square";
+            square.firstChild.className = "peg-hole";
+        });
 
-        cpuGridSquares.forEach(square => { square.className = "square" });
+        cpuGridSquares.forEach(square => {
+            square.className = "square";
+            square.firstChild.className = "peg-hole";
+        });
+    };
+
+    function resetChatBubbles() {
+        const playerText = document.getElementById("player-text");
+        const cpuText = document.getElementById("cpu-text");
+
+        playerText.textContent = "";
+        cpuText.textContent = "";
     };
 
     return { createBoardGrid, playerAttackMessage, opponentResponse,
         updatePeg, displayEndGame, removeCpuShipBlocks, addStartGameText,
         hideTooltipText, resetTooltipVisibility, helpBoxToggle, 
         getShipsPlacedCounter, startBtnListener, resetPlayerShipDock, 
-        resetCpuShipDock, resetGameGrids };
+        resetCpuShipDock, resetGameGrids, resetChatBubbles };
 })();
 
 module.exports = Display;

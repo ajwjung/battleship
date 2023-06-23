@@ -119,6 +119,7 @@ const StartGame = (() => {
     // Reset game
     const resetBtn = document.querySelector(".reset-game");
     resetBtn.addEventListener("click", () => {
+        Display.resetChatBubbles();
         startBtn.classList.remove("hidden");
         Display.resetTooltipVisibility();
         // Reset gameboards
