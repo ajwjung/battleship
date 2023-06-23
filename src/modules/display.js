@@ -99,6 +99,7 @@ const Display = (() => {
         };
     };
 
+    // Handlers for start of game
     function removeCpuShipBlocks() {
         const cpuShipBlocks = document.querySelectorAll(".ship-preview");
         cpuShipBlocks.forEach(cpuShip => cpuShip.remove());
@@ -111,6 +112,7 @@ const Display = (() => {
         cpuMessage.textContent = "You may go first.";
     };
 
+    // Button popups/tooltips
     function hideTooltipText() {
         const tooltipText = document.querySelector(".tooltip-text");
         tooltipText.style.visibility = "hidden";
@@ -123,6 +125,7 @@ const Display = (() => {
         helpBox.classList.toggle("hidden");
     }
 
+    // Handlers for enabling/disabling start button
     let shipsPlaced = 0;
 
     function getShipsPlacedCounter() {
