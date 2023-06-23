@@ -6,7 +6,6 @@
     --blue-border: rgba(34, 73, 104, 0.85);
     --light-gray: rgb(211, 211, 211);
     --dark-gray: rgb(90, 109, 119);
-    --yellow: rgb(233, 216, 141);
     --off-white: rgb(243, 244, 245);
     --red: rgb(185, 16, 16);
     --border: 3px solid var(--blue-border);
@@ -197,9 +196,9 @@ h1 {
     background: var(--blue);
     border: none;
     border-radius: 50%;
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 600;
-    color: var(--yellow);
+    color: var(--off-white);
 }
 
 .start-game:not(:disabled):hover,
