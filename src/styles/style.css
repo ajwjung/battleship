@@ -47,7 +47,8 @@ h1,
 .opponent-message-container,
 .icon-container,
 .chat-bubble,
-.button-container {
+.button-container,
+.reset-game {
     display: flex;
     align-items: center;
 }
@@ -56,7 +57,8 @@ h1,
 .info-container,
 .player-side,
 .opponent-side,
-.button-container {
+.button-container,
+.reset-game {
     justify-content: center;
 }
 
@@ -166,11 +168,12 @@ h1 {
     width: 100%;
     grid-column: 2;
     font-size: var(--font-size);
-    gap: 2rem;
+    gap: 1rem;
     position: relative;
 }
 
-.start-game {
+.start-game,
+.reset-game {
     height: 40px;
     width: 100px;
     border: none;
@@ -186,26 +189,40 @@ h1 {
     text-transform: lowercase;
 }
 
-.start-game:not(:disabled) {
+.start-game:not(:disabled),
+.help,
+.reset-game {
     background: var(--blue);
     color: var(--off-white);
     font-weight: 600;
 }
 
-.help {
+.help,
+.reset-game {
     height: 37px;
     width: 37px;
-    background: var(--blue);
     border: none;
     border-radius: 50%;
     font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--off-white);
 }
 
 .start-game:not(:disabled):hover,
-.help:hover {
+.help:hover,
+.reset-game:hover {
     background: var(--blue-border);
+}
+
+.help:hover {
+    color: rgb(231, 171, 153);
+}
+
+#reset-icon {
+    height: 75%;
+    filter: invert(99%) sepia(1%) saturate(168%) hue-rotate(169deg) brightness(97%) contrast(99%);
+}
+
+#reset-icon:hover {
+    filter: invert(89%) sepia(5%) saturate(4420%) hue-rotate(308deg) brightness(87%) contrast(110%);
 }
 
 /* Styles tooltip for start button */

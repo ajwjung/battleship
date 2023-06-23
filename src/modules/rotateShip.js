@@ -144,9 +144,16 @@ const Rotate = (() => {
         allPlayerSquares.forEach(square => {
             square.addEventListener("click", squareHandler, true);
         });
-    }
+    };
 
-    return { rotateShip, disableRotateShip }
+    function enableRotateShip() {
+        const allPlayerSquares = document.querySelectorAll("#my-board .square");
+        allPlayerSquares.forEach(square => {
+            square.removeEventListener("click", squareHandler, false);
+        });
+    };
+
+    return { rotateShip, disableRotateShip, enableRotateShip }
 })();
 
 module.exports = Rotate;

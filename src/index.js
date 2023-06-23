@@ -20,12 +20,11 @@ const StartGame = (() => {
         infoText.innerHTML = "When you're finished, click the 'Start' button to begin the game.";
     }, 9000);
 
-
     // Game setup
     const player = Player("player");
     const computer = Player("computer");
-    const playerBoard = Gameboard();
-    const computerBoard = Gameboard();
+    let playerBoard = Gameboard();
+    let computerBoard = Gameboard();
 
     // Display setup
     const playerGrid = document.getElementById("my-board");
@@ -35,22 +34,22 @@ const StartGame = (() => {
     Display.createBoardGrid(opponentGrid);
 
     // Player ships setup
-    const playerCarrier = Ship(5);
-    const playerBattleship = Ship(4);
-    const playerDestroyer = Ship(3);
-    const playerSubmarine = Ship(3);
-    const playerPatrol = Ship(2); 
-    const allPlayerShips = [
+    let playerCarrier = Ship(5);
+    let playerBattleship = Ship(4);
+    let playerDestroyer = Ship(3);
+    let playerSubmarine = Ship(3);
+    let playerPatrol = Ship(2); 
+    let allPlayerShips = [
         playerCarrier, playerBattleship, playerDestroyer,
         playerSubmarine, playerPatrol
     ];
 
-    const computerCarrier = Ship(5);
-    const computerBattleship = Ship(4);
-    const computerDestroyer = Ship(3);
-    const computerSubmarine = Ship(3);
-    const computerPatrol = Ship(2); 
-    const allComputerShips = [
+    let computerCarrier = Ship(5);
+    let computerBattleship = Ship(4);
+    let computerDestroyer = Ship(3);
+    let computerSubmarine = Ship(3);
+    let computerPatrol = Ship(2); 
+    let allComputerShips = [
         computerCarrier, computerBattleship, computerDestroyer,
         computerSubmarine, computerPatrol
     ];
@@ -115,6 +114,40 @@ const StartGame = (() => {
             DragDrop.disableDragDrop(ships);
         }
     })
+
+    // Reset game
+    const resetBtn = document.querySelector(".reset-game");
+    resetBtn.addEventListener("click", () => {
+        // Reset gameboards
+        Display.resetPlayerShipDock();
+        Display.resetCpuShipDock();
+        Rotate.enableRotateShip();
+
+        playerBoard = Gameboard();
+        computerBoard = Gameboard();
+        Display.resetGameGrids();
+
+        // Reset player and cpu ships
+        playerCarrier = Ship(5);
+        playerBattleship = Ship(4);
+        playerDestroyer = Ship(3);
+        playerSubmarine = Ship(3);
+        playerPatrol = Ship(2); 
+        allPlayerShips = [
+            playerCarrier, playerBattleship, playerDestroyer,
+            playerSubmarine, playerPatrol
+        ];
+
+        computerCarrier = Ship(5);
+        computerBattleship = Ship(4);
+        computerDestroyer = Ship(3);
+        computerSubmarine = Ship(3);
+        computerPatrol = Ship(2); 
+        allComputerShips = [
+            computerCarrier, computerBattleship, computerDestroyer,
+            computerSubmarine, computerPatrol
+        ];
+    });
 
     // Game starts with player going first
     player.startTurn();
