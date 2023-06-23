@@ -4,6 +4,7 @@
     --grid-text: rgb(98, 211, 226);
     --blue: rgb(57, 101, 133);
     --blue-border: rgba(34, 73, 104, 0.85);
+    --dark-blue: rgb(15, 49, 80);
     --light-gray: rgb(211, 211, 211);
     --dark-gray: rgb(90, 109, 119);
     --off-white: rgb(243, 244, 245);
@@ -166,6 +167,7 @@ h1 {
     grid-column: 2;
     font-size: var(--font-size);
     gap: 2rem;
+    position: relative;
 }
 
 .start-game {
@@ -221,6 +223,73 @@ h1 {
 
 .start-game:disabled:hover .tooltip-text {
     visibility: visible;
+}
+
+/* Styles help popup box */
+.backdrop {
+    height: 100vh;
+    width: 100vw;
+    background: rgba(50, 50, 50, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 20;
+}
+
+.help-box {
+    width: 550px;
+    background: var(--dark-blue);
+    border: 1px solid var(--grid-outline);
+    border-radius: 3px;
+    padding: 2rem;
+    font-size: 1rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+    display: grid;
+    grid-template-rows: 0.5fr 5fr;
+}
+
+.help-bar {
+    grid-row: 1;
+    display: flex;
+    justify-content: space-between;
+}
+
+#how-to,
+#close-help {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+#close-help {
+    height: 30px;
+    width: 30px;
+    background: none;
+    border: none;
+}
+
+#close-help:hover {
+    color: var(--red);
+}
+
+.help-info {
+    grid-row: 2;
+}
+
+.help-info > ul {
+    padding-left: 25px;
+}
+
+.help-info:not(b),
+.help-info > ul li {
+    color: var(--off-white);
+}
+
+.hidden {
+    display: none;
 }
 
 .player-side {

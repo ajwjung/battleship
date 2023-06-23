@@ -116,6 +116,13 @@ const Display = (() => {
         tooltipText.style.visibility = "hidden";
     };
 
+    function helpBoxToggle() {
+        const helpBox = document.querySelector(".help-box");
+        const helpBoxBackdrop = document.querySelector(".backdrop");
+        helpBoxBackdrop.classList.toggle("hidden");
+        helpBox.classList.toggle("hidden");
+    }
+
     let shipsPlaced = 0;
 
     function getShipsPlacedCounter() {
@@ -146,7 +153,7 @@ const Display = (() => {
 
     return { createBoardGrid, playerAttackMessage, opponentResponse,
         updatePeg, displayEndGame, removeCpuShipBlocks, addStartGameText,
-        hideTooltipText, getShipsPlacedCounter, startBtnListener };
+        hideTooltipText, helpBoxToggle, getShipsPlacedCounter, startBtnListener };
 })();
 
 module.exports = Display;

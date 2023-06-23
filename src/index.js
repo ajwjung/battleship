@@ -71,6 +71,18 @@ const StartGame = (() => {
         square.addEventListener("dragleave", e => DragDrop.dragLeave(e));
         square.addEventListener("drop", e => DragDrop.dragDrop(e));
     });
+
+    // Help info box
+    const helpBtn = document.querySelector(".help");
+    const closeHelpBtn = document.getElementById("close-help");
+
+    helpBtn.addEventListener("click", () => {
+        Display.helpBoxToggle()
+    });
+
+    closeHelpBtn.addEventListener("click", () => {
+        Display.helpBoxToggle();
+    });
  
     // Listen for changes in player's dock
     // To enable/disable "Start" button
