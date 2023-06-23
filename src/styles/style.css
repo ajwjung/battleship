@@ -175,6 +175,7 @@ h1 {
     border: none;
     border-radius: 3px;
     font-size: 1rem;
+    position: relative;
 }
 
 .start-game:disabled {
@@ -204,6 +205,23 @@ h1 {
 .start-game:not(:disabled):hover,
 .help:hover {
     background: var(--blue-border);
+}
+
+/* Styles tooltip for start button */
+.start-game .tooltip-text {
+    visibility: hidden;
+    width: 165px;
+    color: rgb(255, 86, 74);
+    position: absolute;
+    top: 53px;
+    left: -32px;
+    font-style: normal;
+    text-transform: none;
+    font-size: 0.87rem;
+}
+
+.start-game:disabled:hover .tooltip-text {
+    visibility: visible;
 }
 
 .player-side {

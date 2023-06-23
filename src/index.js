@@ -110,6 +110,8 @@ const StartGame = (() => {
             removeCpuShipBlocks();
             Game.placeComputerShips(computerBoard, allComputerShips);
             startBtn.disabled = true;
+            const tooltipText = document.querySelector(".tooltip-text");
+            tooltipText.style.visibility = "hidden";
             observer.disconnect();
             const cpuMessage = document.getElementById("cpu-text");
             cpuMessage.textContent = "You may go first.";
