@@ -39,7 +39,7 @@ const StartGame = (() => {
     const playerBattleship = Ship(4);
     const playerDestroyer = Ship(3);
     const playerSubmarine = Ship(3);
-    const playerPatrol = Ship (2); 
+    const playerPatrol = Ship(2); 
     const allPlayerShips = [
         playerCarrier, playerBattleship, playerDestroyer,
         playerSubmarine, playerPatrol
@@ -49,7 +49,7 @@ const StartGame = (() => {
     const computerBattleship = Ship(4);
     const computerDestroyer = Ship(3);
     const computerSubmarine = Ship(3);
-    const computerPatrol = Ship (2); 
+    const computerPatrol = Ship(2); 
     const allComputerShips = [
         computerCarrier, computerBattleship, computerDestroyer,
         computerSubmarine, computerPatrol
@@ -76,72 +76,33 @@ const StartGame = (() => {
     // To enable/disable "Start" button
     const startBtn = document.querySelector(".start-game");
     const playerDock = document.getElementById("my-ships");
-    const playerShipBlocks = document.querySelectorAll(".ship");
-    let shipsPlaced = 0;
     startBtn.disabled = true;
-    
-    function incrementShipsPlaced() {
-        shipsPlaced += 1;
-    }
-
     const config = { childList: true, subtree: true };
-
-    function mutationHandler(mutations) {
-        mutations.forEach((mutation => {
-            if (mutation.type === "childList") incrementShipsPlaced();
-        }));
-
-        if (shipsPlaced === 5) {
-            startBtn.disabled = false;
-        };
-    }
-
-    const observer = new MutationObserver(mutationHandler);
+    const observer = Display.startBtnListener();
     observer.observe(playerDock, config);
-
-    function removeCpuShipBlocks() {
-        const cpuShipBlocks = document.querySelectorAll(".ship-preview");
-        cpuShipBlocks.forEach(cpuShip => cpuShip.remove());
-    }
 
     // Finalize both party's ship placement
     startBtn.addEventListener("click", () => {
+        const shipsPlaced = Display.getShipsPlacedCounter();
+        const playerShipBlocks = document.querySelectorAll(".ship");
+
         if (shipsPlaced === 5) {
-            removeCpuShipBlocks();
-            Game.placeComputerShips(computerBoard, allComputerShips);
             startBtn.disabled = true;
-            const tooltipText = document.querySelector(".tooltip-text");
-            tooltipText.style.visibility = "hidden";
             observer.disconnect();
-            const cpuMessage = document.getElementById("cpu-text");
-            cpuMessage.textContent = "You may go first.";
-            infoText.textContent = "The first to sink all 5 of their opponent's ships wins. Good luck!";
-            playerShipBlocks.forEach(ship => {
-                ship.style.cursor = "default";
-            });
-            const playerOccupiedSquares = document.querySelectorAll("#my-board .square.taken");
-            playerOccupiedSquares.forEach(occupiedSquare => {
-                const shipName = occupiedSquare.classList[1].slice(3);
-                const coordinates = occupiedSquare.id;
-                const formattedCoordinates = [coordinates[1], coordinates[0]];
-                
-                if (shipName === "patrol") {
-                    playerBoard.placeShip(playerPatrol, formattedCoordinates);
-                } else if (shipName === "destroyer") {
-                    playerBoard.placeShip(playerDestroyer, formattedCoordinates);
-                } else if (shipName === "submarine") {
-                    playerBoard.placeShip(playerSubmarine, formattedCoordinates);
-                } else if (shipName === "battleship") {
-                    playerBoard.placeShip(playerBattleship, formattedCoordinates);
-                } else if (shipName === "carrier") {
-                    playerBoard.placeShip(playerCarrier, formattedCoordinates);
-                }
-            });
+            Display.hideTooltipText();
+            Display.addStartGameText();
+            Display.removeCpuShipBlocks();
+            playerShipBlocks.forEach(ship => { ship.style.cursor = "default" });
+
+            Game.placeComputerShips(computerBoard, allComputerShips);
+            Game.placePlayerShips(
+                playerBoard, playerPatrol, playerDestroyer, playerSubmarine, 
+                playerBattleship, playerSubmarine, playerCarrier
+            );
             Rotate.disableRotateShip();
             DragDrop.disableDragDrop(ships);
         }
     })
-
 
     // Game starts with player going first
     player.startTurn();

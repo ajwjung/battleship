@@ -99,8 +99,54 @@ const Display = (() => {
         };
     };
 
+    function removeCpuShipBlocks() {
+        const cpuShipBlocks = document.querySelectorAll(".ship-preview");
+        cpuShipBlocks.forEach(cpuShip => cpuShip.remove());
+    };
+
+    function addStartGameText() {
+        const cpuMessage = document.getElementById("cpu-text");
+        const infoText = document.getElementById("info-text");
+        infoText.textContent = "The first to sink all 5 of their opponent's ships wins. Good luck!";
+        cpuMessage.textContent = "You may go first.";
+    };
+
+    function hideTooltipText() {
+        const tooltipText = document.querySelector(".tooltip-text");
+        tooltipText.style.visibility = "hidden";
+    };
+
+    let shipsPlaced = 0;
+
+    function getShipsPlacedCounter() {
+        return shipsPlaced;
+    };
+    
+    function incrementShipsPlaced() {
+        shipsPlaced += 1;
+    };
+
+    function mutationHandler(mutations) {
+        const startBtn = document.querySelector(".start-game");
+        mutations.forEach((mutation => {
+            if (mutation.type === "childList") incrementShipsPlaced();
+        }));
+
+        if (shipsPlaced === 5) {
+            startBtn.disabled = false;
+        };
+    };
+
+    function startBtnListener() {
+        const startBtn = document.querySelector(".start-game");
+        startBtn.disabled = true;
+        
+        return new MutationObserver(mutationHandler);
+    };
+
     return { createBoardGrid, playerAttackMessage, opponentResponse,
-        updatePeg, displayEndGame };
+        updatePeg, displayEndGame, removeCpuShipBlocks, addStartGameText,
+        hideTooltipText, getShipsPlacedCounter, startBtnListener };
 })();
 
 module.exports = Display;

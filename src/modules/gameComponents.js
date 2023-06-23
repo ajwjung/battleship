@@ -45,6 +45,27 @@ const Game = (() => {
         return takenSquares;
     };
 
+    function placePlayerShips(playerBoard, playerPatrol, playerDestroyer, playerSubmarine, playerBattleship, playerCarrier) {
+        const playerOccupiedSquares = document.querySelectorAll("#my-board .square.taken");
+        playerOccupiedSquares.forEach(occupiedSquare => {
+            const shipName = occupiedSquare.classList[1].slice(3);
+            const coordinates = occupiedSquare.id;
+            const formattedCoordinates = [coordinates[1], coordinates[0]];
+            
+            if (shipName === "patrol") {
+                playerBoard.placeShip(playerPatrol, formattedCoordinates);
+            } else if (shipName === "destroyer") {
+                playerBoard.placeShip(playerDestroyer, formattedCoordinates);
+            } else if (shipName === "submarine") {
+                playerBoard.placeShip(playerSubmarine, formattedCoordinates);
+            } else if (shipName === "battleship") {
+                playerBoard.placeShip(playerBattleship, formattedCoordinates);
+            } else if (shipName === "carrier") {
+                playerBoard.placeShip(playerCarrier, formattedCoordinates);
+            }
+        });
+    }
+
     // CPU makes a random attack (we don't pass coordinates bc it's randomly generated)
     // CPU calls out the coordinates - displayed
     // Display opponent's response (hit/miss)
@@ -149,7 +170,7 @@ const Game = (() => {
         });
     };
 
-    return { placeComputerShips, takeTurnsAttacking };
+    return { placeComputerShips, placePlayerShips, takeTurnsAttacking };
 })();
 
 module.exports = Game;
