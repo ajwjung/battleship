@@ -160,6 +160,7 @@ h1 {
     word-wrap: break-word;
 }
 
+/* Styles buttons */
 .button-container {
     height: 100%;
     width: 100%;
@@ -183,15 +184,16 @@ h1 {
     text-transform: lowercase;
 }
 
-.start-game:not(:disabled),
-.help {
+.start-game:not(:disabled) {
     background: var(--blue);
+    color: var(--off-white);
     font-weight: 600;
 }
 
 .help {
     height: 37px;
     width: 37px;
+    background: var(--blue);
     border: none;
     border-radius: 50%;
     font-size: 1rem;
@@ -342,19 +344,34 @@ h1 {
     border-radius: 0 30% 30% 0;
 }
 
-.red-pegs {
+.red-peg-holder,
+.white-peg-holder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.red-peg-holder {
     height: 35%;
     width: 100%;
     border-bottom: var(--border);
     border-radius: 0% 30% 0% 0% / 10% 80% 0% 0%;
-    background: rgb(185, 16, 16);
 }
 
-.white-pegs {
+.white-peg-holder {
     height: 65%;
     width: 100%;
     border-radius: 0% 0% 30% 0% / 0% 30% 45% 50%;
-    background: var(--off-white);
+}
+
+.red-pegs {
+    height: 100%;
+    width: auto;
+}
+
+.white-pegs {
+    height: 90%;
+    width: auto;
 }
 
 /* Highlight CPU ships */
