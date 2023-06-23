@@ -118,6 +118,11 @@ const Display = (() => {
         tooltipText.style.visibility = "hidden";
     };
 
+    function resetTooltipVisibility() {
+        const tooltipText = document.querySelector(".tooltip-text");
+        tooltipText.style.visibility = "";
+    };
+
     function helpBoxToggle() {
         const helpBox = document.querySelector(".help-box");
         const helpBoxBackdrop = document.querySelector(".backdrop");
@@ -215,9 +220,9 @@ const Display = (() => {
 
     return { createBoardGrid, playerAttackMessage, opponentResponse,
         updatePeg, displayEndGame, removeCpuShipBlocks, addStartGameText,
-        hideTooltipText, helpBoxToggle, getShipsPlacedCounter, 
-        startBtnListener, resetPlayerShipDock, resetCpuShipDock,
-        resetGameGrids };
+        hideTooltipText, resetTooltipVisibility, helpBoxToggle, 
+        getShipsPlacedCounter, startBtnListener, resetPlayerShipDock, 
+        resetCpuShipDock, resetGameGrids };
 })();
 
 module.exports = Display;

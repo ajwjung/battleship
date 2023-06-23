@@ -87,7 +87,7 @@ const StartGame = (() => {
     // To enable/disable "Start" button
     const startBtn = document.querySelector(".start-game");
     const playerDock = document.getElementById("my-ships");
-    startBtn.disabled = true;
+    // startBtn.disabled = true;
     const config = { childList: true, subtree: true };
     const observer = Display.startBtnListener();
     observer.observe(playerDock, config);
@@ -112,12 +112,15 @@ const StartGame = (() => {
             );
             Rotate.disableRotateShip();
             DragDrop.disableDragDrop(ships);
+            startBtn.classList.add("hidden");
         }
     })
 
     // Reset game
     const resetBtn = document.querySelector(".reset-game");
     resetBtn.addEventListener("click", () => {
+        startBtn.classList.remove("hidden");
+        Display.resetTooltipVisibility();
         // Reset gameboards
         Display.resetPlayerShipDock();
         Display.resetCpuShipDock();
