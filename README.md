@@ -1,5 +1,7 @@
 # Battleship
 
+- [Live demo](https://ajwjung.github.io/battleship/)
+
 ## Objective
 
 To practice test-driven development (TDD) by creating a single-player Battleship game played against the computer. Full details can be found on [The Odin Project's page](https://www.theodinproject.com/lessons/node-path-javascript-battleship).
