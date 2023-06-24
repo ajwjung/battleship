@@ -1,7 +1,7 @@
-const Coordinates = require("./convertCoordinates");
-const GenerateCoordinates = require("./generateCoordinates");
-const Display = require("./display");
-const arrayContainsCoordinates = require("./checkArraysContains");
+const Coordinates = require("./convertCoordinates.js");
+const GenerateCoordinates = require("./generateCoordinates.js");
+const Display = require("./display.js");
+const arrayContainsCoordinates = require("./checkArraysContains.js");
 
 const Game = (() => {
   const cpuMsgBox = document.getElementById("cpu-text");

@@ -1,4 +1,4 @@
-const DragDrop = require("./dragDrop");
+const DragDrop = require("./dragDrop.js");
 
 const Rotate = (() => {
   let angle = 0;

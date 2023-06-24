@@ -1,5 +1,5 @@
-const arrayContainsCoordinates = require("./checkArraysContains");
-const Coordinates = require("./convertCoordinates");
+const arrayContainsCoordinates = require("./checkArraysContains.js");
+const Coordinates = require("./convertCoordinates.js");
 
 const Gameboard = () => {
   const board = [];

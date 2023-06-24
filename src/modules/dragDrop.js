@@ -1,4 +1,4 @@
-const Coordinates = require("./convertCoordinates");
+const Coordinates = require("./convertCoordinates.js");
 
 const DragDrop = (() => {
   function hasVerticalClass(ship) {

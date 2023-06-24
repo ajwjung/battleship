@@ -1,12 +1,12 @@
 import "./styles/style.css";
 
-const Ship = require("./modules/ship");
-const Gameboard = require("./modules/gameboard");
-const Player = require("./modules/player");
-const Display = require("./modules/display");
-const Game = require("./modules/gameComponents");
-const DragDrop = require("./modules/dragDrop");
-const Rotate = require("./modules/rotateShip");
+const Ship = require("./modules/ship.js");
+const Gameboard = require("./modules/gameboard.js");
+const Player = require("./modules/player.js");
+const Display = require("./modules/display.js");
+const Game = require("./modules/gameComponents.js");
+const DragDrop = require("./modules/dragDrop.js");
+const Rotate = require("./modules/rotateShip.js");
 
 const StartGame = (() => {
   const infoText = document.getElementById("info-text");

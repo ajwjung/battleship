@@ -1,4 +1,4 @@
-const arrayContainsCoordinates = require("./checkArraysContains");
+const arrayContainsCoordinates = require("./checkArraysContains.js");
 
 const GenerateCoordinates = (() => {
   const lettersKey = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
