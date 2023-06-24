@@ -37,7 +37,7 @@ body {
     display: grid;
     justify-content: center;
     grid-template-columns: 1fr 0.5fr 1fr;
-    grid-template-rows: repeat(3, 0.8fr) 5fr;
+    grid-template-rows: repeat(3, 0.8fr) 5fr 0.5fr;
 }
 
 h1,
@@ -49,7 +49,8 @@ h1,
 .icon-container,
 .chat-bubble,
 .button-container,
-.reset-game {
+.reset-game,
+footer {
     display: flex;
     align-items: center;
 }
@@ -59,7 +60,8 @@ h1,
 .player-side,
 .opponent-side,
 .button-container,
-.reset-game {
+.reset-game,
+footer {
     justify-content: center;
 }
 
@@ -476,6 +478,22 @@ h1 {
 .white-pegs {
     height: 90%;
     width: auto;
+}
+
+footer {
+    grid-column: 1 / span 3;
+    grid-row: 5;
+    font-size: 1rem;
+}
+
+footer > a {
+    padding-right: 10px;
+}
+
+#github-icon {
+    height: 30px;
+    width: 30px;
+    filter: invert(77%) sepia(42%) saturate(538%) hue-rotate(141deg) brightness(93%) contrast(89%);
 }
 
 /* Highlight CPU ships */
