@@ -42,8 +42,7 @@ const Display = (() => {
         };
     };
 
-    // Initial message - player calling out coordinates
-    // Update respective player's message box
+    // Player calls out a coordinate to attack
     function playerAttackMessage(coordinates, player) {
         if (player.playerName === "computer") {
             const formattedCoordinates = `${coordinates[1]}${coordinates[0]}`;
@@ -54,7 +53,6 @@ const Display = (() => {
     };
 
     // Opponent that got hit responds hit/miss
-    // Update respective player's message box
     function opponentResponse(wasHit, hitTarget, opponent) {
         const message = opponent.playerName !== "computer" ? playerMsgBox : cpuMsgBox;
 

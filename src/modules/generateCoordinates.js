@@ -26,6 +26,8 @@ const GenerateCoordinates = (() => {
         return overlap;
     };
 
+    // Randomly generate a coordinate for CPU's ship
+    // And keeps generating until we get an unoccupied square
     function getRandomPlacement(takenSpots, ship) {
         const row = Math.floor(Math.random() * 10) + 1;
         const colIndex = Math.floor(Math.random() * lettersKey.length)
@@ -39,6 +41,7 @@ const GenerateCoordinates = (() => {
         return [row, lettersKey[colIndex]];
     };
 
+    // For CPU attack on player
     function getUnusedCoordinates(successfulHits, missedAttacks) {
         const row = Math.floor(Math.random() * 10) + 1;
         const col = lettersKey[Math.floor(Math.random() * lettersKey.length)];

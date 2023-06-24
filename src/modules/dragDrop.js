@@ -57,6 +57,7 @@ const DragDrop = (() => {
         });
     }
 
+    // Removes temporary classes added when rotating in dock only
     function removeTemporaryClasses(ship) {
         if (ship.classList.contains("rotated-vertical")) ship.classList.remove("rotated-vertical");
         if (ship.classList.contains("rotated-horizontal")) ship.classList.remove("rotated-horizontal");
@@ -84,7 +85,6 @@ const DragDrop = (() => {
         return row - 1 + shipLength <= 10;
     }
 
-    // Works for both orientations
     function getAdjacentSquares(squareId, dimension, orientation) {
         const lettersKey = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
         const shipLength = getShipLength(dimension);
@@ -104,11 +104,9 @@ const DragDrop = (() => {
         return requiredSquares;
     }
 
-    // Works for both orientations
     function checkSquaresTaken(requiredSquares, ship) {
-        // Checks whether at least one square has `.taken` class
-        // If a square is taken,
-        // checks that it's not taken by the same ship we're dropping/rotating
+        // A square taken up by the same current ship is okay
+        // Because we want to allow pivoting around the first square
         const shipName = ship.classList[1];
         return requiredSquares.some(square => 
             square.classList.contains("taken") && square.classList[1] !== `my-${shipName}`
@@ -116,7 +114,8 @@ const DragDrop = (() => {
     };
 
     function isValidDrop(squareId, dimension, adjacentSquares, ship, orientation) {
-        // Returns true if the attempted drop position is within bounds and does not overlap a placed ship
+        // Returns true if the attempted drop position is within bounds
+        // and does not overlap a placed ship
         let validDrop;
 
         if (orientation === "vertical") {
