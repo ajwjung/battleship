@@ -1,43 +1,43 @@
 :root {
-    --grid-bg: rgb(32, 119, 160);
-    --grid-outline: rgb(34, 190, 211);
-    --grid-text: rgb(98, 211, 226);
-    --blue: rgb(57, 101, 133);
-    --blue-border: rgba(34, 73, 104, 0.85);
-    --dark-blue: rgb(15, 49, 80);
-    --light-gray: rgb(211, 211, 211);
-    --dark-gray: rgb(90, 109, 119);
-    --off-white: rgb(243, 244, 245);
-    --red: rgb(185, 16, 16);
-    --border: 3px solid var(--blue-border);
-    --font-size: 1.5rem;
+  --grid-bg: rgb(32, 119, 160);
+  --grid-outline: rgb(34, 190, 211);
+  --grid-text: rgb(98, 211, 226);
+  --blue: rgb(57, 101, 133);
+  --blue-border: rgba(34, 73, 104, 0.85);
+  --dark-blue: rgb(15, 49, 80);
+  --light-gray: rgb(211, 211, 211);
+  --dark-gray: rgb(90, 109, 119);
+  --off-white: rgb(243, 244, 245);
+  --red: rgb(185, 16, 16);
+  --border: 3px solid var(--blue-border);
+  --font-size: 1.5rem;
 }
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    color: var(--grid-text);
-    font-family: 'Roboto Mono', monospace;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: var(--grid-text);
+  font-family: "Roboto Mono", monospace;
 }
 
 body {
-    background:rgb(5, 30, 49);
+  background: rgb(5, 30, 49);
 }
 
 .container {
-    height: 100vh;
-    width: 100vw;
-    margin: 0 auto;
+  height: 100vh;
+  width: 100vw;
+  margin: 0 auto;
 }
 
 .content {
-    height: 100%;
-    width: 100%;
-    display: grid;
-    justify-content: center;
-    grid-template-columns: 1fr 0.5fr 1fr;
-    grid-template-rows: repeat(3, 0.8fr) 5fr 0.5fr;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 1fr 0.5fr 1fr;
+  grid-template-rows: repeat(3, 0.8fr) 5fr 0.5fr;
 }
 
 h1,
@@ -51,8 +51,8 @@ h1,
 .button-container,
 .reset-game,
 footer {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 h1,
@@ -62,270 +62,272 @@ h1,
 .button-container,
 .reset-game,
 footer {
-    justify-content: center;
+  justify-content: center;
 }
 
 h1 {
-    text-align: center;
-    grid-column: 1 / span 3;
-    grid-row: 1;
-    margin-top: 2rem;
+  text-align: center;
+  grid-column: 1 / span 3;
+  grid-row: 1;
+  margin-top: 2rem;
 }
 
 .info-container {
-    grid-column: 1 / span 3;
-    grid-row: 2;
-    font-size: var(--font-size);
-    gap: 1rem;
-    flex-direction: column;
+  grid-column: 1 / span 3;
+  grid-row: 2;
+  font-size: var(--font-size);
+  gap: 1rem;
+  flex-direction: column;
 }
 
 /* Styles message containers and buttons */
 .message-container {
-    height: 100%;
-    width: 100%;
-    padding: 0 1rem;
-    grid-column: 1 / span 3;
-    grid-row: 3;
-    display: grid;
-    grid-template-columns: 1fr 0.5fr 1fr;
+  height: 100%;
+  width: 100%;
+  padding: 0 1rem;
+  grid-column: 1 / span 3;
+  grid-row: 3;
+  display: grid;
+  grid-template-columns: 1fr 0.5fr 1fr;
 }
 
 .player-message-container {
-    width: 100%;
-    grid-column: 1;
-    justify-content: flex-start;
-    margin-left: 5rem;
+  width: 100%;
+  grid-column: 1;
+  justify-content: flex-start;
+  margin-left: 5rem;
 }
 
 .opponent-message-container {
-    width: 100%;
-    grid-column: 3;
-    flex-direction: row-reverse;
-    justify-content: flex-start;
-    margin-left: -5rem;
+  width: 100%;
+  grid-column: 3;
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+  margin-left: -5rem;
 }
 
 .icon-container {
-    flex-direction: column;
+  flex-direction: column;
 }
 
 .user-icon {
-    height: 75px;
-    width: 75px;
-    filter: invert(77%) sepia(42%) saturate(538%) hue-rotate(141deg) brightness(93%) contrast(89%);
+  height: 75px;
+  width: 75px;
+  filter: invert(77%) sepia(42%) saturate(538%) hue-rotate(141deg)
+    brightness(93%) contrast(89%);
 }
 
 .chat-bubble {
-    height: 5rem;
-    width: 60%;
-    border-radius: 10px;
-    background: var(--blue);
+  height: 5rem;
+  width: 60%;
+  border-radius: 10px;
+  background: var(--blue);
 }
 
 .player-message-container .chat-bubble {
-    margin-left: 4rem;
-    position: relative;
+  margin-left: 4rem;
+  position: relative;
 }
 
 .player-message-container .chat-bubble::before {
-    content: "";
-    position: absolute;
-    height: 0;
-    width: 0;
-    border-top: 15px solid transparent;
-    border-right: 30px solid var(--blue);
-    border-bottom: 15px solid transparent;
-    top: 20px;
-    left: -30px;
+  content: "";
+  position: absolute;
+  height: 0;
+  width: 0;
+  border-top: 15px solid transparent;
+  border-right: 30px solid var(--blue);
+  border-bottom: 15px solid transparent;
+  top: 20px;
+  left: -30px;
 }
 
 .opponent-message-container .chat-bubble {
-    margin-right: 5rem;
-    position: relative;
+  margin-right: 5rem;
+  position: relative;
 }
 
 .opponent-message-container .chat-bubble::after {
-    content: "";
-    position: absolute;
-    height: 0;
-    width: 0;
-    border-top: 15px solid transparent;
-    border-left: 30px solid var(--blue);
-    border-bottom: 15px solid transparent;
-    top: 20px;
-    right: -30px;
-
+  content: "";
+  position: absolute;
+  height: 0;
+  width: 0;
+  border-top: 15px solid transparent;
+  border-left: 30px solid var(--blue);
+  border-bottom: 15px solid transparent;
+  top: 20px;
+  right: -30px;
 }
 
 #player-text,
 #cpu-text {
-    margin-left: 2rem;
-    font-size: var(--font-size);
-    word-wrap: break-word;
+  margin-left: 2rem;
+  font-size: var(--font-size);
+  word-wrap: break-word;
 }
 
 /* Styles buttons */
 .button-container {
-    height: 100%;
-    width: 100%;
-    grid-column: 2;
-    font-size: var(--font-size);
-    gap: 1rem;
-    position: relative;
+  height: 100%;
+  width: 100%;
+  grid-column: 2;
+  font-size: var(--font-size);
+  gap: 1rem;
+  position: relative;
 }
 
 .start-game,
 .reset-game {
-    height: 40px;
-    width: 100px;
-    border: none;
-    border-radius: 3px;
-    font-size: 1rem;
-    position: relative;
+  height: 40px;
+  width: 100px;
+  border: none;
+  border-radius: 3px;
+  font-size: 1rem;
+  position: relative;
 }
 
 .start-game:disabled {
-    background: var(--dark-gray);
-    color: rgb(0, 0, 0);
-    font-style: italic;
-    text-transform: lowercase;
+  background: var(--dark-gray);
+  color: rgb(0, 0, 0);
+  font-style: italic;
+  text-transform: lowercase;
 }
 
 .start-game:not(:disabled),
 .help,
 .reset-game {
-    background: var(--blue);
-    color: var(--off-white);
-    font-weight: 600;
+  background: var(--blue);
+  color: var(--off-white);
+  font-weight: 600;
 }
 
 .help,
 .reset-game {
-    height: 37px;
-    width: 37px;
-    border: none;
-    border-radius: 50%;
-    font-size: 1.2rem;
+  height: 37px;
+  width: 37px;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.2rem;
 }
 
 .start-game:not(:disabled):hover,
 .help:hover,
 .reset-game:hover {
-    background: var(--blue-border);
+  background: var(--blue-border);
 }
 
 .help:hover {
-    color: rgb(231, 171, 153);
+  color: rgb(231, 171, 153);
 }
 
 #reset-icon {
-    height: 75%;
-    filter: invert(99%) sepia(1%) saturate(168%) hue-rotate(169deg) brightness(97%) contrast(99%);
+  height: 75%;
+  filter: invert(99%) sepia(1%) saturate(168%) hue-rotate(169deg)
+    brightness(97%) contrast(99%);
 }
 
 #reset-icon:hover {
-    filter: invert(89%) sepia(5%) saturate(4420%) hue-rotate(308deg) brightness(87%) contrast(110%);
+  filter: invert(89%) sepia(5%) saturate(4420%) hue-rotate(308deg)
+    brightness(87%) contrast(110%);
 }
 
 /* Styles tooltip for start button */
 .start-game .tooltip-text {
-    visibility: hidden;
-    width: 165px;
-    color: rgb(255, 86, 74);
-    position: absolute;
-    top: 53px;
-    left: -32px;
-    font-style: normal;
-    text-transform: none;
-    font-size: 0.87rem;
+  visibility: hidden;
+  width: 165px;
+  color: rgb(255, 86, 74);
+  position: absolute;
+  top: 53px;
+  left: -32px;
+  font-style: normal;
+  text-transform: none;
+  font-size: 0.87rem;
 }
 
 .start-game:disabled:hover .tooltip-text {
-    visibility: visible;
+  visibility: visible;
 }
 
 /* Styles help popup box */
 .backdrop {
-    height: 100vh;
-    width: 100vw;
-    background: rgba(50, 50, 50, 0.5);
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 20;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(50, 50, 50, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
 }
 
 .help-box {
-    width: 550px;
-    background: var(--dark-blue);
-    border: 1px solid var(--grid-outline);
-    border-radius: 3px;
-    padding: 2rem;
-    font-size: 1rem;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 20;
-    display: grid;
-    grid-template-rows: 0.5fr 5fr;
+  width: 550px;
+  background: var(--dark-blue);
+  border: 1px solid var(--grid-outline);
+  border-radius: 3px;
+  padding: 2rem;
+  font-size: 1rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  display: grid;
+  grid-template-rows: 0.5fr 5fr;
 }
 
 .help-bar {
-    grid-row: 1;
-    display: flex;
-    justify-content: space-between;
+  grid-row: 1;
+  display: flex;
+  justify-content: space-between;
 }
 
 #how-to,
 #close-help {
-    font-size: 1.2rem;
-    font-weight: 600;
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
 #close-help {
-    height: 30px;
-    width: 30px;
-    background: none;
-    border: none;
+  height: 30px;
+  width: 30px;
+  background: none;
+  border: none;
 }
 
 #close-help:hover {
-    color: var(--red);
+  color: var(--red);
 }
 
 .help-info {
-    grid-row: 2;
+  grid-row: 2;
 }
 
 .help-info > ul {
-    padding-left: 25px;
+  padding-left: 25px;
 }
 
 .help-info:not(b),
 .help-info > ul li {
-    color: var(--off-white);
+  color: var(--off-white);
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 .player-side {
-    grid-column: 1;
-    grid-row: 4;
+  grid-column: 1;
+  grid-row: 4;
 }
 
 .opponent-side {
-    grid-column: 3;
-    grid-row: 4;
+  grid-column: 3;
+  grid-row: 4;
 }
 
 .player-side,
 .opponent-side {
-    flex-direction: column;
-    gap: 3rem;
+  flex-direction: column;
+  gap: 3rem;
 }
 
 /* Styles for Gameboards*/
@@ -333,206 +335,207 @@ h1 {
 .left-panel,
 .left-ships,
 .right-ships {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .main-grid {
-    height: 500px;
-    width: 500px;
-    background: var(--grid-bg);
-    border: var(--border);
+  height: 500px;
+  width: 500px;
+  background: var(--grid-bg);
+  border: var(--border);
 }
 
 .peg-hole {
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    border: 5px solid var(--grid-outline);
-    position: absolute;
-    z-index: 10;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  border: 5px solid var(--grid-outline);
+  position: absolute;
+  z-index: 10;
 }
 
 .white-miss {
-    border-color: var(--off-white);
-    background: var(--off-white);
+  border-color: var(--off-white);
+  background: var(--off-white);
 }
 
 .red-hit {
-    border-color: var(--red);
-    background: var(--red);
+  border-color: var(--red);
+  background: var(--red);
 }
 
 /* Styles the ships (left panel) */
 .left-panel {
-    border-right: none;
-    border-radius: 30% 0 0 30%;
-    justify-content: space-evenly;
+  border-right: none;
+  border-radius: 30% 0 0 30%;
+  justify-content: space-evenly;
 }
 
 .left-panel,
 .right-panel {
-    height: 480px;
-    width: 170px;
-    border: var(--border);
-    background: var(--blue);
+  height: 480px;
+  width: 170px;
+  border: var(--border);
+  background: var(--blue);
 }
 
 .left-ships,
 .right-ships {
-    flex-direction: column;
-    height: 100%;
-    width: 35%;
+  flex-direction: column;
+  height: 100%;
+  width: 35%;
 }
 
 .left-ships > *,
 .right-ships > * {
-    border: 2px solid;
-    margin: 1rem 0;
+  border: 2px solid;
+  margin: 1rem 0;
 }
 
 .ship {
-    cursor: pointer;
-    z-index: 1;
+  cursor: pointer;
+  z-index: 1;
 }
 
 .ship,
 .ship-preview {
-    background: var(--light-gray);
+  background: var(--light-gray);
 }
 
 .carrier {
-    height: 223px;
-    width: 45px;
-    border-radius: 5px;
+  height: 223px;
+  width: 45px;
+  border-radius: 5px;
 }
 
 .battleship {
-    height: 178px;
-    width: 45px;
-    border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
+  height: 178px;
+  width: 45px;
+  border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
 }
 
 .destroyer,
 .submarine {
-    height: 133px;
-    width: 45px;
+  height: 133px;
+  width: 45px;
 }
 
 .destroyer {
-    border-radius: 50% 50% 25% 25% / 65% 65% 10% 10% 
+  border-radius: 50% 50% 25% 25% / 65% 65% 10% 10%;
 }
 
 .submarine {
-    border-radius: 50% 50% 60% 55% / 50% 50% 40% 40%;
+  border-radius: 50% 50% 60% 55% / 50% 50% 40% 40%;
 }
 
 .patrol {
-    height: 88px;
-    width: 45px;
-    border-radius: 50% 50% 30% 30% / 70% 70% 20% 20% 
+  height: 88px;
+  width: 45px;
+  border-radius: 50% 50% 30% 30% / 70% 70% 20% 20%;
 }
 
 /* Align ships individually based on orientation */
 .horizontal {
-    position: absolute;
+  position: absolute;
 }
 
 .vertical {
-    align-self: flex-start;
-    position: absolute;
+  align-self: flex-start;
+  position: absolute;
 }
 
 /* Styles the pegs (right panel)*/
 .right-panel {
-    border-left: none;
-    border-radius: 0 30% 30% 0;
+  border-left: none;
+  border-radius: 0 30% 30% 0;
 }
 
 .red-peg-holder,
 .white-peg-holder {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .red-peg-holder {
-    height: 35%;
-    width: 100%;
-    border-bottom: var(--border);
-    border-radius: 0% 30% 0% 0% / 10% 80% 0% 0%;
+  height: 35%;
+  width: 100%;
+  border-bottom: var(--border);
+  border-radius: 0% 30% 0% 0% / 10% 80% 0% 0%;
 }
 
 .white-peg-holder {
-    height: 65%;
-    width: 100%;
-    border-radius: 0% 0% 30% 0% / 0% 30% 45% 50%;
+  height: 65%;
+  width: 100%;
+  border-radius: 0% 0% 30% 0% / 0% 30% 45% 50%;
 }
 
 .red-pegs {
-    height: 100%;
-    width: auto;
+  height: 100%;
+  width: auto;
 }
 
 .white-pegs {
-    height: 90%;
-    width: auto;
+  height: 90%;
+  width: auto;
 }
 
 footer {
-    grid-column: 1 / span 3;
-    grid-row: 5;
-    font-size: 1rem;
+  grid-column: 1 / span 3;
+  grid-row: 5;
+  font-size: 1rem;
 }
 
 footer > a {
-    padding-right: 10px;
+  padding-right: 10px;
 }
 
 #github-icon {
-    height: 30px;
-    width: 30px;
-    filter: invert(77%) sepia(42%) saturate(538%) hue-rotate(141deg) brightness(93%) contrast(89%);
+  height: 30px;
+  width: 30px;
+  filter: invert(77%) sepia(42%) saturate(538%) hue-rotate(141deg)
+    brightness(93%) contrast(89%);
 }
 
 /* Highlight CPU ships */
 .highlight {
-    background: greenyellow;
+  background: greenyellow;
 }
 
 .hover {
-    background: var(--dark-gray);
+  background: var(--dark-gray);
 }
 
 /* Styles DOM-created grid*/
 .row,
 .square {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .row {
-    height: calc(100% / 11);
-    width: 100%;
+  height: calc(100% / 11);
+  width: 100%;
 }
 
 /* Adds bottom border to all but last row (row 10)*/
-.row:not(:nth-last-child(-n+1)) {
-    border-bottom: 3px double var(--grid-outline);
+.row:not(:nth-last-child(-n + 1)) {
+  border-bottom: 3px double var(--grid-outline);
 }
 
 .square {
-    height: 100%;
-    width: calc(100% / 11);
-    font-weight: 600;
-    font-size: var(--font-size);
-    color: var(--grid-text);
-    position: relative;
+  height: 100%;
+  width: calc(100% / 11);
+  font-weight: 600;
+  font-size: var(--font-size);
+  color: var(--grid-text);
+  position: relative;
 }
 
 /* Adds right border to all but last col (col "J")  */
 .square:not(:nth-child(11n)) {
-    border-right: 3px double var(--grid-outline);
+  border-right: 3px double var(--grid-outline);
 }
