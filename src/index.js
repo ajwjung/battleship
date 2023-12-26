@@ -97,7 +97,6 @@ const StartGame = (() => {
   // To enable/disable "Start" button
   const startBtn = document.querySelector(".start-game");
   const playerDock = document.getElementById("my-ships");
-  // startBtn.disabled = true;
   const config = { childList: true, subtree: true };
   const observer = Display.startBtnListener();
   observer.observe(playerDock, config);
@@ -109,7 +108,6 @@ const StartGame = (() => {
 
     if (shipsPlaced === 5) {
       startBtn.disabled = true;
-      observer.disconnect();
       Display.hideTooltipText();
       Display.addStartGameText();
       Display.removeCpuShipBlocks();
@@ -136,6 +134,7 @@ const StartGame = (() => {
   // Reset game
   const resetBtn = document.querySelector(".reset-game");
   resetBtn.addEventListener("click", () => {
+    Display.resetShipsPlacedCounter();
     Display.resetChatBubbles();
     startBtn.classList.remove("hidden");
     Display.resetTooltipVisibility();

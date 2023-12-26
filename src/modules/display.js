@@ -142,10 +142,19 @@ const Display = (() => {
     shipsPlaced += 1;
   }
 
+  function resetShipsPlacedCounter() {
+    shipsPlaced = 0;
+  }
+
   function mutationHandler(mutations) {
     const startBtn = document.querySelector(".start-game");
+
     mutations.forEach((mutation) => {
-      if (mutation.type === "childList") incrementShipsPlaced();
+      if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
+        resetShipsPlacedCounter();
+      } else if (mutation.type === "childList" && mutation.removedNodes.length > 0) {
+        incrementShipsPlaced();
+      }
     });
 
     if (shipsPlaced === 5) {
@@ -217,6 +226,7 @@ const Display = (() => {
     rightShipDock.appendChild(submarineBlock);
   }
 
+  // Removes styles for hit/missed coordinates on grid
   function resetGameGrids() {
     const playerGridSquares = document.querySelectorAll(
       "#my-board .square:not(.legend)"
@@ -257,6 +267,7 @@ const Display = (() => {
     helpBoxToggle,
     getShipsPlacedCounter,
     startBtnListener,
+    resetShipsPlacedCounter,
     resetPlayerShipDock,
     resetCpuShipDock,
     resetGameGrids,
