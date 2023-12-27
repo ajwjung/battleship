@@ -176,6 +176,25 @@ const Display = (() => {
     return newShipBlock;
   }
 
+  // Handlers for preventing the user from attacking CPU until game starts
+  function disableClickingCpuBoard() {
+    const cpuBoard = document.querySelector("#opponent-board");
+    const cpuBoardContents = document.querySelectorAll("#opponent-board *");
+    cpuBoard.classList.add("disabled");
+    cpuBoardContents.forEach((element) => {
+      element.classList.add("disabled");
+    });
+  }
+
+  function enableClickingCpuBoard() {
+    const cpuBoard = document.querySelector("#opponent-board");
+    const cpuBoardContents = document.querySelectorAll("#opponent-board *");
+    cpuBoard.classList.remove("disabled");
+    cpuBoardContents.forEach((element) => {
+      element.classList.remove("disabled");
+    });
+  }
+
   // Handlers for resetting the game
   function resetPlayerShipDock() {
     // Append ships back to dock instead of re-creating new ships
@@ -267,6 +286,8 @@ const Display = (() => {
     helpBoxToggle,
     getShipsPlacedCounter,
     startBtnListener,
+    disableClickingCpuBoard,
+    enableClickingCpuBoard,
     resetShipsPlacedCounter,
     resetPlayerShipDock,
     resetCpuShipDock,

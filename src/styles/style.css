@@ -80,6 +80,11 @@ h1 {
   flex-direction: column;
 }
 
+/* Styles cursor for disabled divs */
+.disabled {
+  pointer-events: none;
+}
+
 /* Styles message containers and buttons */
 .message-container {
   height: 100%;
@@ -446,7 +451,7 @@ h1 {
   position: absolute;
 }
 
-/* Styles the pegs (right panel)*/
+/* Styles the pegs (right panel) */
 .right-panel {
   border-left: none;
   border-radius: 0 30% 30% 0;

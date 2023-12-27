@@ -93,6 +93,9 @@ const StartGame = (() => {
     Display.helpBoxToggle();
   });
 
+  // Prevent user from attacking CPU until allowed (i.e., start button clicked)
+  Display.disableClickingCpuBoard();
+
   // Listen for changes in player's dock
   // To enable/disable "Start" button
   const startBtn = document.querySelector(".start-game");
@@ -107,6 +110,8 @@ const StartGame = (() => {
     const playerShipBlocks = document.querySelectorAll(".ship");
 
     if (shipsPlaced === 5) {
+      Display.enableClickingCpuBoard();
+
       startBtn.disabled = true;
       Display.hideTooltipText();
       Display.addStartGameText();
@@ -134,6 +139,7 @@ const StartGame = (() => {
   // Reset game
   const resetBtn = document.querySelector(".reset-game");
   resetBtn.addEventListener("click", () => {
+    Display.disableClickingCpuBoard();
     Display.resetShipsPlacedCounter();
     Display.resetChatBubbles();
     startBtn.classList.remove("hidden");
