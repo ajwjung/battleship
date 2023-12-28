@@ -12,7 +12,7 @@ const StartGame = (() => {
   const infoText = document.getElementById("info-text");
   setTimeout(() => {
     infoText.innerHTML =
-      "Drag and drop your ships to place them on the left board.";
+      "Drag and drop your ships to place them on the left (or top) board.";
   }, 2000);
   setTimeout(() => {
     infoText.innerHTML = "Click to rotate any ship horizontally or vertically.";

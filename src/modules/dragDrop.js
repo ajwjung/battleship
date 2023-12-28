@@ -18,11 +18,13 @@ const DragDrop = (() => {
   }
 
   function getShipLength(dimension) {
-    return Math.round((dimension + 2) / 45);
+    const CELL_WIDTH = 26;
+    return Math.round((dimension + 2) / CELL_WIDTH);
   }
 
   function getHorizontalOffset(dimension) {
-    return 22 * (getShipLength(dimension) - 1);
+    const HALF_CELL_WIDTH = 13;
+    return HALF_CELL_WIDTH * (getShipLength(dimension) - 1);
   }
 
   function addVerticalStyle(ship) {
