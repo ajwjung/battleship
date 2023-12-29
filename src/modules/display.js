@@ -152,7 +152,10 @@ const Display = (() => {
     mutations.forEach((mutation) => {
       if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
         resetShipsPlacedCounter();
-      } else if (mutation.type === "childList" && mutation.removedNodes.length > 0) {
+      } else if (
+        mutation.type === "childList" &&
+        mutation.removedNodes.length > 0
+      ) {
         incrementShipsPlaced();
       }
     });

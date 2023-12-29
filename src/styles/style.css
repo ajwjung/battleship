@@ -10,10 +10,10 @@
   --dark-gray: rgb(90, 109, 119);
   --off-white: rgb(243, 244, 245);
   --btn-hover: rgb(231, 171, 153);
-  --bright-red: rgb(255, 86, 74); 
+  --bright-red: rgb(255, 86, 74);
   --red: rgb(185, 16, 16);
   --filter-blue: invert(77%) sepia(42%) saturate(538%) hue-rotate(141deg)
-  brightness(93%) contrast(89%);
+    brightness(93%) contrast(89%);
   --border: 3px solid var(--blue-border);
   --small-pad: 1rem;
   --medium-pad: 2rem;
@@ -239,19 +239,19 @@ footer {
 #reset-icon {
   height: 75%;
   filter: invert(99%) sepia(1%) saturate(168%) hue-rotate(169deg)
-      brightness(97%) contrast(99%);
+    brightness(97%) contrast(99%);
 }
 
 #reset-icon:hover {
   filter: invert(89%) sepia(5%) saturate(4420%) hue-rotate(308deg)
-      brightness(87%) contrast(110%);
+    brightness(87%) contrast(110%);
 }
 
 /* Styles tooltip for start button */
 .start-game .tooltip-text {
   visibility: hidden;
   width: 165px;
-  
+
   position: absolute;
   top: -15px;
   left: 105px;

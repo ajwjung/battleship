@@ -1,214 +1,214 @@
 /* Styles for tablet-sized viewports */
 @media (min-width: 768px) {
-    #info-text {
-        font-size: var(--large-font);
-    }
+  #info-text {
+    font-size: var(--large-font);
+  }
 
-    /* Styles for buttons */
-    .help,
-    .reset-game {
-        height: 40px;
-        width: 40px;
-    }
-    
-    .help {
-        font-size: var(--large-font);
-    }
+  /* Styles for buttons */
+  .help,
+  .reset-game {
+    height: 40px;
+    width: 40px;
+  }
 
-    .start-game {
-        height: 40px;
-    }
+  .help {
+    font-size: var(--large-font);
+  }
 
-    /* Styles for player info */
-    .player-name {
-        font-size: var(--medium-font);
-    }
+  .start-game {
+    height: 40px;
+  }
 
-    .user-icon {
-        height: 45px;
-        width: 45px;
-    }
+  /* Styles for player info */
+  .player-name {
+    font-size: var(--medium-font);
+  }
 
-    /* Styles for gameboard */
-    .main-grid {
-        height: 400px;
-        width: 400px;
-    }
+  .user-icon {
+    height: 45px;
+    width: 45px;
+  }
 
-    .peg-hole {
-        height: 15px;
-        width: 15px;
-    }
+  /* Styles for gameboard */
+  .main-grid {
+    height: 400px;
+    width: 400px;
+  }
 
-    /* Styles for ships and ship dock (left panel) */
-    .left-panel,
-    .right-panel {
-        height: 400px;
-        width: 140px;
-    }
+  .peg-hole {
+    height: 15px;
+    width: 15px;
+  }
 
-    /* Ship dimensions based on cells of size 35px by 32px (l x w) */
-    .carrier,
-    .battleship,
-    .destroyer,
-    .submarine,
-    .patrol {
-        width: 32px;
-    }
+  /* Styles for ships and ship dock (left panel) */
+  .left-panel,
+  .right-panel {
+    height: 400px;
+    width: 140px;
+  }
 
-    .carrier {
-        height: 176px;
-    }
+  /* Ship dimensions based on cells of size 35px by 32px (l x w) */
+  .carrier,
+  .battleship,
+  .destroyer,
+  .submarine,
+  .patrol {
+    width: 32px;
+  }
 
-    .battleship {
-        height: 140px;
-    }
+  .carrier {
+    height: 176px;
+  }
 
-    .destroyer,
-    .submarine {
-        height: 105px;
-    }
+  .battleship {
+    height: 140px;
+  }
 
-    .patrol {
-        height: 70px;
-    }
+  .destroyer,
+  .submarine {
+    height: 105px;
+  }
+
+  .patrol {
+    height: 70px;
+  }
 }
 
 /* Styles for desktops */
 @media (min-width: 1024px) {
-    /* styles for overall content */
-    .content {
-        padding: var(--large-pad);
-    }
+  /* styles for overall content */
+  .content {
+    padding: var(--large-pad);
+  }
 
-    .content > * {
-        width: 100%;
-        padding: var(--small-pad);
-    }
+  .content > * {
+    width: 100%;
+    padding: var(--small-pad);
+  }
 
-    #info-text {
-        display: flex;
-        justify-content: center;
-    }
+  #info-text {
+    display: flex;
+    justify-content: center;
+  }
 
-    .help-box {
-        width: 70vw;
-    }
+  .help-box {
+    width: 70vw;
+  }
 
-    /* Styles for buttons */
-    .button-container {
-        gap: var(--medium-pad);
-    }
+  /* Styles for buttons */
+  .button-container {
+    gap: var(--medium-pad);
+  }
 
-    .start-game .tooltip-text {
-        font-size: var(--normal-font);
-    }
+  .start-game .tooltip-text {
+    font-size: var(--normal-font);
+  }
 
-    /* Styles for player info and chat bubbles */
-    .player-message-container {
-        padding-left: var(--large-pad);
-    }
+  /* Styles for player info and chat bubbles */
+  .player-message-container {
+    padding-left: var(--large-pad);
+  }
 
-    .opponent-message-container {
-        padding-right: var(--large-pad);
-    }
+  .opponent-message-container {
+    padding-right: var(--large-pad);
+  }
 
-    .chat-bubble {
-        width: 50%;
-    }
+  .chat-bubble {
+    width: 50%;
+  }
 }
 
 /* Styles for XL monitors */
 @media (min-width: 1440px) {
-    /* Styles for overall content */
-    .content {
-        grid-template-columns: repeat(2, 1fr);
-    }
+  /* Styles for overall content */
+  .content {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
-    h1 {
-        grid-row: 1;
-        grid-column: 1 / span 2;
-    }
-    
-    .info-container {
-        grid-row: 2;
-        grid-column: 1 / span 2;
+  h1 {
+    grid-row: 1;
+    grid-column: 1 / span 2;
+  }
 
-        width: 100%;
-    }
-    
-    .button-container {
-        grid-row: 3;
-        grid-column: 1 / span 2;
-    }
-    
-    .player-message-container {
-        grid-row: 4;
-        grid-column: 1;
-    }
+  .info-container {
+    grid-row: 2;
+    grid-column: 1 / span 2;
 
-    .opponent-message-container {
-        grid-row: 4;
-        grid-column: 2;
-    }
-    
-    .player-side {
-        grid-row: 5;
-        grid-column: 1;
-    }
-    
-    .opponent-side {
-        grid-row: 5;
-        grid-column: 2;
-    }
+    width: 100%;
+  }
 
-    .player-side,
-    .opponent-side {
-        padding: var(--small-pad);
-    }
-    
-    footer {
-        grid-row: 6;
-        grid-column: 1 / span 2;
-    }
+  .button-container {
+    grid-row: 3;
+    grid-column: 1 / span 2;
+  }
 
-    /* Styles for help box */
-    .help-box {
-        width: unset;
-    }
+  .player-message-container {
+    grid-row: 4;
+    grid-column: 1;
+  }
 
-    /* Styles for user info and chat bubbles */
-    .player-message-container,
-    .opponent-message-container {
-        display: flex;
-        justify-content: center;
-    }
+  .opponent-message-container {
+    grid-row: 4;
+    grid-column: 2;
+  }
 
-    .player-message-container {
-        margin-left: 20px;
-    }
+  .player-side {
+    grid-row: 5;
+    grid-column: 1;
+  }
 
-    .opponent-message-container {
-        margin-right: 20px;
-    }
+  .opponent-side {
+    grid-row: 5;
+    grid-column: 2;
+  }
 
-    .chat-bubble {
-        width: 50%;
-    }
+  .player-side,
+  .opponent-side {
+    padding: var(--small-pad);
+  }
 
-    /* Styles for buttons */
-    .button-container {
-        gap: var(--medium-pad);
-    }
+  footer {
+    grid-row: 6;
+    grid-column: 1 / span 2;
+  }
 
-    .start-game {
-        font-size: var(--medium-font);
-    }
+  /* Styles for help box */
+  .help-box {
+    width: unset;
+  }
 
-    .start-game .tooltip-text {
-        width: 185px;
-        top: -20px;
-        left: 125px;
-        font-size: var(--medium-font);
-    }
+  /* Styles for user info and chat bubbles */
+  .player-message-container,
+  .opponent-message-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .player-message-container {
+    margin-left: 20px;
+  }
+
+  .opponent-message-container {
+    margin-right: 20px;
+  }
+
+  .chat-bubble {
+    width: 50%;
+  }
+
+  /* Styles for buttons */
+  .button-container {
+    gap: var(--medium-pad);
+  }
+
+  .start-game {
+    font-size: var(--medium-font);
+  }
+
+  .start-game .tooltip-text {
+    width: 185px;
+    top: -20px;
+    left: 125px;
+    font-size: var(--medium-font);
+  }
 }
