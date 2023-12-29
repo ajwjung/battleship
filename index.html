@@ -10,6 +10,9 @@
       href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;600&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="styles/responsiveStyles.css" />
+    <script type="module" src="main.js" defer></script>
     <title>Battleship</title>
   </head>
   <body>
@@ -19,94 +22,92 @@
         <div class="info-container">
           <p id="info-text">Welcome to Battleship!</p>
         </div>
-        <!-- <div class="message-container"> -->
-          <div class="player-message-container">
-            <div class="icon-container">
-              <img
-                src="imgs/account.svg"
-                alt="Person icon"
-                class="user-icon"
-              />
-              <p class="player-name">Player</p>
-            </div>
-            <div class="chat-bubble">
-              <p id="player-text"></p>
-            </div>
+        <div class="player-message-container">
+          <div class="icon-container">
+            <img
+              src="imgs/account.svg"
+              alt="Person icon"
+              class="user-icon"
+            />
+            <p class="player-name">Player</p>
           </div>
-          <div class="button-container">
-            <button type="button" class="help" title="Help">?</button>
-            <div class="backdrop hidden">
-              <div class="help-box hidden">
-                <div class="help-bar">
-                  <span id="how-to">How to Play</span>
-                  <button type="button" id="close-help">X</button>
-                </div>
-                <div class="help-info">
-                  <b>Game pieces:</b>
-                  <ul>
-                    <li>Carrier - length of 5</li>
-                    <li>Battleship - length of 4</li>
-                    <li>Destroyer - length of 3</li>
-                    <li>Submarine - length of 3</li>
-                    <li>Patrol Boat - length of 2</li>
-                    <li>White pegs - marker for missed attacks</li>
-                    <li>Red pegs - marker for successful attacks</li>
-                  </ul>
-                  <br />
-                  <b>Place your ships:</b>
-                  <ul>
-                    <li>Drag and drop your ships from the dock to the grid.</li>
-                    <li>
-                      Click the ship to rotate to horizontal or vertical
-                      orientation.
-                    </li>
-                  </ul>
-                  <br />
-                  <b>Start game:</b>
-                  <ul>
-                    <li>
-                      Click the "Start" button to begin the game after you've
-                      placed all of your ships.
-                    </li>
-                    <li>
-                      Both players will take turns attacking the other person's
-                      board.
-                    </li>
-                  </ul>
+          <div class="chat-bubble">
+            <p id="player-text"></p>
+          </div>
+        </div>
+        <div class="button-container">
+          <button type="button" class="help" title="Help">?</button>
+          <div class="backdrop hidden">
+            <div class="help-box hidden">
+              <div class="help-bar">
+                <span id="how-to">How to Play</span>
+                <button type="button" id="close-help">X</button>
+              </div>
+              <div class="help-info">
+                <b>Game pieces:</b>
+                <ul>
+                  <li>Carrier - length of 5</li>
+                  <li>Battleship - length of 4</li>
+                  <li>Destroyer - length of 3</li>
+                  <li>Submarine - length of 3</li>
+                  <li>Patrol Boat - length of 2</li>
+                  <li>White pegs - marker for missed attacks</li>
+                  <li>Red pegs - marker for successful attacks</li>
+                </ul>
+                <br />
+                <b>Place your ships:</b>
+                <ul>
+                  <li>Drag and drop your ships from the dock to the grid.</li>
+                  <li>
+                    Click the ship to rotate to horizontal or vertical
+                    orientation.
+                  </li>
+                </ul>
+                <br />
+                <b>Start game:</b>
+                <ul>
+                  <li>
+                    Click the "Start" button to begin the game after you've
+                    placed all of your ships.
+                  </li>
+                  <li>
+                    Both players will take turns attacking the other person's
+                    board.
+                  </li>
+                </ul>
 
-                  <br /><b>Goal:</b> Sink all of your opponent's ships to win
-                  the game!
-                </div>
+                <br /><b>Goal:</b> Sink all of your opponent's ships to win
+                the game!
               </div>
             </div>
-            <button type="button" class="reset-game" title="Restart game">
-              <img
-                src="imgs/restart.svg"
-                alt="Reset icon"
-                id="reset-icon"
-              />
-            </button>
-            <button type="button" class="start-game" disabled="true">
-              START
-              <p class="tooltip-text">
-                You must place all ships to start the game!
-              </p>
-            </button>
           </div>
-          <div class="opponent-message-container">
-            <div class="icon-container">
-              <img
-                src="imgs/laptop.svg"
-                alt="Laptop icon"
-                class="user-icon"
-              />
-              <p class="player-name">Computer</p>
-            </div>
-            <div class="chat-bubble">
-              <p id="cpu-text"></p>
-            </div>
+          <button type="button" class="reset-game" title="Restart game">
+            <img
+              src="imgs/restart.svg"
+              alt="Reset icon"
+              id="reset-icon"
+            />
+          </button>
+          <button type="button" class="start-game" disabled="true">
+            START
+            <p class="tooltip-text">
+              You must place all ships to start the game!
+            </p>
+          </button>
+        </div>
+        <div class="opponent-message-container">
+          <div class="icon-container">
+            <img
+              src="imgs/laptop.svg"
+              alt="Laptop icon"
+              class="user-icon"
+            />
+            <p class="player-name">Computer</p>
           </div>
-        <!-- </div> -->
+          <div class="chat-bubble">
+            <p id="cpu-text"></p>
+          </div>
+        </div>
         <div class="player-side">
           <div class="board">
             <div class="left-panel" id="my-ships">
