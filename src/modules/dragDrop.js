@@ -18,13 +18,27 @@ const DragDrop = (() => {
   }
 
   function getShipLength(dimension) {
-    const CELL_WIDTH = 26;
-    return Math.round((dimension + 2) / CELL_WIDTH);
+    let cellHeight;
+
+    if (window.innerWidth < 768) {
+      cellHeight = 26;
+    } else if (window.innerWidth >= 768) {
+      cellHeight = 36;
+    }
+
+    return Math.round((dimension + 2) / cellHeight);
   }
 
   function getHorizontalOffset(dimension) {
-    const HALF_CELL_WIDTH = 13;
-    return HALF_CELL_WIDTH * (getShipLength(dimension) - 1);
+    let halfOfCellHeight;
+
+    if (window.innerWidth < 768) {
+      halfOfCellHeight = 13;
+    } else if (window.innerWidth >= 768) {
+      halfOfCellHeight = 18;
+    }
+
+    return halfOfCellHeight * (getShipLength(dimension) - 1);
   }
 
   function addVerticalStyle(ship) {

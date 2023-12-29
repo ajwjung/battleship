@@ -1,4 +1,5 @@
 import "./styles/style.css";
+import "./styles/responsiveStyles.css";
 
 const Ship = require("./modules/ship.js");
 const Gameboard = require("./modules/gameboard.js");
