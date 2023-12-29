@@ -34,6 +34,10 @@
 }
 
 /* Styles for overall content/layout */
+body {
+  background: var(--dark-blue);
+}
+
 .container {
   height: 100vh;
   width: 100vw;
