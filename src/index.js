@@ -66,7 +66,7 @@ const StartGame = (() => {
 
   const viewportSize = window.innerWidth;
   const mobileModeEnabled = viewportSize < 1024;
-  
+
   // Player places ships
   const ships = document.querySelectorAll(".ship");
   const squares = document.body.querySelectorAll(
@@ -84,14 +84,16 @@ const StartGame = (() => {
       ship.addEventListener("dragstart", (e) => DragDrop.dragStart(e));
       ship.addEventListener("dragend", null);
     });
-  
+
     squares.forEach((square) => {
       square.removeEventListener("click", DragDrop.dragDrop);
 
       square.addEventListener("dragover", (e) => DragDrop.dragOver(e));
       square.addEventListener("dragenter", (e) => DragDrop.dragEnter(e));
       square.addEventListener("dragleave", (e) => DragDrop.dragLeave(e));
-      square.addEventListener("drop", (e) => DragDrop.dragDrop(e, viewportSize));
+      square.addEventListener("drop", (e) =>
+        DragDrop.dragDrop(e, viewportSize)
+      );
     });
   } else if (mobileModeEnabled || viewportSize < 1024) {
     // Mobile/tablet mode - click to place ships
@@ -99,7 +101,7 @@ const StartGame = (() => {
       ship.removeEventListener("click", Rotate.rotateShip);
       ship.removeEventListener("dragstart", DragDrop.dragStart);
       ship.removeEventListener("dragend", null);
-      
+
       ship.addEventListener("click", (e) => MobilePlay.setSelectedShip(e));
       ship.addEventListener("dblclick", (e) => Rotate.rotateShip(e));
     });
@@ -110,7 +112,9 @@ const StartGame = (() => {
       square.removeEventListener("dragleave", DragDrop.dragLeave);
       square.removeEventListener("drop", DragDrop.dragDrop);
 
-      square.addEventListener("click", (e) => DragDrop.dragDrop(e, viewportSize));
+      square.addEventListener("click", (e) =>
+        DragDrop.dragDrop(e, viewportSize)
+      );
     });
   }
 

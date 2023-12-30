@@ -1,15 +1,15 @@
 const MobilePlay = (() => {
-    let selectedShip;
+  let selectedShip;
 
-    function setSelectedShip(e) {
-        [, selectedShip] = e.target.classList;
-    }
+  function setSelectedShip(e) {
+    [, selectedShip] = e.target.classList;
+  }
 
-    function getSelectedShip() {
-        return selectedShip;
-    }
-    
-    return { setSelectedShip, getSelectedShip }
+  function getSelectedShip() {
+    return selectedShip;
+  }
+
+  return { setSelectedShip, getSelectedShip };
 })();
 
 export default MobilePlay;

@@ -190,7 +190,8 @@ const DragDrop = (() => {
 
   function dragDrop(e, viewportSize) {
     const shipName = MobilePlay.getSelectedShip();
-    const shipData = (viewportSize >= 1024) ? e.dataTransfer.getData("text") : shipName;
+    const shipData =
+      viewportSize >= 1024 ? e.dataTransfer.getData("text") : shipName;
     const ship = document.querySelector(`.ship.${shipData}`);
     const shipHeight = getShipHeight(ship);
     const shipWidth = getShipWidth(ship);
