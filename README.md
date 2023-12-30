@@ -67,6 +67,6 @@ All svg icons used in the webpage were downloaded from [Material Design Icons](h
 
 ## Author's Notes
 
-**Update:** The website's UI has been updated to be more responsive but because I wanted the gameboard to resemble the actual gameboard design, it is not the most ideal layout for smaller devices. The game also cannot be played on mobile devices/tablets because the ships need to be dragged and dropped.
+**Update:** I  reworked the website's UI to be more responsive and the game can also now be played on mobile/tablets. However, placing ships may be finicky because of how the grid was designed and created (the peg holes kind of get in the way of properly clicking on the squares).
 
 This project took the longest to figure out out of all of the ones I've done so far. The biggest challenge was the drag/drop feature; I couldn't figure out how to make ships drag/drop in a way that takes up the exact number of squares required. Eventually I figured out that I could make the ships the exact size based on the squares they will need to take up, so more of a visual effect than anything. I also struggled with the "click-to-rotate" feature because there were many scenarios to check. But this project forced me to think in different ways so that I could achieve the effects I wanted and I enjoyed struggling through to learn new things.
