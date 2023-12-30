@@ -1,5 +1,6 @@
 import "./styles/style.css";
 import "./styles/responsiveStyles.css";
+import MobilePlay from "./modules/mobilePlaceShip.js";
 
 const Ship = require("./modules/ship.js");
 const Gameboard = require("./modules/gameboard.js");
@@ -63,24 +64,55 @@ const StartGame = (() => {
     computerPatrol,
   ];
 
-  // Drag-drop player ships
+  const viewportSize = window.innerWidth;
+  const mobileModeEnabled = viewportSize < 1024;
+  
+  // Player places ships
   const ships = document.querySelectorAll(".ship");
   const squares = document.body.querySelectorAll(
     "#my-board .square:not(.legend)"
   );
 
-  ships.forEach((ship) => {
-    ship.addEventListener("click", (e) => Rotate.rotateShip(e));
-    ship.addEventListener("dragstart", (e) => DragDrop.dragStart(e));
-    ship.addEventListener("dragend", null);
-  });
+  // Toggle between mobile and desktop game mode when viewport size changes
+  if (!mobileModeEnabled || viewportSize >= 1024) {
+    // Desktop mode - drag/drop to place ships
+    ships.forEach((ship) => {
+      ship.removeEventListener("click", MobilePlay.setSelectedShip);
+      ship.removeEventListener("dblclick", Rotate.rotateShip);
 
-  squares.forEach((square) => {
-    square.addEventListener("dragover", (e) => DragDrop.dragOver(e));
-    square.addEventListener("dragenter", (e) => DragDrop.dragEnter(e));
-    square.addEventListener("dragleave", (e) => DragDrop.dragLeave(e));
-    square.addEventListener("drop", (e) => DragDrop.dragDrop(e));
-  });
+      ship.addEventListener("click", (e) => Rotate.rotateShip(e));
+      ship.addEventListener("dragstart", (e) => DragDrop.dragStart(e));
+      ship.addEventListener("dragend", null);
+    });
+  
+    squares.forEach((square) => {
+      square.removeEventListener("click", DragDrop.dragDrop);
+
+      square.addEventListener("dragover", (e) => DragDrop.dragOver(e));
+      square.addEventListener("dragenter", (e) => DragDrop.dragEnter(e));
+      square.addEventListener("dragleave", (e) => DragDrop.dragLeave(e));
+      square.addEventListener("drop", (e) => DragDrop.dragDrop(e, viewportSize));
+    });
+  } else if (mobileModeEnabled || viewportSize < 1024) {
+    // Mobile/tablet mode - click to place ships
+    ships.forEach((ship) => {
+      ship.removeEventListener("click", Rotate.rotateShip);
+      ship.removeEventListener("dragstart", DragDrop.dragStart);
+      ship.removeEventListener("dragend", null);
+      
+      ship.addEventListener("click", (e) => MobilePlay.setSelectedShip(e));
+      ship.addEventListener("dblclick", (e) => Rotate.rotateShip(e));
+    });
+
+    squares.forEach((square) => {
+      square.removeEventListener("dragover", DragDrop.dragOver);
+      square.removeEventListener("dragenter", DragDrop.dragEnter);
+      square.removeEventListener("dragleave", DragDrop.dragLeave);
+      square.removeEventListener("drop", DragDrop.dragDrop);
+
+      square.addEventListener("click", (e) => DragDrop.dragDrop(e, viewportSize));
+    });
+  }
 
   // Help info box
   const helpBtn = document.querySelector(".help");

@@ -1,4 +1,5 @@
 const Coordinates = require("./convertCoordinates.js");
+const { default: MobilePlay } = require("./mobilePlaceShip.js");
 
 const DragDrop = (() => {
   function hasVerticalClass(ship) {
@@ -187,8 +188,9 @@ const DragDrop = (() => {
       e.target.classList.remove("hover");
   }
 
-  function dragDrop(e) {
-    const shipData = e.dataTransfer.getData("text");
+  function dragDrop(e, viewportSize) {
+    const shipName = MobilePlay.getSelectedShip();
+    const shipData = (viewportSize >= 1024) ? e.dataTransfer.getData("text") : shipName;
     const ship = document.querySelector(`.ship.${shipData}`);
     const shipHeight = getShipHeight(ship);
     const shipWidth = getShipWidth(ship);
@@ -200,7 +202,7 @@ const DragDrop = (() => {
       if (
         hasVerticalClass(ship) ||
         ship.classList.contains("rotated-vertical") ||
-        (firstDropForShip(ship) && shipNeverRotatedBefore(ship))
+        (firstDropForShip(ship, shipWidth) && shipNeverRotatedBefore(ship))
       ) {
         // All scenarios where ship is in vertical orientation
         adjacentSquares = getAdjacentSquares(
@@ -304,6 +306,8 @@ const DragDrop = (() => {
     isValidDrop,
     addHorizontalStyle,
     addVerticalStyle,
+    firstDropForShip,
+    removeTemporaryClasses,
     markOldSquaresAvailable,
     markSquareTaken,
     shipNeverRotatedBefore,

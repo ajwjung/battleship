@@ -193,7 +193,8 @@ footer {
 }
 
 .start-game,
-.reset-game {
+.reset-game,
+.game-mode {
   height: 30px;
   width: 100px;
   border: none;
@@ -211,7 +212,8 @@ footer {
 
 .start-game:not(:disabled),
 .help,
-.reset-game {
+.reset-game,
+.game-mode {
   background: var(--blue);
   color: var(--off-white);
   font-weight: 600;
@@ -228,11 +230,13 @@ footer {
 
 .start-game:not(:disabled):hover,
 .help:hover,
-.reset-game:hover {
+.reset-game:hover,
+.game-mode:hover {
   background: var(--blue-border);
 }
 
-.help:hover {
+.help:hover,
+.game-mode:hover {
   color: var(--btn-hover);
 }
 
@@ -245,6 +249,11 @@ footer {
 #reset-icon:hover {
   filter: invert(89%) sepia(5%) saturate(4420%) hue-rotate(308deg)
     brightness(87%) contrast(110%);
+}
+
+.game-mode {
+  height: 40px;
+  width: 150px;
 }
 
 /* Styles tooltip for start button */
@@ -390,6 +399,10 @@ footer {
 /* Adds right border to all but last col (col "J")  */
 .square:not(:nth-child(11n)) {
   border-right: 3px double var(--grid-outline);
+}
+
+.square:not(.legend):hover {
+  background: var(--btn-hover);
 }
 
 /* Styles for game board peg holes (filled and unfilled) */
