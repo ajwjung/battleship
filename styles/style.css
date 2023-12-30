@@ -392,6 +392,10 @@ footer {
   border-right: 3px double var(--grid-outline);
 }
 
+.square:not(.legend):hover {
+  background: var(--btn-hover);
+}
+
 /* Styles for game board peg holes (filled and unfilled) */
 .peg-hole {
   height: 12px;
